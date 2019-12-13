@@ -74,6 +74,7 @@ public class TabActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setClass(TabActivity.this,MainActivity.class);
             startActivity(intent);
+            //
         }
     };
 }
