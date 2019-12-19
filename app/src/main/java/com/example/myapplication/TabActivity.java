@@ -40,7 +40,7 @@ public class TabActivity extends AppCompatActivity {
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
         new myJsonObjectRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
-        //---------------------------------------------------------------------------------
+        //-----------------初始設定----------------------------------------------------------------
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);

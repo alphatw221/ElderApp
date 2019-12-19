@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Frag1 extends Fragment {
     private TextView person_name,person_rank,person_happybi;
     private Button takeBi,giveBi,myTrans,exchange;
+    private WebView webView;
     private SharedPreferences preference;
     private String url="https://www.happybi.com.tw/api/auth/me";
     @Nullable
@@ -40,6 +44,7 @@ public class Frag1 extends Fragment {
         giveBi=(Button)view.findViewById(R.id._giveBi);
         myTrans=(Button)view.findViewById(R.id._myTrans);
         exchange=(Button)view.findViewById(R.id._exchange);
+        webView=(WebView)view.findViewById(R.id._web_view);
         //---------------------發出請求------------------------------------------------------------
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
@@ -49,6 +54,12 @@ public class Frag1 extends Fragment {
         giveBi.setOnClickListener(giveBi_listener);
         myTrans.setOnClickListener(myTrans_listener);
         exchange.setOnClickListener(exchange_listener);
+
+        webView.loadUrl("https://www.happybi.com.tw/slider.html");
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+
 
         //----------------------------------------------------------------------------------------------------------------------------------------------------
 
