@@ -2,32 +2,29 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.ui.main.SectionsPagerAdapter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TabActivity extends AppCompatActivity {
     //-----------------全域變數-----------------------------------------------------------------------------------------------------------------------
-    EditText person_name;
+    BottomNavigationView bottomNav;
 
     //----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -39,16 +36,38 @@ public class TabActivity extends AppCompatActivity {
         String url="https://www.happybi.com.tw/api/auth/me";
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-        new myJsonObjectRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
         //-----------------初始設定----------------------------------------------------------------
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
 
+        bottomNav=findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Frag1()).commit();
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener=
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment selectedFragment=null;
+                    switch (menuItem.getItemId()){
+                        case R.id.nav_home:
+                            selectedFragment=new Frag1();
+                            break;
+                        case R.id.nav_event:
+                            selectedFragment=new Frag2();
+                            break;
+                        case R.id.nav_myAccount:
+                            selectedFragment=new Frag3();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+                    return true;
+                }
+            };
+
+
+
     @Override
     public  void onBackPressed(){
 //        getSharedPreferences("preFile",MODE_PRIVATE).edit().remove("access_token").commit();
@@ -68,12 +87,11 @@ public class TabActivity extends AppCompatActivity {
             new AlertDialog.Builder(TabActivity.this)
                     .setTitle("錯誤")
                     .setIcon(R.mipmap.ic_launcher)
-                    .setMessage(error.toString())
+                    .setMessage("連線逾時 請從新登入")
                     .show();
             getSharedPreferences("preFile",MODE_PRIVATE).edit().remove("access_token").commit();
-            Intent intent = new Intent();
-            intent.setClass(TabActivity.this,MainActivity.class);
-            startActivity(intent);
+
+            finish();
             //
         }
     };

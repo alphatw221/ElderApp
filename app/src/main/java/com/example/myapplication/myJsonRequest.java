@@ -7,29 +7,33 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class myJsonObjectRequest {
+public class myJsonRequest {
     private String _url;
     private String _mode; // get , post , put , delete
     private int _mode_int;
     private Object[] _key,_value;
     private JSONObject _jsonObject;
+    private JSONArray _jsonArray;
     private Context _context;
     private Response.Listener<JSONObject> _RL;
+    private Response.Listener<JSONArray> _RL_JA;
     private Response.ErrorListener _REL;
     private RequestQueue _queue;
 
-    public myJsonObjectRequest(){
+    public myJsonRequest(){
 
     }
-    public myJsonObjectRequest(String url,String mode,Context context,Response.Listener<JSONObject> RL,Response.ErrorListener REL){
+    public myJsonRequest(String url, String mode, Context context, Response.Listener<JSONObject> RL, Response.ErrorListener REL){
         _url=url;
         _mode=mode;
         _RL=RL;
@@ -38,7 +42,16 @@ public class myJsonObjectRequest {
         _queue = MySingleton.getInstance(_context).getRequestQueue();
         get_mode();
     }
-    public myJsonObjectRequest(String url,String mode,Object[] key,Object[] value,Context context,Response.Listener<JSONObject> RL,Response.ErrorListener REL){
+    public myJsonRequest(String url, String mode, Context context, Response.Listener<JSONArray> RL_JA, Response.ErrorListener REL,int tf){
+        _url=url;
+        _mode=mode;
+        _RL_JA=RL_JA;
+        _REL=REL;
+        _context=context;
+        _queue = MySingleton.getInstance(_context).getRequestQueue();
+        get_mode();
+    }
+    public myJsonRequest(String url, String mode, Object[] key, Object[] value, Context context, Response.Listener<JSONObject> RL, Response.ErrorListener REL){
         _url=url;
         _mode=mode;
         _key=key;
@@ -62,6 +75,9 @@ public class myJsonObjectRequest {
 
         }
     }
+    private void get_JSONArray(){
+
+    }
     private void get_mode(){
         if(_mode.equals("post")){
             _mode_int=1;
@@ -84,6 +100,18 @@ public class myJsonObjectRequest {
             }
         };
         _queue.add(jsonObjectRequest);
+    }
+    public void Fire2(){
+        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(_mode_int,_url,null,_RL_JA,_REL){
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        _queue.add(jsonArrayRequest);
     }
 
 }

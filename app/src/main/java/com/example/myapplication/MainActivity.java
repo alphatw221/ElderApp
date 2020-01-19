@@ -2,117 +2,119 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class MainActivity extends AppCompatActivity {
     //-----------------全域變數-----------------------------------------------------------------------------------------------------------------------
-    private Button login,signup;
-    private TextView account,password;
     private SharedPreferences preference;
-    private Context context;
+    private User user;
     //----------------------------------------------------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //------------檢查token----------------------------------------------------------------------------------------------------------------------------
+
         preference=getSharedPreferences("preFile",MODE_PRIVATE);
-        try{
-            if(preference.contains("access_token")){
-                Intent intent = new Intent();
-//                intent.setClass(MainActivity.this,MainPageActivity.class);
-                intent.setClass(MainActivity.this,TabActivity.class);
+        new Handler().postDelayed(new Runnable() {
 
-                startActivity(intent);
-            }
-        }catch (Exception e){
 
-        }
+            @Override
 
-        //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
-        login=(Button)findViewById(R.id.button1);
-        signup=(Button) findViewById(R.id.button2);
-        account=(TextView)findViewById(R.id.editText1);
-        password=(TextView)findViewById(R.id.editText2);
-        //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-        context=this.getApplicationContext();
-        login.setOnClickListener(login_listener);
-        signup.setOnClickListener(signup_listener);
-    }
-//-------------------登入按鈕Listener---------------------------------------------------------------------------------------------------------------------
-    private  Button.OnClickListener login_listener =new Button.OnClickListener(){     //登入按鈕
-        @Override
-        public void onClick(View v) {
-            Object[] key=new Object[]{"email","password"};
-            Object[] value=new Object[]{account.getText().toString(),password.getText().toString()};
-            String url = "https://www.happybi.com.tw/api/auth/login";
-            //---------------------回報Listener------------------------------------------------------------
-            Response.Listener<JSONObject> RL=new Response.Listener<JSONObject>(){
-                @Override
-                public void onResponse(JSONObject response) {
-                    if(response.has("access_token")){
-                        try{
-                            preference.edit().putString("access_token",response.getString("access_token")).commit();
-                        }catch (JSONException e){
+            public void run() {
+                //------------檢查版本----------------------------------------------------------------------------------------------------------------------------
 
-                        }
+                //------------檢查token----------------------------------------------------------------------------------------------------------------------------
+                try{
+                    if(preference.contains("access_token")){
+                        check_token_expire();
+                    }else{
                         Intent intent = new Intent();
-//                        intent.setClass(MainActivity.this,MainPageActivity.class);
-                        intent.setClass(MainActivity.this,TabActivity.class);
+                        intent.setClass(MainActivity.this,LoginActivity.class);
                         startActivity(intent);
-
+                        finish();
                     }
+                }catch (Exception e){
 
                 }
-            };
-            //---------------------錯誤回報Listener------------------------------------------------------------
-            Response.ErrorListener REL=new Response.ErrorListener(){
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("錯誤")
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setMessage(error.toString())
-                            .show();
-                }
-            };
-            //---------------------執行請求------------------------------------------------------------
-            new myJsonObjectRequest(url,"post",key,value,context,RL,REL).Fire();
+
+            }
+
+        }, 2*1000); // wait for 5 seconds
+
+
+
+    }
+
+    private boolean check_token_expire(){
+        //---------------------發出請求------------------------------------------------------------
+        String url="https://www.happybi.com.tw/api/auth/me";
+        Object[] key=new Object[]{"token"};
+        Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
+        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+      return true;
+    };
+    //---------------------回報Listener------------------------------------------------------------
+    private  Response.Listener RL=new Response.Listener<JSONObject>(){
+        @Override
+        public void onResponse(JSONObject response) {
+            try{
+                user=new User();
+                user.user_id=response.getInt("user_id");
+                user.id_code=response.getString("id_code");
+                user.email=response.getString("email");
+                user.name=response.getString("name");
+                user.wallet= response.getInt("wallet");
+                user.rank=response.getInt("rank");
+            }catch (JSONException e)
+            {
+
+            }
+
+
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this,myAccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra("User",user);
+
+            Intent intent1=new Intent();
+            intent1.setClass(MainActivity.this,EventActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent1.putExtra("User",user);
+
+            Intent intent2=new Intent();
+            intent2.setClass(MainActivity.this,HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent2.putExtra("User",user);
+
+            startActivity(intent);
+            startActivity(intent1);
+            startActivity(intent2);
+            finish();
         }
     };
-//-----------------註冊按鈕Listener-----------------------------------------------------------------------------------------------------------------------
-    private  Button.OnClickListener signup_listener =new Button.OnClickListener(){      //註冊按鈕
-
-
+    //---------------------錯誤回報Listener------------------------------------------------------------
+    private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
-        public void onClick(View v) {
+        public void onErrorResponse(VolleyError error) {
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this,RegistrationActivity.class);
+            intent.setClass(MainActivity.this,LoginActivity.class);
             startActivity(intent);
+            finish();
+            //
         }
     };
 }
-//----------------------------------------------------------------------------------------------------------------------------------------
+

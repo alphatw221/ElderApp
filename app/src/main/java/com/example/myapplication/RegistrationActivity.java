@@ -135,7 +135,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 Object[] value=new Object[]{idCode.getText().toString(),name.getText().toString(),account.getText().toString(),
                         PW.getText().toString(),gender_int,birthday_Date,cellPhone.getText().toString(),phone.getText().toString(),
                         address.getText().toString(),District_Spinner.getSelectedItemPosition(),District_Spinner.getSelectedItem().toString()};
-                //---------------------錯誤回報Listener------------------------------------------------------------
+                //---------------------回報Listener------------------------------------------------------------
                 Response.Listener<JSONObject> RL=new Response.Listener<JSONObject>(){
                         @Override
                         public void onResponse(JSONObject response) {
@@ -146,8 +146,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 }
                                 Intent intent = new Intent();
-                                intent.setClass(RegistrationActivity.this,MainPageActivity.class);
+                                intent.setClass(RegistrationActivity.this,HomeActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                     };
@@ -164,7 +165,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     };
                 //----------------------執行請求----------------------------------------------------------------
-                new myJsonObjectRequest(url,"post",key,value,context,RL,REL).Fire(); }
+                new myJsonRequest(url,"post",key,value,context,RL,REL).Fire(); }
         }
         //---------------------驗證副程式------------------------------------------------------------
         private boolean verification(){
@@ -219,6 +220,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Intent intent = new Intent();
             intent.setClass(RegistrationActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
     };
 }

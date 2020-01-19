@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FF6D00">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_input_delete" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFAB00">
+
+        <Button
+            android:id="@+id/_market_product"
+            android:layout_width="155dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="48dp"
+            android:layout_marginLeft="48dp"
+            android:background="#00FFFFFF"
+            android:text="商品"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/_market_myProduct"
+            android:layout_width="152dp"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:text="已兌換"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/_market_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>

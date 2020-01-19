@@ -4,16 +4,42 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_red_light">
+        android:background="#FFAB00"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="#FF6D00">
+
+            <TextView
+                android:id="@+id/_home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp"
+                android:background="#00FF6D00"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:fontFamily="cursive"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="銀髮社群" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -21,21 +47,33 @@
 
             <ImageView
                 android:id="@+id/_name_icon"
-                android:layout_width="15dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/member" />
 
             <TextView
                 android:id="@+id/_person_name"
-                android:layout_width="wrap_content"
+                android:layout_width="262dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textSize="36sp" />
-        </LinearLayout>
+                android:textSize="36sp"
+                app:layout_constraintStart_toEndOf="@+id/_name_icon"
+                app:layout_constraintTop_toTopOf="@+id/_name_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -43,21 +81,33 @@
 
             <ImageView
                 android:id="@+id/_happybi_icon"
-                android:layout_width="13dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/coin" />
 
             <TextView
                 android:id="@+id/_person_happybi"
-                android:layout_width="wrap_content"
+                android:layout_width="262dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textSize="36sp" />
-        </LinearLayout>
+                android:textSize="36sp"
+                app:layout_constraintStart_toEndOf="@+id/_happybi_icon"
+                app:layout_constraintTop_toTopOf="@+id/_happybi_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -65,64 +115,97 @@
 
             <ImageView
                 android:id="@+id/_rank_icon"
-                android:layout_width="14dp"
-                android:layout_height="match_parent"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/level" />
 
             <TextView
                 android:id="@+id/_person_rank"
-                android:layout_width="wrap_content"
+                android:layout_width="262dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_weight="1"
                 android:text="TextView"
-                android:textSize="36sp" />
-        </LinearLayout>
+                android:textSize="36sp"
+                app:layout_constraintStart_toEndOf="@+id/_rank_icon"
+                app:layout_constraintTop_toTopOf="@+id/_rank_icon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <WebView
             android:id="@+id/_web_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" >
 
-        <TableLayout
+
+        </WebView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow>
+            <ImageButton
+                android:id="@+id/_takeBi"
+                android:layout_width="182dp"
+                android:layout_height="186dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="52dp"
+                android:layout_weight="0.5"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/take" />
 
-                <Button
-                    android:id="@+id/_takeBi"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5"
-                    android:text="收樂幣" />
+            <ImageButton
+                android:id="@+id/_giveBi"
+                android:layout_width="179dp"
+                android:layout_height="184dp"
+                android:layout_weight="0.5"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toEndOf="@+id/_takeBi"
+                app:layout_constraintTop_toTopOf="@+id/_takeBi"
+                app:srcCompat="@drawable/give" />
 
-                <Button
-                    android:id="@+id/_giveBi"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:text="送樂幣" />
-            </TableRow>
 
-            <TableRow>
+            <ImageButton
+                android:id="@+id/_myTrans"
+                android:layout_width="180dp"
+                android:layout_height="185dp"
+                android:layout_weight="0.5"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="@+id/_takeBi"
+                app:layout_constraintTop_toBottomOf="@+id/_takeBi"
+                app:srcCompat="@drawable/trans" />
 
-                <Button
-                    android:id="@+id/_myTrans"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="0.5"
-                    android:text="我的帳簿" />
+            <ImageButton
+                android:id="@+id/_exchange"
+                android:layout_width="175dp"
+                android:layout_height="187dp"
+                android:layout_weight="0.5"
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toEndOf="@+id/_myTrans"
+                app:layout_constraintTop_toBottomOf="@+id/_giveBi"
+                app:srcCompat="@drawable/promo" />
 
-                <Button
-                    android:id="@+id/_exchange"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:text="兌換商品" />
-            </TableRow>
-        </TableLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
     </LinearLayout>

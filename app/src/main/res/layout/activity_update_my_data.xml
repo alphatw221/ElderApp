@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UpdateMyDataActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:text="修改個人資料"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/update32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/_update_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="test" />
+
+
+        <TextView
+            android:id="@+id/update26"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="手機" />
+
+        <EditText
+            android:id="@+id/_update_cellPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/update28"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="住家電話" />
+
+        <EditText
+            android:id="@+id/_update_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/update29"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="地址" />
+
+        <EditText
+            android:id="@+id/_update_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <TextView
+            android:id="@+id/update30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="身分證" />
+
+        <EditText
+            android:id="@+id/_update_idcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/_update_comfirm"
+                android:layout_width="261dp"
+                android:layout_height="69dp"
+                android:layout_marginTop="24dp"
+                android:background="#FFAB00"
+                android:text="確定修改"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/_update_cancel"
+                android:layout_width="257dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="8dp"
+                android:text="取消"
+                app:layout_constraintStart_toStartOf="@+id/_update_comfirm"
+                app:layout_constraintTop_toBottomOf="@+id/_update_comfirm" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

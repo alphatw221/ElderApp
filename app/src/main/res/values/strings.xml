@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">ElderApp beta</string>
     <string name="title_activity_bottom_tab">BottomTabActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
