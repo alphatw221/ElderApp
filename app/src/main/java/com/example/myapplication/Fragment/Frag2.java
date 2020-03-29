@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,10 +12,12 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.event_listview_adapter;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONArray;
 
@@ -34,7 +36,8 @@ public class Frag2 extends Fragment {
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         context=this.getContext();
         //---------------------發出請求------------------------------------------------------------
-        new myJsonRequest(url,"get",getActivity().getApplicationContext(),RL_JA,REL,0).Fire2();
+//        new myJsonRequest(url,"get",getActivity().getApplicationContext(),RL_JA,REL,0).Fire2();
+        myJsonRequest.GET_Request.getJSON_array(url,null,null,getActivity().getApplicationContext(),RL_JA,REL);
         //----------------------------------------------------------------------------------------------------------------------------------------------------
         return view;
     }

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Helper_Class;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.myapplication.Model_Class.Transaction_class;
+import com.example.myapplication.R;
 
 import org.json.JSONArray;
 
@@ -57,10 +60,10 @@ public class my_transaction_listview_adapter extends BaseAdapter {
 
 
         if(list.get(position).give_take==1){
-            transaction_amount.setText("+"+list.get(position).amount);
+            transaction_amount.setText("+"+Integer.toString(list.get(position).amount));
             transaction_amount.setTextColor(Color.GREEN);
         }else{
-            transaction_amount.setText("-"+list.get(position).amount);
+            transaction_amount.setText("-"+Integer.toString(list.get(position).amount));
             transaction_amount.setTextColor(Color.RED);
         }
 

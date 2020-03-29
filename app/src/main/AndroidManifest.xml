@@ -14,21 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".myAccountActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".EventActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".HomeActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".give_money_comfirm_Activity" />
-        <activity android:name=".give_money_Frag" />
-        <activity android:name=".take_money_Frag" />
-        <activity android:name=".TransactionActivity" />
-        <activity android:name=".UpdateMyDataActivity" />
+        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity android:name=".Activity.myAccountActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".Activity.EventActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".Activity.HomeActivity" android:launchMode="singleInstance"/>
+        <activity android:name=".Activity.give_money_comfirm_Activity" />
+        <activity android:name=".Fragment.give_money_Frag" />
+        <activity android:name=".Fragment.take_money_Frag" />
+        <activity android:name=".Activity.TransactionActivity" />
+        <activity android:name=".Activity.UpdateMyDataActivity" />
         <activity
-            android:name=".TabActivity"
+            android:name=".Activity.TabActivity"
             android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.RegistrationActivity" />
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

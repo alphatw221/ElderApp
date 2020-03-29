@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFAB00"
-    tools:context=".give_money_Frag">
+    tools:context=".Fragment.give_money_Frag">
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/_qrCodeScanner"

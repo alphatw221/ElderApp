@@ -1,24 +1,22 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Fragment.Frag1;
+import com.example.myapplication.Fragment.Frag2;
+import com.example.myapplication.Fragment.Frag3;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-
-import com.example.myapplication.ui.main.SectionsPagerAdapter;
 
 import org.json.JSONObject;
 
@@ -36,7 +34,8 @@ public class TabActivity extends AppCompatActivity {
         String url="https://www.happybi.com.tw/api/auth/me";
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+//        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+        myJsonRequest.POST_Request.getJSON_object(url,key,value,this.getApplicationContext(),RL,REL);
         //-----------------初始設定----------------------------------------------------------------
 
         bottomNav=findViewById(R.id.bottom_navigation);

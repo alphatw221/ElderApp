@@ -1,8 +1,7 @@
-package com.example.myapplication;
+package com.example.myapplication.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.myapplication.Helper_Class.QRCodeHelper;
+import com.example.myapplication.R;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 public class take_money_Frag extends Fragment {

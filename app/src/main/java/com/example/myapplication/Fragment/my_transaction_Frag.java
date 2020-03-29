@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +15,10 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Model_Class.User;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
+import com.example.myapplication.Helper_Class.my_transaction_listview_adapter;
 
 import org.json.JSONArray;
 
@@ -38,7 +42,7 @@ public class my_transaction_Frag extends Fragment {
         user=(User) getActivity().getIntent().getSerializableExtra("User");
         backButton.setOnClickListener(backListener);
         //---------------------發出請求------------------------------------------------------------
-        new myJsonRequest(url+user.user_id,"get",getActivity().getApplicationContext(),RL_JA,REL,0).Fire2();
+        myJsonRequest.GET_Request.getJSON_array(url+user.user_id,null,null,getActivity().getApplicationContext(),RL_JA,REL);
         //----------------------------------------------------------------------------------------------------------------------------------------------------
 
         return view;

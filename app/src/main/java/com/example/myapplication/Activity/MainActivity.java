@@ -1,20 +1,17 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Model_Class.User;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         check_token_expire();
                     }else{
                         Intent intent = new Intent();
-                        intent.setClass(MainActivity.this,LoginActivity.class);
+                        intent.setClass(MainActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -66,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         String url="https://www.happybi.com.tw/api/auth/me";
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
-      return true;
+//        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+        myJsonRequest.POST_Request.getJSON_object(url,key,value,this.getApplicationContext(),RL,REL);
+        return true;
+
     };
     //---------------------回報Listener------------------------------------------------------------
     private  Response.Listener RL=new Response.Listener<JSONObject>(){
@@ -88,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this,myAccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.setClass(MainActivity.this, myAccountActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent.putExtra("User",user);
 
             Intent intent1=new Intent();
-            intent1.setClass(MainActivity.this,EventActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent1.setClass(MainActivity.this, EventActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent1.putExtra("User",user);
 
             Intent intent2=new Intent();
-            intent2.setClass(MainActivity.this,HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent2.setClass(MainActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent2.putExtra("User",user);
 
             startActivity(intent);

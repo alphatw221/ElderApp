@@ -1,20 +1,19 @@
-package com.example.myapplication;
+package com.example.myapplication.Helper_Class;
 
 import android.app.AlertDialog;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.Model_Class.Product_class;
+import com.example.myapplication.Model_Class.Transaction_class;
+import com.example.myapplication.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class jasonList_2_objList {
     private static Context context;
@@ -24,6 +23,7 @@ public class jasonList_2_objList {
     public jasonList_2_objList(Context c){
         context=c;
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------------------
 
     public static List convert_2_Event_list(Context context,JSONArray jsonArray){
 
@@ -41,22 +41,6 @@ public class jasonList_2_objList {
         }
         return list;
     }
-    public static List convert_2_transaction_list(Context context,JSONArray jsonArray){
-        List<Transaction_class> list=new ArrayList();
-        for (int i=0;i<jsonArray.length();i++){
-            try{
-                list.add(convert_2_transaction(jsonArray.getJSONObject(i)));
-            }catch (JSONException e){
-                new AlertDialog.Builder(context)
-                        .setTitle("錯誤")
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setMessage(e.toString())
-                        .show();
-            }
-        }
-
-        return list;
-    };
 
     static private Event_class convert_2_event(JSONObject object){
         Event_class event_class=new Event_class();
@@ -88,6 +72,24 @@ public class jasonList_2_objList {
         }
         return event_class;
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static List convert_2_transaction_list(Context context,JSONArray jsonArray){
+        List<Transaction_class> list=new ArrayList();
+        for (int i=0;i<jsonArray.length();i++){
+            try{
+                list.add(convert_2_transaction(jsonArray.getJSONObject(i)));
+            }catch (JSONException e){
+                new AlertDialog.Builder(context)
+                        .setTitle("錯誤")
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setMessage(e.toString())
+                        .show();
+            }
+        }
+
+        return list;
+    };
 
     static private Transaction_class convert_2_transaction(JSONObject object){
         Transaction_class transaction_class=new Transaction_class();
@@ -112,6 +114,51 @@ public class jasonList_2_objList {
         }
         return transaction_class;
     };
+    //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static List convert_2_Product_list(Context context,JSONObject jsonObject){
+
+        List<Product_class> list=new ArrayList();
+        JSONArray jsonArray_products,jsonArray_cats=new JSONArray();
+        try{
+            jsonArray_products=jsonObject.getJSONArray("products");
+            jsonArray_cats=jsonObject.getJSONArray("cats");
+            for (int i=0;i<jsonArray_products.length();i++){
+                list.add(convert_2_product(jsonArray_products.getJSONObject(i)));
+
+            }
+        }catch (JSONException e){
+
+        }
+
+        return list;
+    }
+    static private Product_class convert_2_product(JSONObject object){
+        Product_class product_class=new Product_class();
+        try{
+            product_class.img=object.getString("img");
+            product_class.product_category_id=object.getInt("product_category_id");
+            product_class.name=object.getString("name");
+            product_class.price=object.getInt("price");
+            product_class.info=object.getString("info");
+            product_class.slug=object.getString("slug");
+            product_class._public=object.getInt("public");
+        }catch (JSONException e){
+            new AlertDialog.Builder(context)
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(e.toString())
+                    .show();
+        }
+        return product_class;
+    }
+
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 }

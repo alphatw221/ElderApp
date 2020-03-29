@@ -1,10 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONObject;
 
@@ -55,7 +56,8 @@ public class give_money_comfirm_Activity extends AppCompatActivity {
                     "",
                     amount
             };
-            new myJsonRequest(url,"post",key,value,app_context,RL,REL).Fire();
+//            new myJsonRequest(url,"post",key,value,app_context,RL,REL).Fire();
+            myJsonRequest.POST_Request.getJSON_object(url,key,value,app_context,RL,REL);
         }
     };
     //---------------------取消支付按紐Listener------------------------------------------------------------

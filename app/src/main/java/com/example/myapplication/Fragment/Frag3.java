@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,6 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Activity.MainActivity;
+import com.example.myapplication.R;
+import com.example.myapplication.Activity.UpdateMyDataActivity;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +59,8 @@ public class Frag3 extends Fragment {
         //---------------------發出請求------------------------------------------------------------
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-        new myJsonRequest(url,"post",key,value,getActivity().getApplicationContext(),RL,REL).Fire();
+//        new myJsonRequest(url,"post",key,value,getActivity().getApplicationContext(),RL,REL).Fire();
+        myJsonRequest.POST_Request.getJSON_object(url,key,value,getActivity().getApplicationContext(),RL,REL);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         myAccount_logout.setOnClickListener(logout_listener);
         myAccount_agrement.setOnClickListener(agreement_listener);
@@ -106,7 +111,7 @@ public class Frag3 extends Fragment {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.setClass(context,UpdateMyDataActivity.class);
+            intent.setClass(context, UpdateMyDataActivity.class);
             startActivity(intent);
             getActivity().finish();
         }
@@ -131,7 +136,7 @@ public class Frag3 extends Fragment {
         public void onClick(View v) {
             preferences.edit().remove("access_token").commit();
             Intent intent = new Intent();
-            intent.setClass(context,MainActivity.class);
+            intent.setClass(context, MainActivity.class);
             startActivity(intent);
             getActivity().finish();
         }

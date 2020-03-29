@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,7 +148,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 }
                                 Intent intent = new Intent();
-                                intent.setClass(RegistrationActivity.this,HomeActivity.class);
+                                intent.setClass(RegistrationActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -165,7 +167,10 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     };
                 //----------------------執行請求----------------------------------------------------------------
-                new myJsonRequest(url,"post",key,value,context,RL,REL).Fire(); }
+//                new myJsonRequest(url,"post",key,value,context,RL,REL).Fire();
+                    myJsonRequest.POST_Request.getJSON_object(url,key,value,context,RL,REL);
+            }
+
         }
         //---------------------驗證副程式------------------------------------------------------------
         private boolean verification(){
@@ -218,7 +223,7 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.setClass(RegistrationActivity.this,MainActivity.class);
+            intent.setClass(RegistrationActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Model_Class.User;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
             String url = "https://www.happybi.com.tw/api/auth/login";
 
             //---------------------執行請求------------------------------------------------------------
-            new myJsonRequest(url,"post",key,value,context,RL,REL).Fire();
+//            new myJsonRequest(url,"post",key,value,context,RL,REL).Fire();
+            myJsonRequest.POST_Request.getJSON_object(url,key,value,context,RL,REL);
         }
     };
     //-----------------註冊按鈕Listener-----------------------------------------------------------------------------------------------------------------------
@@ -59,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.setClass(LoginActivity.this,RegistrationActivity.class);
+            intent.setClass(LoginActivity.this, RegistrationActivity.class);
             startActivity(intent);
         }
     };
@@ -85,13 +89,13 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 Intent intent = new Intent();
-                intent.setClass(LoginActivity.this,HomeActivity.class);
+                intent.setClass(LoginActivity.this, HomeActivity.class);
                 intent.putExtra("User",user);
                 startActivity(intent);
-                intent.setClass(LoginActivity.this,EventActivity.class);
+                intent.setClass(LoginActivity.this, EventActivity.class);
                 intent.putExtra("User",user);
                 startActivity(intent);
-                intent.setClass(LoginActivity.this,myAccountActivity.class);
+                intent.setClass(LoginActivity.this, myAccountActivity.class);
                 intent.putExtra("User",user);
                 startActivity(intent);
                 finish();

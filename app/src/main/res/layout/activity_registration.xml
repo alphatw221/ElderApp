@@ -10,7 +10,7 @@
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".RegistrationActivity"
+    tools:context=".Activity.RegistrationActivity"
     android:fillViewport="true"
     app:layout_constraintBottom_toTopOf="@+id/_return"
 

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.R;
+import com.example.myapplication.Helper_Class.myJsonRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,8 @@ public class UpdateMyDataActivity extends AppCompatActivity {
         String url="https://www.happybi.com.tw/api/auth/myAccount";
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+//        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
+        myJsonRequest.POST_Request.getJSON_object(url,key,value,this.getApplicationContext(),RL,REL);
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
         update_name=(EditText)findViewById(R.id._update_name);
         update_cellPhone=(EditText)findViewById(R.id._update_cellPhone);
@@ -74,7 +77,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
                     .setMessage("系統錯誤")
                     .show();
             Intent intent = new Intent();
-            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
+            intent.setClass(UpdateMyDataActivity.this, TabActivity.class);
             startActivity(intent);
             finish();
             //
@@ -93,7 +96,8 @@ public class UpdateMyDataActivity extends AppCompatActivity {
             update_tel.getText().toString(),
             update_address.getText().toString(),
             update_idcode.getText().toString()};
-            new myJsonRequest(url,"post",key,value,context,RL2,REL2).Fire();
+//            new myJsonRequest(url,"post",key,value,context,RL2,REL2).Fire();
+            myJsonRequest.POST_Request.getJSON_object(url,key,value,context,RL2,REL2);
         }
     };
 

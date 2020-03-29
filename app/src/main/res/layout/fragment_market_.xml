@@ -12,6 +12,7 @@
         android:background="#FF6D00">
 
         <ImageButton
+            android:id="@+id/_market_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00FFFFFF"

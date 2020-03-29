@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Helper_Class;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
