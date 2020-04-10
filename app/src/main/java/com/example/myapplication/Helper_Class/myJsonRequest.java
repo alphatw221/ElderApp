@@ -2,10 +2,13 @@ package com.example.myapplication.Helper_Class;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -178,6 +181,29 @@ public class myJsonRequest {
         private static Object[] _key,_value;
         private static JSONObject _jsonObject;
         private static JSONArray _jsonArray;
+
+        public static void get_string(String url,Object[] key, Object[] value, Context context, Response.Listener<String> RL, Response.ErrorListener REL){
+            _key=key;
+            _value=value;
+            get_JSONObject();
+            StringRequest stringRequest=new StringRequest(1,url,RL,REL){
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+        }
+
+
+
+
+
+
+
+
 
         public static void getJSON_array(String url, Object[] key, Object[] value, Context context, Response.Listener<JSONArray> RL, Response.ErrorListener REL){
 

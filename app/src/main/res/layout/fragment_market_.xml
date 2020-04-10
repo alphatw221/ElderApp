@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="48dp"
             android:layout_marginLeft="48dp"
-            android:background="#00FFFFFF"
+            android:background="#FF6D00"
             android:text="商品"
             android:textStyle="bold" />
 

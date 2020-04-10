@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.myapplication.Helper_Class.QRCodeHelper;
+import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
@@ -22,16 +23,20 @@ public class take_money_Frag extends Fragment {
     private ImageView take_money_qrcode;
     private Context context;
     private ImageButton take_money_back;
+    private User user;
+    public void setUser(User u){user=u;}
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         context=this.getContext();
         View view= inflater.inflate(R.layout.frag_take_money_,container,false);
         take_money_qrcode=(ImageView)view.findViewById(R.id._take_money_qrcode);
-        String string="I love you";
+
+
+        String text=user.user_id+","+user.name+","+user.email;
         Bitmap bitmap = QRCodeHelper
             .newInstance(context)
-            .setContent(string)
+            .setContent(text)
             .setErrorCorrectionLevel(ErrorCorrectionLevel.Q)
             .setMargin(2)
             .getQRCOde();

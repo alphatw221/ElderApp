@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
 
@@ -34,6 +35,13 @@ public class Frag1 extends Fragment {
     private WebView webView;
     private Context context;
     private String url="https://www.happybi.com.tw/api/auth/me";
+    private User user;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,7 +113,9 @@ public class Frag1 extends Fragment {
                 fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("take_money")).commit();
             } else {
                 //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new take_money_Frag(), "take_money").commit();
+                take_money_Frag take_money_frag=new take_money_Frag();
+                take_money_frag.setUser(user);
+                fragmentManager.beginTransaction().add(R.id.home_fragment_container, take_money_frag, "take_money").commit();
             }
             if(fragmentManager.findFragmentByTag("frag1") != null){
                 //if the other fragment is visible, hide it.
@@ -172,4 +182,8 @@ public class Frag1 extends Fragment {
             }
         }
     };
+
+    public void setUser(User u){
+        user=u;
+    }
 }

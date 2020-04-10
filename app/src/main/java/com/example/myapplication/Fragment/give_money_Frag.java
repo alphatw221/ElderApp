@@ -1,6 +1,8 @@
 package com.example.myapplication.Fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +22,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 
@@ -27,7 +32,7 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
 
     private ImageButton backButton;
     private ZXingScannerView qrScanner;
-
+    private Context context;
 
 
     @Override
@@ -37,7 +42,7 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
         qrScanner=view.findViewById(R.id._qrCodeScanner);
         backButton = view.findViewById(R.id._give_money_back);
         backButton.setOnClickListener(backListener);
-
+        context=this.getContext();
         return view;
     }
 
@@ -108,5 +113,23 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
     @Override
     public void handleResult(Result rawResult) {
 
+        String[] a=rawResult.getText().split(",");
+        Map<String,String> parameters=new HashMap<String, String>(){
+
+        };
+
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
+        if(fragmentManager.findFragmentByTag("frag1") != null) {
+            //if the fragment exists, show it.
+            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
+        } else {
+            //if the fragment does not exist, add it to fragment manager.
+            fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
+        }
+        if(fragmentManager.findFragmentByTag("take_money") != null){
+            //if the other fragment is visible, hide it.
+            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("take_money")).commit();
+        }
     }
 }

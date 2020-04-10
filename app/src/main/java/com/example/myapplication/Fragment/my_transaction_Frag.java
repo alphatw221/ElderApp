@@ -41,6 +41,7 @@ public class my_transaction_Frag extends Fragment {
         context=this.getContext();
         user=(User) getActivity().getIntent().getSerializableExtra("User");
         backButton.setOnClickListener(backListener);
+        my_transaction_listview.setOnItemClickListener(null);
         //---------------------發出請求------------------------------------------------------------
         myJsonRequest.GET_Request.getJSON_array(url+user.user_id,null,null,getActivity().getApplicationContext(),RL_JA,REL);
         //----------------------------------------------------------------------------------------------------------------------------------------------------

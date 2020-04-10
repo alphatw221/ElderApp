@@ -2,6 +2,7 @@ package com.example.myapplication.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.myapplication.Fragment.Frag1;
+import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,7 +33,11 @@ public class HomeActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
         } else {
             //if the fragment does not exist, add it to fragment manager.
-            fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
+            Bundle bundle=getIntent().getExtras();
+            User user=(User)bundle.get("User");
+            Frag1 frag1=new Frag1();
+            frag1.setUser(user);
+            fragmentManager.beginTransaction().add(R.id.home_fragment_container, frag1, "frag1").commit();
         }
 
     }

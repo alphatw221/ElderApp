@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 
 import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.Model_Class.LocationQuantity_class;
+import com.example.myapplication.Model_Class.Location_class;
+import com.example.myapplication.Model_Class.Order_class;
 import com.example.myapplication.Model_Class.Product_class;
 import com.example.myapplication.Model_Class.Transaction_class;
 import com.example.myapplication.R;
@@ -156,9 +159,115 @@ public class jasonList_2_objList {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public static List convert_2_Location_list(Context context,JSONArray jsonArray)
+    {
+        List<Location_class> list=new ArrayList();
+        try{
+
+            for (int i=0;i<jsonArray.length();i++){
+                list.add(convert_2_loccation(jsonArray.getJSONObject(i)));
+
+            }
+        }catch (JSONException e){
+
+        }
+
+        return list;
+    }
+    private static Location_class convert_2_loccation(JSONObject object)
+    {
+        Location_class location_class=new Location_class();
+        try{
+            location_class.slug=object.getString("slug");
+            location_class.user_id=object.getInt("user_id");
+            location_class.id=object.getInt("id");
+            location_class.name=object.getString("name");
+            location_class.img=object.getString("img");
+            location_class.address=object.getString("address");
+            location_class.link=object.getString("link");
+        }catch (JSONException e){
+            new AlertDialog.Builder(context)
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(e.toString())
+                    .show();
+        }
+        return location_class;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static List convert_2_LocationQuantity_list(Context context,JSONArray jsonArray)
+    {
+        List<LocationQuantity_class> list=new ArrayList();
+        try{
+
+            for (int i=0;i<jsonArray.length();i++){
+                list.add(convert_2_LocationQuantity(jsonArray.getJSONObject(i)));
+
+            }
+        }catch (JSONException e){
+
+        }
+
+        return list;
+    }
+    private static LocationQuantity_class convert_2_LocationQuantity(JSONObject object)
+    {
+        LocationQuantity_class locationquantity_class=new LocationQuantity_class();
+        try{
+            locationquantity_class.product_id=object.getInt("product_id");
+            locationquantity_class.location_id=object.getInt("location_id");
+            locationquantity_class.quantity=object.getInt("quantity");
+        }catch (JSONException e){
+            new AlertDialog.Builder(context)
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(e.toString())
+                    .show();
+        }
+        return locationquantity_class;
+    }
 
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public static List convert_2_Order_list(Context context,JSONArray jsonArray)
+    {
+        List<Order_class> list=new ArrayList();
+        try{
 
+            for (int i=0;i<jsonArray.length();i++){
+                list.add(convert_2_order(jsonArray.getJSONObject(i)));
+
+            }
+        }catch (JSONException e){
+
+        }
+
+        return list;
+    }
+    private static Order_class convert_2_order(JSONObject object)
+    {
+        Order_class order_class=new Order_class();
+        try{
+            order_class.address=object.getString("address");
+            order_class.created_at=object.getString("created_at");
+            order_class.img=object.getString("img");
+            order_class.location=object.getString("location");
+            order_class.location_id=object.getInt("location_id");
+            order_class.product=object.getString("product");
+            order_class.receive=object.getInt("receive");
+            order_class.updated_at=object.getString("updated_at");
+
+        }catch (JSONException e){
+            new AlertDialog.Builder(context)
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(e.toString())
+                    .show();
+        }
+        return order_class;
+    }
 
 }

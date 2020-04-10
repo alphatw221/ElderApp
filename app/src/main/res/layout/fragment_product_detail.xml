@@ -4,19 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#00FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
+        android:background="#00FFFFFF"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/_product_detail_exchange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
+
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="#FF6D00"
@@ -34,36 +37,74 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+
+            android:fillViewport="true">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content"        android:background="#00FFFFFF"
+
                 android:orientation="vertical">
+
                 <ImageView
                     android:id="@+id/_product_detail_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content"        android:background="#00FFFFFF"
+
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/_product_detail_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"        android:background="#00FFFFFF"
+
                     android:text="TextView" />
 
                 <TextView
-                    android:id="@+id/_product_detail_price"
+                    android:id="@+id/_product_detail_price"        android:background="#00FFFFFF"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="TextView" />
+
+                <TextView        android:background="#00FFFFFF"
+
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="兌換據點：" />
+
+                <ListView
+                    android:id="@+id/_product_detail_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="#00FFFFFF"
+                    android:isScrollContainer="false" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="請選擇兌換地點"
+                    />
+
+                <Spinner
+                    android:id="@+id/_product_detail_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="#FFAB00" />
+
+                <TextView
+                    android:id="@+id/_product_detail_info"        android:background="#00FFFFFF"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView" />
 
-                <TextView
-                    android:id="@+id/_product_detail_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
 
             </LinearLayout>
+
         </ScrollView>
 
 
@@ -71,7 +112,7 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/_product_detail_exchange"
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:background="#FF6D00"
