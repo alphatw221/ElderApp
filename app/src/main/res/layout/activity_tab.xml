@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,17 +9,49 @@
     tools:context=".Activity.TabActivity"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/bottom_bavigation"></com.google.android.material.bottomnavigation.BottomNavigationView>
-</RelativeLayout>
+        android:layout_height="60dp"
+        android:background="#A19A83"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIconTintMode="src_in"
+        app:tabIndicatorColor="#FFC400"
+        app:tabIndicatorGravity="top"
+        app:tabInlineLabel="false"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="2dp"
+        app:tabPaddingTop="2dp"
+        app:tabSelectedTextColor="#FFC400"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small">
+
+        <!--<com.google.android.material.tabs.TabItem-->
+        <!--    android:layout_width="wrap_content"-->
+        <!--    android:layout_height="match_parent"-->
+        <!--    android:icon="@drawable/ic_baseline_house_24"-->
+        <!--    android:text="首頁"/>-->
+
+        <!--        <com.google.android.material.tabs.TabItem-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:icon="@drawable/ic_school_black_24dp"-->
+        <!--            android:text="活動"-->
+        <!--            />-->
+
+        <!--        <com.google.android.material.tabs.TabItem-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:icon="@drawable/ic_baseline_folder_shared_24"-->
+        <!--            android:text="我的帳戶"/>-->
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/_viewpager2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/_tab_layout"
+        app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

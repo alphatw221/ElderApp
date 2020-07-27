@@ -64,8 +64,8 @@ public class jasonList_2_objList {
             event_class.updated_at=object.getString("updated_at");
             event_class.slug=object.getString("slug");
             event_class.maximum=object.getInt("maximum");
-            event_class.people=object.getInt("people");
-            event_class.numberOfPeople=object.getInt("numberOfPeople");
+            event_class.people=object.getInt("people");                     //先不要用
+            event_class.numberOfPeople=object.getInt("numberOfPeople");     //改用這個
         }catch (JSONException e){
             new AlertDialog.Builder(context)
                     .setTitle("錯誤")

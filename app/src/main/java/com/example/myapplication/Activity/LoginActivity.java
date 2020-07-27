@@ -89,15 +89,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, HomeActivity.class);
+                intent.setClass(LoginActivity.this, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 intent.putExtra("User",user);
                 startActivity(intent);
-                intent.setClass(LoginActivity.this, EventActivity.class);
-                intent.putExtra("User",user);
-                startActivity(intent);
-                intent.setClass(LoginActivity.this, myAccountActivity.class);
-                intent.putExtra("User",user);
-                startActivity(intent);
+
+//                Intent intent = new Intent();
+//                intent.setClass(LoginActivity.this, HomeActivity.class);
+//                intent.putExtra("User",user);
+//                startActivity(intent);
+//                intent.setClass(LoginActivity.this, EventActivity.class);
+//                intent.putExtra("User",user);
+//                startActivity(intent);
+//                intent.setClass(LoginActivity.this, myAccountActivity.class);
+//                intent.putExtra("User",user);
+//                startActivity(intent);
                 finish();
 
             }
@@ -111,7 +116,8 @@ public class LoginActivity extends AppCompatActivity {
             new AlertDialog.Builder(LoginActivity.this)
                     .setTitle("錯誤")
                     .setIcon(R.mipmap.ic_launcher)
-                    .setMessage("登入失敗")
+//                    .setMessage("登入失敗")
+                    .setMessage(error.toString())
                     .show();
         }
     };

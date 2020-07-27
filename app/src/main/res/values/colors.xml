@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+<!--    <color name="colorPrimary">#008577</color>-->
+<!--    <color name="colorPrimaryDark">#00574B</color>-->
+<!--    <color name="colorAccent">#D81B60</color>-->
 
+    <color name="colorPrimary">#FFAB00</color>
+    <color name="colorPrimaryDark">#FF6D00</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="tabSelectedIconColor">#FFC400</color>
+    <color name="tabUnselectedIconColor">#ffffff</color>
     <color name="get_money_green">#18A048</color>
     <color name="give_money_red">#D32828</color>
     #00C853

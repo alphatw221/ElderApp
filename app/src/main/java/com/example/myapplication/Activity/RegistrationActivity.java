@@ -148,7 +148,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 }
                                 Intent intent = new Intent();
-                                intent.setClass(RegistrationActivity.this, HomeActivity.class);
+                                intent.setClass(RegistrationActivity.this, TabActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
