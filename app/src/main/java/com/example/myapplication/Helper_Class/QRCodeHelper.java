@@ -108,7 +108,7 @@ public class QRCodeHelper {
             for (int i = 0; i < mHeight; i++) {
                 for (int j = 0; j < mWidth; j++) {
                     if (bitMatrix.get(j, i)) {
-                        pixels[i * mWidth + j] = 0xFFFFFFFF;
+                        pixels[i * mWidth + j] = 0xff000000;
                     } else {
                         pixels[i * mWidth + j] = 0x282946;
                     }

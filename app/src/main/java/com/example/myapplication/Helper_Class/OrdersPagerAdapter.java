@@ -1,25 +1,40 @@
 package com.example.myapplication.Helper_Class;
 
+import android.app.AlertDialog;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.myapplication.Activity.TabActivity;
 import com.example.myapplication.Fragment.Frag1;
 import com.example.myapplication.Fragment.Frag2;
 import com.example.myapplication.Fragment.Frag3;
 import com.example.myapplication.Fragment.event_detial_Frag;
+import com.example.myapplication.Fragment.frag1_blank;
+import com.example.myapplication.Fragment.frag2_blank;
+import com.example.myapplication.Fragment.frag3_blank;
+import com.example.myapplication.Fragment.give_money_Frag;
+import com.example.myapplication.Fragment.market_Frag;
+import com.example.myapplication.Fragment.my_transaction_Frag;
+import com.example.myapplication.Fragment.take_money_Frag;
 import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.Model_Class.User;
+import com.example.myapplication.R;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 public class OrdersPagerAdapter extends FragmentStateAdapter {
     private Fragment Frag1,Frag2,Frag3;
-    private Frag2.change_frag2 c;
-    public OrdersPagerAdapter(@NonNull FragmentActivity fragmentActivity,Frag2.change_frag2 c) {
+    private List<Event_class> e;
+
+    public OrdersPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.c=c;
-        Frag1=new Frag1();
-        Frag2=new Frag2(c);
-        Frag3=new Frag3();
     }
 
     @NonNull
@@ -27,11 +42,11 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             default:
-                return Frag1;
+                return new frag1_blank();
             case 1:
-                return Frag2;
+                return new frag2_blank(e);
             case 2:
-                return Frag3;
+                return new frag3_blank();
 
         }
     }
@@ -41,7 +56,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
         return 3;
     }
 
-    public void change_frag2(Event_class e){
-        Frag2=new event_detial_Frag(e);
+    public void set_frag2(List<Event_class> e){
+        this.e=e;
     }
 }

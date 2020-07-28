@@ -10,8 +10,11 @@ import com.android.volley.VolleyError;
 import com.example.myapplication.Fragment.Frag1;
 import com.example.myapplication.Fragment.Frag2;
 import com.example.myapplication.Fragment.Frag3;
+import com.example.myapplication.Fragment.MyAdapter;
 import com.example.myapplication.Helper_Class.OrdersPagerAdapter;
+import com.example.myapplication.Helper_Class.jasonList_2_objList;
 import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
 import com.google.android.material.badge.BadgeDrawable;
@@ -28,85 +31,39 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.MenuItem;
 import android.widget.TableLayout;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class TabActivity extends AppCompatActivity implements Frag2.change_frag2{
+import java.util.List;
+
+public class TabActivity extends AppCompatActivity {
     //-----------------全域變數-----------------------------------------------------------------------------------------------------------------------
     private Context context;
     private OrdersPagerAdapter ordersPagerAdapter;
-    private Frag2.change_frag2 c=this;
     private ViewPager2 viewpager2;
     private TabLayout tabLayout;
+    private String url="https://www.happybi.com.tw/api/getEvents";
+    public static User user;
+
     //----------------------------------------------------------------------------------------------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
-        //---------------------發出請求------------------------------------------------------------
-        //-----------------初始設定----------------------------------------------------------------
+
+        user=(User)getIntent().getExtras().get("User");
         context=this.getApplicationContext();
         viewpager2 = findViewById(R.id._viewpager2);
-
-        ordersPagerAdapter=new OrdersPagerAdapter(this,c);
-        viewpager2.setAdapter(ordersPagerAdapter);
-
         tabLayout = findViewById(R.id._tab_layout);
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int tabIconColor = ContextCompat.getColor(context, R.color.tabSelectedIconColor);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-            }
+        ordersPagerAdapter=new OrdersPagerAdapter(this);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                int tabIconColor = ContextCompat.getColor(context, R.color.tabUnselectedIconColor);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-            }
+        //---------------------發出請求------------------------------------------------------------
+        myJsonRequest.GET_Request.getJSON_array(url,null,null,context,RL_JA,REL);
+        //-----------------初始設定----------------------------------------------------------------
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
-        TabLayoutMediator tabLayoutMediator=new TabLayoutMediator(
-                tabLayout, viewpager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
-                    case 0:
-                        tab.setText("首頁");
-                        tab.setIcon(R.drawable.ic_baseline_house_24);
-//                        BadgeDrawable badgeDrawable1=tab.getOrCreateBadge();
-//                        badgeDrawable1.setBackgroundColor(ContextCompat.getColor(context,R.color.get_money_green));
-//                        badgeDrawable1.setVisible(true);
-//                        badgeDrawable1.setNumber(12);
-
-                        break;
-                    case 1:
-                        tab.setText("活動");
-                        tab.setIcon(R.drawable.ic_school_black_24dp);
-//                        BadgeDrawable badgeDrawable=tab.getOrCreateBadge();
-//                        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
-//                        badgeDrawable.setVisible(true);
-//                        badgeDrawable.setNumber(12);
-                        break;
-
-                    case 2:
-                        tab.setText("我的帳戶");
-                        tab.setIcon(R.drawable.ic_folder_shared_black_24dp);
-//                        BadgeDrawable badgeDrawable=tab.getOrCreateBadge();
-//                        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
-//                        badgeDrawable.setVisible(true);
-//                        badgeDrawable.setNumber(12);
-                        break;
-                }
-            }
-        }
-        );
-        tabLayoutMediator.attach();
     }
 
 
@@ -119,9 +76,69 @@ public class TabActivity extends AppCompatActivity implements Frag2.change_frag2
 
 
     //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL=new Response.Listener<JSONObject>(){
+    private  Response.Listener RL_JA=new Response.Listener<JSONArray>(){
         @Override
-        public void onResponse(JSONObject response) {
+        public void onResponse(JSONArray response) {
+
+            List<Event_class> myDataset= jasonList_2_objList.convert_2_Event_list(context,response);
+            ordersPagerAdapter.set_frag2(myDataset);
+            viewpager2.setAdapter(ordersPagerAdapter);
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    int tabIconColor = ContextCompat.getColor(context, R.color.tabSelectedIconColor);
+                    tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    int tabIconColor = ContextCompat.getColor(context, R.color.tabUnselectedIconColor);
+                    tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+            TabLayoutMediator tabLayoutMediator=new TabLayoutMediator(
+                    tabLayout, viewpager2, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    switch (position){
+                        case 0:
+                            tab.setText("首頁");
+                            tab.setIcon(R.drawable.ic_baseline_house_24);
+//                        BadgeDrawable badgeDrawable1=tab.getOrCreateBadge();
+//                        badgeDrawable1.setBackgroundColor(ContextCompat.getColor(context,R.color.get_money_green));
+//                        badgeDrawable1.setVisible(true);
+//                        badgeDrawable1.setNumber(12);
+
+                            break;
+                        case 1:
+                            tab.setText("活動");
+                            tab.setIcon(R.drawable.ic_school_black_24dp);
+//                        BadgeDrawable badgeDrawable=tab.getOrCreateBadge();
+//                        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
+//                        badgeDrawable.setVisible(true);
+//                        badgeDrawable.setNumber(12);
+                            break;
+
+                        case 2:
+                            tab.setText("我的帳戶");
+                            tab.setIcon(R.drawable.ic_folder_shared_black_24dp);
+//                        BadgeDrawable badgeDrawable=tab.getOrCreateBadge();
+//                        badgeDrawable.setBackgroundColor(ContextCompat.getColor(context,R.color.colorAccent));
+//                        badgeDrawable.setVisible(true);
+//                        badgeDrawable.setNumber(12);
+                            break;
+                    }
+                }
+            }
+            );
+            tabLayoutMediator.attach();
+
         }
     };
     //---------------------錯誤回報Listener------------------------------------------------------------
@@ -140,10 +157,5 @@ public class TabActivity extends AppCompatActivity implements Frag2.change_frag2
         }
     };
 
-    @Override
-    public void Change_frag2(Event_class event_class) {
-        ordersPagerAdapter.change_frag2(event_class);
-        viewpager2.setAdapter(ordersPagerAdapter);
-        viewpager2.setCurrentItem(1);
-    }
+
 }

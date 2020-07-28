@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,20 +108,24 @@ public class market_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("frag1") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("Frag1");
+            Fragment fragment2=FM.findFragmentByTag("market_Frag");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.remove(fragment2);
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+                    FT.remove(fragment2);
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+
             }
-            if(fragmentManager.findFragmentByTag("market") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("market")).commit();
-//                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("give_money")).commit();
-            }
+            FT.commit();
         }
     };
     //---------------------------------------listview_click Listener---------------------------------------------------
@@ -133,19 +138,7 @@ public class market_Frag extends Fragment {
             Object object=parent.getItemAtPosition(position);
             Product_class product_class=(Product_class)object;
 
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-            if(fragmentManager.findFragmentByTag("product_detail") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("product_detail")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new product_detail_Frag(product_class), "product_detail").commit();
-            }
-            if(fragmentManager.findFragmentByTag("market") != null){
-                //if the other fragment is visible, hide it.
-//                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("market")).commit();
-                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("market")).commit();
-            }
+
         }
 
     };
@@ -174,6 +167,8 @@ public class market_Frag extends Fragment {
                     market_myProduct.setBackgroundColor(Color.parseColor("#FF6D00"));
                     market_product.setOnClickListener(button_listener);
                     market_listView.setOnItemClickListener(null);
+
+
 
                     String url2="https://www.happybi.com.tw/api/my-order-list";
                     JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(0, url2, null, new Response.Listener<JSONArray>() {

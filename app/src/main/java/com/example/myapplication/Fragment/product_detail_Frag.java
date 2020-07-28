@@ -223,20 +223,7 @@ public class product_detail_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("market") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("market")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new market_Frag(), "market").commit();
-            }
-            if(fragmentManager.findFragmentByTag("product_detail") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("product_detail")).commit();
-//                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("give_money")).commit();
-            }
+            
         }
     };
 

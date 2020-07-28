@@ -47,5 +47,6 @@
     <ListView
         android:id="@+id/_market_listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:background="#FF9100"></ListView>
 </LinearLayout>

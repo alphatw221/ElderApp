@@ -10,16 +10,21 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Activity.TabActivity;
+import com.example.myapplication.Model_Class.Event_class;
 import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
@@ -36,11 +41,13 @@ public class Frag1 extends Fragment {
     private Context context;
     private String url="https://www.happybi.com.tw/api/auth/me";
     private User user;
+    private FrameLayout frameLayout;
+    public ScrollView frag1_base;
+    public Frag1() {          //Frag1建構子
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        this.user= TabActivity.user;
     }
+
 
     @Nullable
     @Override
@@ -55,16 +62,18 @@ public class Frag1 extends Fragment {
         myTrans=(ImageButton)view.findViewById(R.id._myTrans);
         exchange=(ImageButton)view.findViewById(R.id._exchange);
         webView=(WebView)view.findViewById(R.id._web_view);
+        frag1_base=(ScrollView)view.findViewById(R.id._frag1_base);
+        frameLayout=view.findViewById(R.id._frag1_fragment);
         //---------------------發出請求------------------------------------------------------------
-        Object[] key=new Object[]{"token"};
-        Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-//        new myJsonRequest(url,"post",key,value,getActivity().getApplicationContext(),RL,REL).Fire();
-        myJsonRequest.POST_Request.getJSON_object(url,key,value,getActivity().getApplicationContext(),RL,REL);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         takeBi.setOnClickListener(takeBi_listener);
         giveBi.setOnClickListener(giveBi_listener);
         myTrans.setOnClickListener(myTrans_listener);
         exchange.setOnClickListener(exchange_listener);
+
+        person_name.setText("姓名:"+user.name);
+        person_happybi.setText("剩餘樂幣:"+user.wallet);
+        person_rank.setText("榮譽等級:"+user.rank);
 
         webView.loadUrl("https://www.happybi.com.tw/slider.html");
         WebSettings webSettings = webView.getSettings();
@@ -78,69 +87,54 @@ public class Frag1 extends Fragment {
         return view;
     }
 
-    //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL=new Response.Listener<JSONObject>(){
-        @Override
-        public void onResponse(JSONObject response) {
-                try{
-                    person_name.setText("姓名:"+response.getString("name"));
-                    person_happybi.setText("剩餘樂幣:"+response.getString("wallet"));
-                    person_rank.setText("榮譽等級:"+response.getString("rank"));
-                }catch (JSONException e){
 
-                }
-        }
-    };
-    //---------------------錯誤回報Listener------------------------------------------------------------
-    private Response.ErrorListener REL=new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("錯誤")
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setMessage(error.toString())
-                    .show();
-        }
-    };
+
     //-----------------收樂幣按鈕Listener-----------------------------------------------------------------------------------------------------------------------
-    private Button.OnClickListener takeBi_listener =new Button.OnClickListener(){
+    private Button.OnClickListener takeBi_listener =new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("take_money") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("take_money")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                take_money_Frag take_money_frag=new take_money_Frag();
-                take_money_frag.setUser(user);
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, take_money_frag, "take_money").commit();
-            }
-            if(fragmentManager.findFragmentByTag("frag1") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("frag1")).commit();
-            }
-        }
-    };
+//            getFragmentManager().beginTransaction().replace(R.id._frag1_fragment,new take_money_Frag(user),"take_money_Frag").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("take_money_Frag");
+            Fragment fragment2=FM.findFragmentByTag("Frag1");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "take_money_Frag");
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new take_money_Frag(user),"take_money_Frag");
 
+            }
+            FT.commit();
+        }
+
+        ;
+    };
     //-----------------送樂幣按鈕Listener-----------------------------------------------------------------------------------------------------------------------
     private Button.OnClickListener giveBi_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("give_money") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("give_money")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new give_money_Frag(), "give_money").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("give_money_Frag");
+            Fragment fragment2=FM.findFragmentByTag("Frag1");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new give_money_Frag(),"give_money_Frag");
             }
-            if(fragmentManager.findFragmentByTag("frag1") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("frag1")).commit();
-            }
+            FT.commit();
         }
     };
 
@@ -148,42 +142,50 @@ public class Frag1 extends Fragment {
     private Button.OnClickListener myTrans_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("myTrans") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("myTrans")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new my_transaction_Frag(), "myTrans").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("my_transaction_Frag");
+            Fragment fragment2=FM.findFragmentByTag("Frag1");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+
+                } else {
+                    FT.add(R.id._frag1_fragment, fragment, "my_transaction_Frag");
+
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new my_transaction_Frag(),"my_transaction_Frag");
             }
-            if(fragmentManager.findFragmentByTag("frag1") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("frag1")).commit();
-            }
+            FT.commit();
         }
     };
     //-----------------商品兌換按鈕Listener-----------------------------------------------------------------------------------------------------------------------
     private Button.OnClickListener exchange_listener =new Button.OnClickListener(){
+
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("market") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("market")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new market_Frag(), "market").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("market_Frag");
+            Fragment fragment2=FM.findFragmentByTag("Frag1");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
             }
-            if(fragmentManager.findFragmentByTag("frag1") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("frag1")).commit();
-            }
+            FT.commit();
         }
     };
 
     public void setUser(User u){
-        user=u;
+        this.user=u;
     }
 }

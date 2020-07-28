@@ -5,13 +5,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 
 import com.example.myapplication.R;
 import com.google.zxing.Result;
@@ -30,8 +36,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class give_money_Frag extends Fragment implements ZXingScannerView.ResultHandler {
 
-    private ImageButton backButton;
+    private ImageButton backButton,give_money_restart_btn;
     private ZXingScannerView qrScanner;
+    private ScrollView frag1_base;
     private Context context;
 
 
@@ -41,10 +48,14 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
         View view = inflater.inflate(R.layout.frag_give_money_, container, false);
         qrScanner=view.findViewById(R.id._qrCodeScanner);
         backButton = view.findViewById(R.id._give_money_back);
-        backButton.setOnClickListener(backListener);
+        give_money_restart_btn=view.findViewById(R.id._give_money_restart_btn);
+        backButton.setOnClickListener(btn_listener);
+        give_money_restart_btn.setOnClickListener(btn_listener);
         context=this.getContext();
+
         return view;
     }
+
 
 
 
@@ -52,7 +63,9 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
     public void onResume() {
         super.onResume();
         Dexter.withActivity(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
+        qrScanner.startCamera();
     }
+
 
     @Override
     public void onPause() {
@@ -63,30 +76,48 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        qrScanner.stopCamera();
-    }
 
-    private ImageButton.OnClickListener backListener = new ImageButton.OnClickListener() {
+
+
+
+
+    private ImageButton.OnClickListener btn_listener = new ImageButton.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("frag1") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
+//            frag1_base.setVisibility(View.VISIBLE);
+            switch (v.getId()){
+                case R.id._give_money_back:
+
+
+                    FragmentManager FM = getFragmentManager();
+                    FragmentTransaction FT = FM.beginTransaction();
+                    Fragment fragment=FM.findFragmentByTag("Frag1");
+                    Fragment fragment2=FM.findFragmentByTag("give_money_Frag");
+                    if ( fragment!=null) {
+                        if ( fragment.isAdded()) {
+                            FT.show(fragment);
+                            FT.remove(fragment2);
+                        } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                            FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+                            FT.remove(fragment2);
+                        }
+                    } else{
+                        FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+
+                    }
+                    FT.commit();
+//                    }
+
+                    break;
+                case R.id._give_money_restart_btn:
+                    Dexter.withActivity(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
+                    qrScanner.startCamera();
+                    break;
             }
-            if(fragmentManager.findFragmentByTag("give_money") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("give_money")).commit();
-//                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("give_money")).commit();
-            }
+
+
         }
     };
 
@@ -99,7 +130,30 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
 
         @Override
         public void onPermissionDenied(PermissionDeniedResponse response) {
+            //跳出提示：--------------------------------------
+            //
+            //
+            //
+            //
+            //-----------------------------------------------
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("Frag1");
+            Fragment fragment2=FM.findFragmentByTag("give_money_Frag");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.remove(fragment2);
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+                    FT.remove(fragment2);
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
 
+            }
+            FT.commit();
         }
 
         @Override
@@ -112,24 +166,12 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
 
     @Override
     public void handleResult(Result rawResult) {
-
+//        String text=user.user_id+","+user.name+","+user.email;
         String[] a=rawResult.getText().split(",");
-        Map<String,String> parameters=new HashMap<String, String>(){
+        getFragmentManager().beginTransaction().add(R.id._frag1_fragment,new give_money_comfirm_Frag(a[0],a[1],a[2]),"give_money_comfirm_Frag").commit();
+        Fragment fragment=getFragmentManager().findFragmentByTag("give_money_Frag");
 
-        };
+        getFragmentManager().beginTransaction().remove(fragment).commit();
 
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-        if(fragmentManager.findFragmentByTag("frag1") != null) {
-            //if the fragment exists, show it.
-            fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
-        } else {
-            //if the fragment does not exist, add it to fragment manager.
-            fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
-        }
-        if(fragmentManager.findFragmentByTag("take_money") != null){
-            //if the other fragment is visible, hide it.
-            fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("take_money")).commit();
-        }
     }
 }

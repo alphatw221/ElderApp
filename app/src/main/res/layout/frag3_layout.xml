@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFC400"
     android:fillViewport="true">
 
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,10 +31,11 @@
                 android:id="@+id/imageView3"
                 android:layout_width="115dp"
                 android:layout_height="103dp"
+                android:background="@drawable/img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView33"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@mipmap/user_default" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,10 +49,10 @@
             android:id="@+id/_myAccount_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="test" />
 
@@ -64,10 +66,10 @@
             android:id="@+id/_myAccount_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -81,10 +83,10 @@
             android:id="@+id/_myAccount_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -98,10 +100,10 @@
             android:id="@+id/_myAccount_birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -115,10 +117,10 @@
             android:id="@+id/_myAccount_cellPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -132,10 +134,10 @@
             android:id="@+id/_myAccount_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -149,10 +151,10 @@
             android:id="@+id/_myAccount_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -166,10 +168,10 @@
             android:id="@+id/_myAccount_idcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:focusable="false"
             android:clickable="false"
+            android:editable="false"
             android:ems="10"
+            android:focusable="false"
             android:inputType="textPersonName"
             android:text="Name" />
 
@@ -187,7 +189,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="155dp"/>
+            android:layout_height="155dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

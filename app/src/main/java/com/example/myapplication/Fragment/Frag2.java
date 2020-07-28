@@ -43,7 +43,7 @@ import java.util.List;
 public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
 
     private ListView event_listview;
-    private String url="https://www.happybi.com.tw/api/getEvents";
+
     private Context context;
     private event_listview_adapter eventlistviewadapter;
     private RecyclerView recyclerView;
@@ -51,7 +51,7 @@ public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
     private MyAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private LinearLayout event_search_layout;
-    private List<Event_class> myDataset;
+    public List<Event_class> myDataset;
     String[]categories={"所有類別","歡樂旅遊","樂活才藝","健康課程","社會服務","天使培訓","長照據點","大型活動"};
     String[]districts={"所有地區","桃園","中壢","平鎮","八德","龜山","蘆竹","大園","觀音","新屋","楊梅","龍潭","大溪","復興"};
     private Spinner event_category_spinner;
@@ -60,14 +60,10 @@ public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
     private boolean check_init=false;
     private boolean first_expand=false;
     private  MyAdapter.IMyOnClickListener THIS=this;
-    private change_frag2 c;
 
-    public Frag2(change_frag2 c) {          //Frag2建構子 傳入介面物件用的
-        this.c=c;
-    }
 
-    public interface change_frag2{          //宣告介面的藍圖
-        void Change_frag2(Event_class event_class);
+    public Frag2(List<Event_class> e) {
+        this.myDataset=e;
     }
 
     @Nullable
@@ -75,7 +71,7 @@ public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.frag2_layout,container,false);
         //---------------------發出請求------------------------------------------------------------
-        myJsonRequest.GET_Request.getJSON_array(url,null,null,getActivity().getApplicationContext(),RL_JA,REL);
+
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
 //        event_listview=(ListView)view.findViewById(R.id._event_listview);
 
@@ -115,7 +111,8 @@ public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-
+        mAdapter = new MyAdapter(myDataset,THIS);
+        recyclerView.setAdapter(mAdapter);
         //----------------------------------------------------------------------------------------------------------------------------------------------------
         return view;
     }
@@ -183,39 +180,35 @@ public class Frag2 extends Fragment implements MyAdapter.IMyOnClickListener{
         }
     };
 
-    //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL_JA=new Response.Listener<JSONArray>(){
-        @Override
-        public void onResponse(JSONArray response) {
-
-//            eventlistviewadapter =new event_listview_adapter(context,response);
-//            event_listview.setAdapter(eventlistviewadapter);
-            myDataset= jasonList_2_objList.convert_2_Event_list(context,response);
-            // specify an adapter (see also next example)
-            mAdapter = new MyAdapter(myDataset,THIS);
-            recyclerView.setAdapter(mAdapter);
-
-        }
-    };
-    //---------------------錯誤回報Listener------------------------------------------------------------
-    private Response.ErrorListener REL=new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("錯誤")
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setMessage(error.toString())
-                    .show();
-        }
-    };
+//    //---------------------回報Listener------------------------------------------------------------
+//    private  Response.Listener RL_JA=new Response.Listener<JSONArray>(){
+//        @Override
+//        public void onResponse(JSONArray response) {
+//
+//            myDataset= jasonList_2_objList.convert_2_Event_list(context,response);
+//            // specify an adapter (see also next example)
+//            mAdapter = new MyAdapter(myDataset,THIS);
+//            recyclerView.setAdapter(mAdapter);
+//
+//        }
+//    };
+//    //---------------------錯誤回報Listener------------------------------------------------------------
+//    private Response.ErrorListener REL=new Response.ErrorListener(){
+//        @Override
+//        public void onErrorResponse(VolleyError error) {
+//            new AlertDialog.Builder(getActivity())
+//                    .setTitle("錯誤")
+//                    .setIcon(R.mipmap.ic_launcher)
+//                    .setMessage(error.toString())
+//                    .show();
+//        }
+//    };
 
 
 //-------------------實作myOnClick介面------------------------------------------------------------------------------
     @Override
     public void myOnClick(int position) {
         Event_class event_class=myDataset.get(position);
-        c.Change_frag2(event_class);
-
     }
 }
 

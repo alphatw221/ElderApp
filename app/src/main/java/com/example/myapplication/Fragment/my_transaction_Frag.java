@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,20 +78,24 @@ public class my_transaction_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.home_fragment_container,new take_money_Frag()).commit();
-            if(fragmentManager.findFragmentByTag("frag1") != null) {
-                //if the fragment exists, show it.
-                fragmentManager.beginTransaction().show(fragmentManager.findFragmentByTag("frag1")).commit();
-            } else {
-                //if the fragment does not exist, add it to fragment manager.
-                fragmentManager.beginTransaction().add(R.id.home_fragment_container, new Frag1(), "frag1").commit();
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("Frag1");
+            Fragment fragment2=FM.findFragmentByTag("my_transaction_Frag");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.remove(fragment2);
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "my_transaction_Frag");
+                    FT.remove(fragment2);
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+
             }
-            if(fragmentManager.findFragmentByTag("myTrans") != null){
-                //if the other fragment is visible, hide it.
-                fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("myTrans")).commit();
-//                fragmentManager.beginTransaction().hide(fragmentManager.findFragmentByTag("give_money")).commit();
-            }
+            FT.commit();
         }
     };
 }

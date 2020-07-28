@@ -28,6 +28,9 @@ public class event_detial_Frag extends Fragment {
     private TextView event_detail_title,event_detail_time,event_detail_endtime,event_detail_body;
     private ImageView event_detail_image;
 
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

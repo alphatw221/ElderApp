@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF9100"
+    tools:context=".Activity.give_money_comfirm_Activity">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="209dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="50dp"
+        android:text="支付對象:"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/_give_money_comfirm_object"
+        android:layout_width="171dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="198dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:text="支付金額:"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/_give_money_comfirm_object"
+        app:layout_constraintTop_toBottomOf="@+id/_give_money_comfirm_object" />
+
+    <EditText
+        android:id="@+id/_give_money_comfirm_amount"
+        android:layout_width="212dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rectangle"
+        android:ems="10"
+        android:inputType="numberSigned"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView32"
+        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="203dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:text="留言:"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/_give_money_comfirm_amount"
+        app:layout_constraintTop_toBottomOf="@+id/_give_money_comfirm_amount" />
+
+    <EditText
+        android:id="@+id/_give_money_comfirm_message"
+        android:layout_width="206dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rectangle"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+    <Button
+        android:id="@+id/_give_money_comfirm_comfirm"
+        android:layout_width="211dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:background="#FFC400"
+        android:text="確定支付"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/_give_money_comfirm_message"
+        app:layout_constraintTop_toBottomOf="@+id/_give_money_comfirm_message" />
+
+    <Button
+        android:id="@+id/_give_money_comfirm_cancel"
+        android:layout_width="207dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:background="#505050"
+        android:text="取消支付"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/_give_money_comfirm_comfirm"
+        app:layout_constraintTop_toBottomOf="@+id/_give_money_comfirm_comfirm" />
+</androidx.constraintlayout.widget.ConstraintLayout>
