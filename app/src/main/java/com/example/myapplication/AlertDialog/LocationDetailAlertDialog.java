@@ -44,10 +44,17 @@ public class LocationDetailAlertDialog extends AlertDialog implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id._location_detail_link:
-                Intent i =new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(location_class.link));
-                mContext.startActivity(i);
-                    this.dismiss();
+                if(location_class.link.isEmpty()){
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("暫無資料")
+                            .show();
+                }else {
+                    Intent i =new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(location_class.link));
+                    mContext.startActivity(i);
+
+                }
+                this.dismiss();
                 break;
 
             case R.id._location_detail_close:

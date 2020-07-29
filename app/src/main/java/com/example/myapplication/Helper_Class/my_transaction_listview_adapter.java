@@ -22,10 +22,9 @@ public class my_transaction_listview_adapter extends BaseAdapter {
     private List<Transaction_class> list;
     Context context ;
 
-    public my_transaction_listview_adapter(Context c, JSONArray jsonArray){
+    public my_transaction_listview_adapter(Context c, List<Transaction_class> list){
         myInflater=LayoutInflater.from(c);
-        list=jasonList_2_objList.convert_2_transaction_list(c,jsonArray);
-
+        this.list=list;
     }
 
     @Override

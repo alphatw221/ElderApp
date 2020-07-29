@@ -8,28 +8,53 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.Helper_Class.MySingleton;
+import com.example.myapplication.Helper_Class.jasonList_2_objList;
+import com.example.myapplication.Model_Class.Product_class;
+import com.example.myapplication.Model_Class.Transaction_class;
 import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
 import com.example.myapplication.Helper_Class.my_transaction_listview_adapter;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class my_transaction_Frag extends Fragment {
     private ListView my_transaction_listview;
-    private String url="https://www.happybi.com.tw/api/trans-history/";
+//    private String url="https://www.happybi.com.tw/api/trans-history/";
+    private String url="https://www.happybi.com.tw/api/transaction/myTransactionHistory/";
+    private int page=1;
+    private boolean hasNextPage;
     private Context context;
     private User user;
     private ImageButton backButton;
+    private my_transaction_listview_adapter adapter;
+    public List<Transaction_class> tran_list;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,22 +64,48 @@ public class my_transaction_Frag extends Fragment {
         backButton = view.findViewById(R.id._my_transaction_back);
 
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
+//        tran_list=new ArrayList<Transaction_class>();
         context=this.getContext();
         user=(User) getActivity().getIntent().getSerializableExtra("User");
         backButton.setOnClickListener(backListener);
         my_transaction_listview.setOnItemClickListener(null);
+        my_transaction_listview.setOnScrollListener(onScrollListener);
         //---------------------發出請求------------------------------------------------------------
-        myJsonRequest.GET_Request.getJSON_array(url+user.user_id,null,null,getActivity().getApplicationContext(),RL_JA,REL);
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(0,url+"?page="+page,null,RL_JA,REL){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization","Bearer "+Token);
+                return headers;
+            }
+        };
+        MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
         //----------------------------------------------------------------------------------------------------------------------------------------------------
 
         return view;
     }
     //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL_JA=new Response.Listener<JSONArray>(){
+    private  Response.Listener RL_JA=new Response.Listener<JSONObject>(){
+
         @Override
-        public void onResponse(JSONArray response) {
-        my_transaction_listview_adapter adapter=new my_transaction_listview_adapter(context,response);
-        my_transaction_listview.setAdapter(adapter);
+        public void onResponse(JSONObject response) {
+            JSONArray jsonArray=new JSONArray();
+            try {
+                jsonArray=response.getJSONArray("transList");
+                hasNextPage=response.getBoolean("hasNextPage");
+            }catch (JSONException e){
+                Log.d("json error",e.toString());
+            }
+            List<Transaction_class> t=new ArrayList<Transaction_class>();
+            tran_list=jasonList_2_objList.convert_2_transaction_list(context,jsonArray);
+
+            adapter=new my_transaction_listview_adapter(context,tran_list);
+            my_transaction_listview.setAdapter(adapter);
+
 
 
         }
@@ -96,6 +147,73 @@ public class my_transaction_Frag extends Fragment {
 
             }
             FT.commit();
+        }
+    };
+
+
+    private ListView.OnScrollListener onScrollListener=new ListView.OnScrollListener(){
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            if(hasNextPage){
+                if(firstVisibleItem>(totalItemCount-5)){
+                    Log.d("total",Integer.toString(totalItemCount));
+                    JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(0,url+"?page="+page,null,RL_JA2,REL2){
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                            Map<String, String> headers = new HashMap<String, String>();
+                            headers.put("Content-Type", "application/x-www-form-urlencoded");
+                            headers.put("Content-Type", "application/json");
+                            headers.put("Authorization","Bearer "+Token);
+                            return headers;
+                        }
+                    };
+                    MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
+                    my_transaction_listview.setOnScrollListener(null);
+                }
+            }
+
+        };
+    };
+
+
+
+
+    //---------------------回報Listener------------------------------------------------------------
+    private  Response.Listener RL_JA2=new Response.Listener<JSONObject>(){
+
+        @Override
+        public void onResponse(JSONObject response) {
+            JSONArray jsonArray=new JSONArray();
+            try {
+                jsonArray=response.getJSONArray("transList");
+                hasNextPage=response.getBoolean("hasNextPage");
+            }catch (JSONException e){
+                Log.d("json error",e.toString());
+            }
+            List<Transaction_class>temp;
+            temp=jasonList_2_objList.convert_2_transaction_list(context,jsonArray);
+            tran_list.addAll(temp);
+            adapter.notifyDataSetChanged();
+            page++;
+            my_transaction_listview.setOnScrollListener(onScrollListener);
+
+        }
+    };
+    //---------------------錯誤回報Listener------------------------------------------------------------
+    private Response.ErrorListener REL2=new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(error.toString())
+                    .show();
         }
     };
 }

@@ -14,12 +14,13 @@
         <ImageButton
             android:id="@+id/_market_back"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:background="#00FFFFFF"
             android:src="@android:drawable/ic_input_delete" />
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#FFAB00">
@@ -28,11 +29,10 @@
             android:id="@+id/_market_product"
             android:layout_width="155dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="48dp"
-            android:layout_marginLeft="48dp"
             android:background="#FF6D00"
             android:text="商品"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/_market_myProduct"
@@ -40,8 +40,10 @@
             android:layout_height="match_parent"
             android:background="#00FFFFFF"
             android:text="已兌換"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ListView

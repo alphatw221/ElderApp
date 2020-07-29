@@ -23,10 +23,10 @@ public class market_listview_adapter extends BaseAdapter {
     private List<Product_class> list;
     Context context ;
 
-    public market_listview_adapter(Context c, JSONObject jsonObject)
+    public market_listview_adapter(Context c, List<Product_class> list)
     {
         myInflater=LayoutInflater.from(c);
-        list= jasonList_2_objList.convert_2_Product_list(c,jsonObject);
+        this.list=list;
     }
 
     @Override
@@ -53,11 +53,11 @@ public class market_listview_adapter extends BaseAdapter {
         TextView market_listview_name=(TextView)convertView.findViewById(R.id._market_listview_name);
         TextView market_listview_price=(TextView)convertView.findViewById(R.id._market_listview_price);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-        String url="https://www.happybi.com.tw/images/products/"+list.get(position).slug+"/"+list.get(position).img;
+        String url=list.get(position).imgUrl;
         Picasso.get().load(url).into(product_image);
 
-        market_listview_name.setText(list.get(position).name);
-        market_listview_price.setText(Integer.toString(list.get(position).price));
+        market_listview_name.setText("商品："+list.get(position).name);
+        market_listview_price.setText("樂幣："+Integer.toString(list.get(position).price));
         return convertView;
     }
 }

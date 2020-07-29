@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         password=(TextView)findViewById(R.id.editText2);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         context=this.getApplicationContext();
+        user=new User();
         login.setOnClickListener(login_listener);
         signup.setOnClickListener(signup_listener);
         preference=getSharedPreferences("preFile",MODE_PRIVATE);
@@ -75,13 +76,12 @@ public class LoginActivity extends AppCompatActivity {
                 try{
                     preference.edit().putString("access_token",response.getString("access_token")).commit();
 
-                    user.id=response.getInt("id");
+                    user.user_id=response.getInt("user_id");
                     user.id_code=response.getString("id_code");
                     user.email=response.getString("email");
                     user.name=response.getString("name");
                     user.wallet=response.getInt("wallet");
                     user.rank=response.getInt("rank");
-                    user.img=response.getString("img");
 
 
 
@@ -93,16 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("User",user);
                 startActivity(intent);
 
-//                Intent intent = new Intent();
-//                intent.setClass(LoginActivity.this, HomeActivity.class);
-//                intent.putExtra("User",user);
-//                startActivity(intent);
-//                intent.setClass(LoginActivity.this, EventActivity.class);
-//                intent.putExtra("User",user);
-//                startActivity(intent);
-//                intent.setClass(LoginActivity.this, myAccountActivity.class);
-//                intent.putExtra("User",user);
-//                startActivity(intent);
+
                 finish();
 
             }

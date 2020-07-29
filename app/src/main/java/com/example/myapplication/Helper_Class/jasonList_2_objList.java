@@ -77,7 +77,7 @@ public class jasonList_2_objList {
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public static List convert_2_transaction_list(Context context,JSONArray jsonArray){
+    public static List<Transaction_class> convert_2_transaction_list(Context context,JSONArray jsonArray){
         List<Transaction_class> list=new ArrayList();
         for (int i=0;i<jsonArray.length();i++){
             try{
@@ -119,15 +119,14 @@ public class jasonList_2_objList {
     };
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public static List convert_2_Product_list(Context context,JSONObject jsonObject){
+    public static List convert_2_Product_list(Context context,JSONArray jsonArray){
 
         List<Product_class> list=new ArrayList();
-        JSONArray jsonArray_products,jsonArray_cats=new JSONArray();
+//        JSONArray jsonArray_products,jsonArray_cats=new JSONArray();
         try{
-            jsonArray_products=jsonObject.getJSONArray("products");
-            jsonArray_cats=jsonObject.getJSONArray("cats");
-            for (int i=0;i<jsonArray_products.length();i++){
-                list.add(convert_2_product(jsonArray_products.getJSONObject(i)));
+
+            for (int i=0;i<jsonArray.length();i++){
+                list.add(convert_2_product(jsonArray.getJSONObject(i)));
 
             }
         }catch (JSONException e){
@@ -139,13 +138,14 @@ public class jasonList_2_objList {
     static private Product_class convert_2_product(JSONObject object){
         Product_class product_class=new Product_class();
         try{
-            product_class.img=object.getString("img");
-            product_class.product_category_id=object.getInt("product_category_id");
+            product_class.imgUrl=object.getString("imgUrl");
+//            product_class.product_category_id=object.getInt("product_category_id");
             product_class.name=object.getString("name");
             product_class.price=object.getInt("price");
-            product_class.info=object.getString("info");
+//            product_class.info=object.getString("info");
+            product_class.pay_cash_price=object.getInt("pay_cash_price");
             product_class.slug=object.getString("slug");
-            product_class._public=object.getInt("public");
+//            product_class._public=object.getInt("public");
         }catch (JSONException e){
             new AlertDialog.Builder(context)
                     .setTitle("錯誤")
@@ -253,12 +253,13 @@ public class jasonList_2_objList {
         try{
             order_class.address=object.getString("address");
             order_class.created_at=object.getString("created_at");
-            order_class.img=object.getString("img");
-            order_class.location=object.getString("location");
-            order_class.location_id=object.getInt("location_id");
-            order_class.product=object.getString("product");
+            order_class.imgUrl=object.getString("imgUrl");
+//            order_class.location=object.getString("location");
+            order_class.location_name=object.getString("location_name");
+            order_class.name=object.getString("name");
+//            order_class.product=object.getString("product");
             order_class.receive=object.getInt("receive");
-            order_class.updated_at=object.getString("updated_at");
+//            order_class.updated_at=object.getString("updated_at");
 
         }catch (JSONException e){
             new AlertDialog.Builder(context)

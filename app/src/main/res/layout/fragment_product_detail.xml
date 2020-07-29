@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#00FFFFFF">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
 
-        android:background="#00FFFFFF"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/_product_detail_exchange"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--        android:background="#00FFFFFF"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/_product_detail_exchange"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -29,86 +28,103 @@
             <ImageButton
                 android:id="@+id/_product_detail_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:background="#00FFFFFF"
                 android:src="@android:drawable/ic_input_delete" />
 
         </LinearLayout>
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:background="#FFFFFFFF"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/_product_detail_exchange"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
+            android:background="#FFFFFF"
 
-            android:fillViewport="true">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/_product_detail_image"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:background="#00FFFFFF"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="10dp"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/_product_detail_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"        android:background="#00FFFFFF"
+                android:layout_height="60dp"
+                android:background="#00FFFFFF"
 
-                android:orientation="vertical">
+                android:text="TextView"
+                android:textColor="#000000" />
 
-                <ImageView
-                    android:id="@+id/_product_detail_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"        android:background="#00FFFFFF"
+            <TextView
+                android:id="@+id/_product_detail_price"
+                android:layout_width="match_parent"
 
-                    tools:src="@tools:sample/avatars" />
+                android:layout_height="30dp"
+                android:background="#00FFFFFF"
+                android:text="TextView"
+                android:textColor="#000000" />
 
-                <TextView
-                    android:id="@+id/_product_detail_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"        android:background="#00FFFFFF"
+            <TextView
+                android:id="@+id/textView2"
 
-                    android:text="TextView" />
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#00FFFFFF"
+                android:text="兌換據點："
+                android:textColor="#000000" />
 
-                <TextView
-                    android:id="@+id/_product_detail_price"        android:background="#00FFFFFF"
+            <ListView
+                android:id="@+id/_product_detail_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:isScrollContainer="false" />
 
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="TextView" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="請選擇兌換地點"
+                android:textColor="#000000" />
 
-                <TextView        android:background="#00FFFFFF"
+            <Spinner
+                android:id="@+id/_product_detail_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="#FFAB00"
+                android:spinnerMode="dialog" />
 
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="兌換據點：" />
+            <TextView
+                android:id="@+id/_product_detail_info"
+                android:layout_width="match_parent"
 
-                <ListView
-                    android:id="@+id/_product_detail_listview"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="#00FFFFFF"
-                    android:isScrollContainer="false" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="請選擇兌換地點"
-                    />
-
-                <Spinner
-                    android:id="@+id/_product_detail_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:background="#FFAB00" />
-
-                <TextView
-                    android:id="@+id/_product_detail_info"        android:background="#00FFFFFF"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:text="TextView"
+                android:textColor="#000000" />
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
 
     <Button

@@ -30,7 +30,7 @@ public class frag1_blank extends Fragment {
         View view = inflater.inflate(R.layout.fragment_frag1_blank, container, false);
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
 //        f = (FrameLayout) view.findViewById(R.id._frag_blank);
-        getFragmentManager().beginTransaction().add(R.id._fragment_frag1_blank,new Frag1(),"Frag1").commit();
+        getFragmentManager().beginTransaction().replace(R.id._fragment_frag1_blank,new Frag1(),"Frag1").commit();
 
         return view;
     }

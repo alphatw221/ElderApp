@@ -8,7 +8,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,7 @@ import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -69,14 +72,15 @@ public class product_detail_Frag extends Fragment {
     private List<LocationQuantity_class> locationquantity_list;
     private Map<Integer,Integer> location_Dic=new HashMap<Integer, Integer>();
     private List<String> location_string_list=new ArrayList<String>();
-    private String Token;
-    private Location_class select_location;
+    List<String> location_name_list=new ArrayList<>();
+    List<String> location_slug_list=new ArrayList<>();
+    List<Integer> location_id_list=new ArrayList<>();
+    private int select_location_position;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Token=this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
     }
 
     @Override
@@ -94,18 +98,14 @@ public class product_detail_Frag extends Fragment {
         product_detail_spinner=(Spinner)view.findViewById(R.id._product_detail_spinner);
         product_detail_exchange=(Button)view.findViewById(R.id._product_detail_exchange);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-        product_detail_name.setText("商品："+product_class.name);
-        product_detail_price.setText("樂幣："+Integer.toString(product_class.price));
-        product_detail_info.setText("商品資訊:\n\n"+product_class.info);
+
         product_detail_back.setOnClickListener(backListener);
         product_detail_listview.setOnItemClickListener(click_listener);
         product_detail_spinner.setOnItemSelectedListener(spinnerListener);
 
-        //---------------------載圖片------------------------------------------------------------
-        String url="https://www.happybi.com.tw/images/products/"+product_class.slug+"/"+product_class.img;
-        Picasso.get().load(url).into(product_detail_image);
+
         //---------------------發出請求------------------------------------------------------------
-        getLocationAndQuantity();
+        getProductDetail();
         //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -113,18 +113,50 @@ public class product_detail_Frag extends Fragment {
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    private void getLocationAndQuantity(){
-        String url2="https://www.happybi.com.tw/api/getLocationAndQuantity/"+product_class.slug;
+    private void getProductDetail(){
+        String url="https://www.happybi.com.tw/api/product/productDetail/"+product_class.slug;
 
         //---------------------回報Listener1------------------------------------------------------------
-        Response.Listener RL1=new Response.Listener<JSONArray>(){
+        Response.Listener RL1=new Response.Listener<JSONObject>(){
             @Override
-            public void onResponse(JSONArray response) {
-                locationquantity_list=jasonList_2_objList.convert_2_LocationQuantity_list(context,response);
-                for(LocationQuantity_class lq:locationquantity_list){
-                    location_Dic.put(lq.location_id,lq.quantity);
+            public void onResponse(JSONObject response) {
+                JSONObject product=new JSONObject();
+                JSONArray locationList=new JSONArray();
+                try {
+                    product=response.getJSONObject("product");
+                    locationList=response.getJSONArray("locationList");
+                }catch (JSONException e){
+                    Log.d("error",e.toString());
                 }
-                getAllLocation();
+                location_listview_adapter location_listview_adapter=new location_listview_adapter(context,locationList);
+                product_detail_listview.setAdapter(location_listview_adapter);
+
+                try {
+                    for(int i=0;i<locationList.length();i++){
+
+                            location_name_list.add(locationList.getJSONObject(i).getString("name"));
+                            location_slug_list.add(locationList.getJSONObject(i).getString("slug"));
+                            location_id_list.add(locationList.getJSONObject(i).getInt("location_id"));
+
+
+                    }
+
+                    String url=product.getString("imgUrl");
+                    Picasso.get().load(url).into(product_detail_image);
+                    product_detail_name.setText("商品："+product.getString("name"));
+                    product_detail_price.setText("樂幣："+product.getString("price"));
+                    product_detail_info.setText("商品資訊:\n\n"+product.getString("info"));
+                }catch (JSONException e){
+
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,location_name_list);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                product_detail_spinner.setAdapter(adapter);
+                product_detail_exchange.setOnClickListener(exchangeListener);
+//
+                //---------------------載圖片------------------------------------------------------------
+
 
             }
         };
@@ -139,50 +171,13 @@ public class product_detail_Frag extends Fragment {
                         .show();
             }
         };
-        myJsonRequest.GET_Request.getJSON_array(url2,null,null,getActivity().getApplicationContext(),RL1,REL1);
+        myJsonRequest.GET_Request.getJSON_object(url,null,null,context,RL1,REL1);
 
 
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    private void getAllLocation(){
-        String url3="https://www.happybi.com.tw/api/location";
 
-        //---------------------回報Listener2------------------------------------------------------------
-        Response.Listener RL2=new Response.Listener<JSONArray>(){
-            @Override
-            public void onResponse(JSONArray response) {
-                List<Location_class> All_location_list=jasonList_2_objList.convert_2_Location_list(context,response);
-                for(Location_class lc:All_location_list){
-                    if(location_Dic.containsKey(lc.id)){
-                        location_list.add(lc);
-                        location_string_list.add(lc.name);
-                    }
-                }
-                location_listview_adapter location_listview_adapter=new location_listview_adapter(context,location_list,location_Dic);
-                product_detail_listview.setAdapter(location_listview_adapter);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,location_string_list.toArray(new String[0]));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                product_detail_spinner.setAdapter(adapter);
-                product_detail_exchange.setOnClickListener(exchangeListener);
-            }
-        };
-        //---------------------錯誤回報Listener2------------------------------------------------------------
-        Response.ErrorListener REL2=new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("錯誤")
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setMessage(error.toString())
-                        .show();
-            }
-        };
-
-        myJsonRequest.GET_Request.getJSON_array(url3,null,null,getActivity().getApplicationContext(),RL2,REL2);
-
-    }
 
 
 
@@ -210,7 +205,8 @@ public class product_detail_Frag extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            select_location=location_list.get(position);
+
+            select_location_position=position;
         }
 
         @Override
@@ -223,7 +219,26 @@ public class product_detail_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-            
+
+
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("market_Frag");
+            Fragment fragment2=FM.findFragmentByTag("product_detail_Frag");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.remove(fragment2);
+                } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+                    FT.remove(fragment2);
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
+
+            }
+            FT.commit();
         }
     };
 
@@ -233,7 +248,7 @@ public class product_detail_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-           new AlertDialog.Builder(getActivity()).setTitle("確定兌換").setMessage("兌換地點:"+select_location.name).setPositiveButton("是", new DialogInterface.OnClickListener() {
+           new AlertDialog.Builder(getActivity()).setTitle("確定兌換").setMessage("兌換地點:"+location_name_list.get(select_location_position)).setPositiveButton("是", new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int which) {
 
@@ -261,9 +276,10 @@ public class product_detail_Frag extends Fragment {
                    }){
                        @Override
                        protected Map<String, String> getParams() throws AuthFailureError {
+                           String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
                            Map<String, String> body = new HashMap<String, String>();
                            body.put("token", Token);
-                           body.put("location_id", Integer.toString(select_location.id));
+                           body.put("location_id", location_id_list.get(select_location_position).toString());
                            return body;
                        }
                    };

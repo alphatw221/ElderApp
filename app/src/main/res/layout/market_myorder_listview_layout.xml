@@ -3,77 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="#FFFFFF">
+    android:layout_height="300dp"
+    android:background="#FF9100">
 
-
-    <ImageView
-        android:id="@+id/_market_myorder_listview_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/shape_rectangle"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/_market_myorder_listview_recieve"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#00FFFFFF"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3"
-        app:srcCompat="@drawable/receive" />
+        <ImageView
+            android:id="@+id/_market_myorder_listview_image"
+            android:layout_width="145dp"
+            android:layout_height="195dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/_market_myorder_listview_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/_market_myorder_listview_recieve"
+            android:layout_width="145dp"
+            android:layout_height="195dp"
+            android:background="#00FFFFFF"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.3"
+            app:srcCompat="@drawable/receive" />
 
-    <TextView
-        android:id="@+id/_market_myorder_listview_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        android:textColor="#FF000000"
-        app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-        app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_name" />
+        <TextView
+            android:id="@+id/_market_myorder_listview_name"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/_market_myorder_listview_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        android:textColor="#FF000000"
-        app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-        app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_location" />
+        <TextView
+            android:id="@+id/_market_myorder_listview_location"
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="#FF000000"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
+            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_name" />
 
-    <TextView
-        android:id="@+id/_market_myorder_listview_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        android:textColor="#FF000000"
-        app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-        app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_address" />
+        <TextView
+            android:id="@+id/_market_myorder_listview_address"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="#FF000000"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
+            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_location" />
+
+        <TextView
+            android:id="@+id/_market_myorder_listview_time"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="#FF000000"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
+            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,10 @@
 package com.example.myapplication.Helper_Class;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -20,7 +23,7 @@ import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class myJsonRequest {
+public class myJsonRequest extends Application {
     public static class GET_Request{
 
         private static Object[] _key,_value;
@@ -82,7 +85,7 @@ public class myJsonRequest {
 
 
 
-    public static class POST_Request{
+    public static class POST_Request  {
 
         private static Object[] _key,_value;
         private static JSONObject _jsonObject;
@@ -102,6 +105,8 @@ public class myJsonRequest {
                 }
             };
             MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
+
+
         }
 
 

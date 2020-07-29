@@ -24,10 +24,10 @@ public class market_myOrder_listview_adapter extends BaseAdapter {
     private List<Order_class> list;
     Context context ;
 
-    public market_myOrder_listview_adapter(Context c, JSONArray jsonArray)
+    public market_myOrder_listview_adapter(Context c, List<Order_class> list)
     {
         myInflater=LayoutInflater.from(c);
-        list= jasonList_2_objList.convert_2_Order_list(c,jsonArray);
+        this.list=list;
     }
 
     @Override
@@ -57,13 +57,13 @@ public class market_myOrder_listview_adapter extends BaseAdapter {
         TextView market_myorder_listview_address=(TextView)convertView.findViewById(R.id._market_myorder_listview_address);
         TextView market_myorder_listview_time=(TextView)convertView.findViewById(R.id._market_myorder_listview_time);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-        String url="https://www.happybi.com.tw"+order_class.img;
+        String url=order_class.imgUrl;
         if(order_class.receive==1){
             market_myorder_listview_recieve.setVisibility(View.VISIBLE);
         }
         Picasso.get().load(url).into(market_myorder_listview_image);
-        market_myorder_listview_name.setText("產品:"+order_class.product);
-        market_myorder_listview_location.setText("據點:"+order_class.location);
+        market_myorder_listview_name.setText("產品:"+order_class.name);
+        market_myorder_listview_location.setText("據點:"+order_class.location_name);
         market_myorder_listview_address.setText("地址:"+order_class.address);
         market_myorder_listview_time.setText(("兌換時間:"+order_class.created_at));
         return convertView;
