@@ -137,11 +137,11 @@ public class give_money_comfirm_Frag extends Fragment {
                     FT.remove(fragment2);
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "give_money_comfirm_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_comfirm_Frag");
                     FT.remove(fragment2);
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new give_money_Frag(),"give_money_Frag");
+                FT.replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag");
 
             }
             FT.commit();
@@ -157,8 +157,12 @@ public class give_money_comfirm_Frag extends Fragment {
                     .setIcon(R.mipmap.ic_launcher)
                     .setMessage(response.toString())
                     .show();
+
+
+
+
             Fragment fragment=getFragmentManager().findFragmentByTag("give_money_comfirm_Frag");
-            getFragmentManager().beginTransaction().replace(R.id._frag1_fragment,new give_money_Frag(),"give_money_Frag").commit();
+            getFragmentManager().beginTransaction().replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag").commit();
         }
 
 
@@ -174,7 +178,7 @@ public class give_money_comfirm_Frag extends Fragment {
                     .show();
 
             Fragment fragment=getFragmentManager().findFragmentByTag("give_money_comfirm_Frag");
-            getFragmentManager().beginTransaction().replace(R.id._frag1_fragment,new give_money_Frag(),"give_money_Frag").commit();
+            getFragmentManager().beginTransaction().replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag").commit();
             //
         }
     };

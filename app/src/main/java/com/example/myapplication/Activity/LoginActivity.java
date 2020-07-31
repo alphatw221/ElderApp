@@ -75,13 +75,14 @@ public class LoginActivity extends AppCompatActivity {
             if(response.has("access_token")){
                 try{
                     preference.edit().putString("access_token",response.getString("access_token")).commit();
-
+                    user.access_token=response.getString("access_token");
                     user.user_id=response.getInt("user_id");
                     user.id_code=response.getString("id_code");
                     user.email=response.getString("email");
                     user.name=response.getString("name");
                     user.wallet=response.getInt("wallet");
                     user.rank=response.getInt("rank");
+                    user.org_rank=response.getInt("org_rank");
 
 
 

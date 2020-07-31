@@ -53,13 +53,9 @@
 
             <ImageView
                 android:id="@+id/_product_detail_image"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
                 android:background="#00FFFFFF"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginBottom="10dp"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
@@ -67,14 +63,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="#00FFFFFF"
-
+                android:layout_marginLeft="10dp"
                 android:text="TextView"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/_product_detail_price"
                 android:layout_width="match_parent"
-
+                android:layout_marginLeft="10dp"
                 android:layout_height="30dp"
                 android:background="#00FFFFFF"
                 android:text="TextView"
@@ -86,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="#00FFFFFF"
+                android:layout_marginLeft="10dp"
                 android:text="兌換據點："
                 android:textColor="#000000" />
 
@@ -93,6 +90,7 @@
                 android:id="@+id/_product_detail_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:background="#FFFFFF"
                 android:isScrollContainer="false" />
 
@@ -100,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="請選擇兌換地點"
+                android:layout_marginLeft="10dp"
                 android:textColor="#000000" />
 
             <Spinner
@@ -107,12 +106,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="#FFAB00"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:spinnerMode="dialog" />
 
             <TextView
                 android:id="@+id/_product_detail_info"
                 android:layout_width="match_parent"
-
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:text="TextView"

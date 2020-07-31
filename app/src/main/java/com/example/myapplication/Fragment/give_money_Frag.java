@@ -100,11 +100,11 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
                             FT.remove(fragment2);
                         } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                            FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+                            FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
                             FT.remove(fragment2);
                         }
                     } else{
-                        FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+                        FT.replace(R.id._fragment_frag1_blank,new Frag1(),"Frag1");
 
                     }
                     FT.commit();
@@ -146,11 +146,11 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
                     FT.remove(fragment2);
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
                     FT.remove(fragment2);
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+                FT.replace(R.id._fragment_frag1_blank,new Frag1(),"Frag1");
 
             }
             FT.commit();
@@ -168,7 +168,7 @@ public class give_money_Frag extends Fragment implements ZXingScannerView.Result
     public void handleResult(Result rawResult) {
 //        String text=user.user_id+","+user.name+","+user.email;
         String[] a=rawResult.getText().split(",");
-        getFragmentManager().beginTransaction().add(R.id._frag1_fragment,new give_money_comfirm_Frag(a[0],a[1],a[2]),"give_money_comfirm_Frag").commit();
+        getFragmentManager().beginTransaction().add(R.id._fragment_frag1_blank,new give_money_comfirm_Frag(a[0],a[1],a[2]),"give_money_comfirm_Frag").commit();
         Fragment fragment=getFragmentManager().findFragmentByTag("give_money_Frag");
 
         getFragmentManager().beginTransaction().remove(fragment).commit();

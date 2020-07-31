@@ -8,23 +8,6 @@
     android:background="#FF9100"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FF6D00"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/_event_back"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="#00FFFFFF"-->
-        <!--            android:src="@android:drawable/ic_input_delete" />-->
-    </LinearLayout>
 
 
 
@@ -32,29 +15,35 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#FFC400"
+        android:background="#FFAB00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <Button
-            android:id="@+id/_event_search_btn"
-            android:layout_width="100dp"
+            android:id="@+id/_event_btn"
+            android:layout_width="155dp"
             android:layout_height="match_parent"
-            android:background="#00FFFFFF"
-            android:text="搜尋活動"
-            android:textSize="18sp"
+            android:layout_margin="2dp"
+            android:background="@drawable/shape_rectangle_orange"
+            android:gravity="center"
+            android:text="所有活動"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/_event_myevent_btn"
-            android:layout_width="100dp"
+            android:layout_width="155dp"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:background="#00FFFFFF"
+            android:gravity="center"
             android:text="我的活動"
-            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -87,7 +76,7 @@
         android:background="#DD878787"
         android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 

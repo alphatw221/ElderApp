@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class Frag3 extends Fragment {
     private EditText myAccount_name,myAccount_account,myAccount_gender,
             myAccount_birthday,myAccount_cellPhone,myAccount_tel,myAccount_address,myAccount_idcode;
     private Button myAccount_update,myAccount_apply,myAccount_agrement,myAccount_logout;
-    private TextView myAccount_member;
+    private TextView myAccount_member,myAccount_valid,myAccount_expiry_date;
     private String url="https://www.happybi.com.tw/api/auth/myAccount";
     private SharedPreferences preferences;
     private Context context;
@@ -51,11 +52,13 @@ public class Frag3 extends Fragment {
         myAccount_tel=(EditText)view.findViewById(R.id._myAccount_tel);
         myAccount_address=(EditText)view.findViewById(R.id._myAccount_address);
         myAccount_idcode=(EditText)view.findViewById(R.id._myAccount_idcode);
-        myAccount_member=(TextView)view.findViewById(R.id._myAccount_member);
+//        myAccount_member=(TextView)view.findViewById(R.id._myAccount_member);
         myAccount_update=(Button)view.findViewById(R.id._myAccount_update);
         myAccount_agrement=(Button)view.findViewById(R.id._myAccount_agrement);
         myAccount_logout=(Button)view.findViewById(R.id._myAccount_logout);
         myAccount_apply=(Button)view.findViewById(R.id._myAccount_apply);
+        myAccount_valid=view.findViewById(R.id._myAccount_valid);
+        myAccount_expiry_date=view.findViewById(R.id._myAccount_expiry_date);
         //---------------------發出請求------------------------------------------------------------
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
@@ -86,6 +89,19 @@ public class Frag3 extends Fragment {
                 myAccount_tel.setText(response.getString("tel"));
                 myAccount_address.setText(response.getString("address"));
                 myAccount_idcode.setText(response.getString("id_number"));
+                if(response.getString("expiry_date")==null){
+                    myAccount_expiry_date.setText("---");
+                }else{
+                    myAccount_expiry_date.setText(response.getString("expiry_date"));
+                }
+
+                if(response.getInt("valid")==0){
+                    myAccount_valid.setText("代付款");
+                    myAccount_valid.setTextColor(Color.parseColor("#FF0000"));
+                }else {
+                    myAccount_valid.setText("有效");
+                    myAccount_valid.setTextColor(Color.parseColor("#76FF03"));
+                }
             }catch(JSONException e){
                 new AlertDialog.Builder(getActivity())
                         .setTitle("錯誤")

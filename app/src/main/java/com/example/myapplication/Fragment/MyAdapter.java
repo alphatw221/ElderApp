@@ -79,17 +79,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {   
 
         ImageView imageView=holder.view.findViewById(R.id._event_image);
         TextView event_title=holder.view.findViewById(R.id._event_title);
-        TextView event_category=holder.view.findViewById(R.id._event_category);
-        TextView event_location=holder.view.findViewById(R.id._event_location);
+        TextView event_category_location=holder.view.findViewById(R.id._event_category_location);
+        TextView event_happybi=holder.view.findViewById(R.id._event_happybi);
+//        TextView event_location=holder.view.findViewById(R.id._event_location);
         TextView event_people=holder.view.findViewById(R.id._event_people);
         TextView event_dateTime=holder.view.findViewById(R.id._event_dateTime);
 
-        String url="https://www.happybi.com.tw/images/events/"+mDataset.get(position).slug+"/"+mDataset.get(position).image;
-        Picasso.get().load(url).resize(300,300).centerCrop().into(imageView);
-        event_title.setText(mDataset.get(position).title);
-        event_category.setText(categories[mDataset.get(position).category_id]+"-"+districts[mDataset.get(position).district_id]);
-        event_location.setText(mDataset.get(position).location);
-        event_people.setText("人數:"+Integer.toString(mDataset.get(position).people)+"/"+Integer.toString(mDataset.get(position).maximum));
+        String url=mDataset.get(position).imgUrl;
+        Picasso.get().load(url).into(imageView);
+        event_title.setText(mDataset.get(position).name);
+        event_category_location.setText(mDataset.get(position).cat+"("+mDataset.get(position).district+")");
+//        event_location.setText(mDataset.get(position).location);
+        event_people.setText(Integer.toString(mDataset.get(position).people)+"/"+Integer.toString(mDataset.get(position).maximum));
+        event_happybi.setText(Integer.toString(mDataset.get(position).reward)+"獎勵");
         if(mDataset.get(position).dateTime.equals("null")){
             event_dateTime.setText("");
         }else{

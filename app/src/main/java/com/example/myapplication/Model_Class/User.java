@@ -13,6 +13,7 @@ public class User implements Serializable {
     public int rank;
     public String img;
     public String access_token;
+    public Integer org_rank;
     public User(){
 
     }

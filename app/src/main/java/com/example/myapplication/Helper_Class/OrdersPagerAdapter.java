@@ -44,7 +44,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
             default:
                 return new frag1_blank();
             case 1:
-                return new frag2_blank(e);
+                return new frag2_blank();
             case 2:
                 return new frag3_blank();
 
@@ -56,7 +56,5 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
         return 3;
     }
 
-    public void set_frag2(List<Event_class> e){
-        this.e=e;
-    }
+
 }

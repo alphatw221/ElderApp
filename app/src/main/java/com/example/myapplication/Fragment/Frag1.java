@@ -2,7 +2,10 @@ package com.example.myapplication.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,32 +20,47 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.Activity.TabActivity;
+import com.example.myapplication.Helper_Class.MySingleton;
+import com.example.myapplication.Helper_Class.jasonList_2_objList;
 import com.example.myapplication.Model_Class.Event_class;
+import com.example.myapplication.Model_Class.Product_class;
 import com.example.myapplication.Model_Class.User;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Frag1 extends Fragment {
-    private TextView person_name,person_rank,person_happybi,home_title;
+    private TextView person_name,person_rank,person_happybi,person_org_rank,home_title;
     private ImageButton takeBi,giveBi,myTrans,exchange;
+    private Button person_org_rank_btn;
+    private ConstraintLayout person_org_rank_layout;
     private WebView webView;
     private Context context;
     private String url="https://www.happybi.com.tw/api/auth/me";
     private User user;
     private FrameLayout frameLayout;
     public ScrollView frag1_base;
+    public String Token;
     public Frag1() {          //Frag1建構子
 
         this.user= TabActivity.user;
@@ -57,6 +75,9 @@ public class Frag1 extends Fragment {
         person_name=(TextView) view.findViewById(R.id._person_name);
         person_rank=(TextView) view.findViewById(R.id._person_rank);
         person_happybi=(TextView) view.findViewById(R.id._person_happybi);
+        person_org_rank=(TextView)view.findViewById(R.id._person_org_rank);
+        person_org_rank_layout=view.findViewById(R.id._person_org_rank_layout);
+        person_org_rank_btn=view.findViewById(R.id._person_org_rank_btn);
         takeBi=(ImageButton)view.findViewById(R.id._takeBi);
         giveBi=(ImageButton)view.findViewById(R.id._giveBi);
         myTrans=(ImageButton)view.findViewById(R.id._myTrans);
@@ -64,28 +85,82 @@ public class Frag1 extends Fragment {
         webView=(WebView)view.findViewById(R.id._web_view);
         frag1_base=(ScrollView)view.findViewById(R.id._frag1_base);
         frameLayout=view.findViewById(R.id._frag1_fragment);
+        context=this.getContext();
         //---------------------發出請求------------------------------------------------------------
+        Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(1,url,null,RL,REL){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization","Bearer "+Token);
+                return headers;
+            }
+        };
+        MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         takeBi.setOnClickListener(takeBi_listener);
         giveBi.setOnClickListener(giveBi_listener);
         myTrans.setOnClickListener(myTrans_listener);
         exchange.setOnClickListener(exchange_listener);
 
-        person_name.setText("姓名:"+user.name);
-        person_happybi.setText("剩餘樂幣:"+user.wallet);
-        person_rank.setText("榮譽等級:"+user.rank);
-
         webView.loadUrl("https://www.happybi.com.tw/slider.html");
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
 
-        context=this.getContext();
+
         //----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
         return view;
     }
+    //---------------------回報Listener------------------------------------------------------------
+    private  Response.Listener RL=new Response.Listener<JSONObject>(){
+        @Override
+        public void onResponse(JSONObject response) {
+
+            try {
+                person_name.setText("姓名:"+response.getString("name"));
+                person_happybi.setText("剩餘樂幣:"+response.getString("wallet"));
+                person_rank.setText("榮譽等級:"+Integer.toString(response.getInt("rank")));
+                int i=response.optInt("org_rank");
+                if(i>0){
+                    if(response.getInt("org_rank")==1){
+                        person_org_rank_layout.setVisibility(View.GONE);
+                    }else{
+                        String[] s={"","平民","小天使","大天使","守護天使","領航天使"};
+                        person_org_rank.setText("職務:"+s[response.getInt("org_rank")]);
+                        person_org_rank_btn.setOnClickListener(new Button.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Intent i =new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse("https://www.happybi.com.tw/memberGroupMembers?token="+Token));
+                                context.startActivity(i);
+                            }
+                        });
+                    }
+                }else{
+                    person_org_rank_layout.setVisibility(View.GONE);
+                }
+            }catch (JSONException e){
+                Log.d("json error",e.toString());
+            }
+
+        }
+    };
+    //---------------------錯誤回報Listener1------------------------------------------------------------
+    private Response.ErrorListener REL=new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("錯誤")
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setMessage(error.toString())
+                    .show();
+        }
+    };
 
 
 
@@ -103,10 +178,10 @@ public class Frag1 extends Fragment {
                     FT.show(fragment);
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "take_money_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "take_money_Frag");
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new take_money_Frag(user),"take_money_Frag");
+                FT.replace(R.id._fragment_frag1_blank,new take_money_Frag(user),"take_money_Frag");
 
             }
             FT.commit();
@@ -128,11 +203,11 @@ public class Frag1 extends Fragment {
 
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "give_money_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
 
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new give_money_Frag(),"give_money_Frag");
+                FT.replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag");
             }
             FT.commit();
         }
@@ -151,11 +226,11 @@ public class Frag1 extends Fragment {
                     FT.show(fragment);
 
                 } else {
-                    FT.add(R.id._frag1_fragment, fragment, "my_transaction_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "my_transaction_Frag");
 
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new my_transaction_Frag(),"my_transaction_Frag");
+                FT.replace(R.id._fragment_frag1_blank,new my_transaction_Frag(),"my_transaction_Frag");
             }
             FT.commit();
         }

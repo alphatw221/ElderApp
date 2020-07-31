@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 user.name=response.getString("name");
                 user.wallet= response.getInt("wallet");
                 user.rank=response.getInt("rank");
+                user.org_rank=response.getInt("org_rank");
             }catch (JSONException e)
             {
 

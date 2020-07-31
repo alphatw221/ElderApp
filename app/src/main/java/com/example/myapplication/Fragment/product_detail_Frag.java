@@ -225,19 +225,21 @@ public class product_detail_Frag extends Fragment {
             FragmentTransaction FT = FM.beginTransaction();
             Fragment fragment=FM.findFragmentByTag("market_Frag");
             Fragment fragment2=FM.findFragmentByTag("product_detail_Frag");
-            if ( fragment!=null) {
-                if ( fragment.isAdded()) {
-                    FT.show(fragment);
-                    FT.remove(fragment2);
-                } else {
-//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
-                    FT.remove(fragment2);
-                }
-            } else{
-                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
+//            if ( fragment!=null) {
+//                if ( fragment.isAdded()) {
+//                    FT.show(fragment);
+//                    FT.remove(fragment2);
+//                } else {
+////                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+//                    FT.add(R.id._fragment_frag1_blank, fragment, "market_Frag");
+//                    FT.remove(fragment2);
+//                }
+//            } else{
+//                FT.replace(R.id._fragment_frag1_blank,new market_Frag(),"market_Frag");
+//
+//            }
+            FT.replace(R.id._fragment_frag1_blank,new market_Frag(),"market_Frag");
 
-            }
             FT.commit();
         }
     };

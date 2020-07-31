@@ -3,10 +3,12 @@ package com.example.myapplication.Fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -78,10 +80,10 @@ public class market_Frag extends Fragment {
 
         market_listView.setOnItemClickListener(click_listener);
 
-
-        market_product.setBackgroundColor(Color.parseColor("#FF6D00"));
-
-        market_myProduct.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+//
+//        market_product.setBackgroundColor(Color.parseColor("#FF6D00"));
+//
+//        market_myProduct.setBackgroundColor(Color.parseColor("#00FFFFFF"));
         btn_flag="left";
         market_myProduct.setOnClickListener(button_listener);
         //---------------------發出請求------------------------------------------------------------
@@ -269,11 +271,11 @@ public class market_Frag extends Fragment {
                     FT.show(fragment);
 
                 } else {
-                    FT.add(R.id._frag1_fragment, fragment, "product_detail_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "product_detail_Frag");
 
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new product_detail_Frag(product_class),"product_detail_Frag");
+                FT.replace(R.id._fragment_frag1_blank,new product_detail_Frag(product_class),"product_detail_Frag");
             }
             FT.commit();
         }
@@ -284,13 +286,16 @@ public class market_Frag extends Fragment {
     //---------------------------------------按鈕 Listener---------------------------------------------------
     private Button.OnClickListener button_listener= new Button.OnClickListener()
     {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id._market_product:
                     btn_flag="left";
                     page=1;
-                    market_product.setBackgroundColor(Color.parseColor("#FF6D00"));
+//                    market_product.setBackgroundColor(Color.parseColor("#FF6D00"));
+//                    market_myProduct.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+                    market_product.setBackground(getResources().getDrawable(R.drawable.shape_rectangle_orange));
                     market_myProduct.setBackgroundColor(Color.parseColor("#00FFFFFF"));
                     market_myProduct.setOnClickListener(button_listener);
                     market_listView.setOnItemClickListener(click_listener);
@@ -315,8 +320,10 @@ public class market_Frag extends Fragment {
                 case R.id._market_myProduct:
                     btn_flag="right";
                     page=1;
+                    market_myProduct.setBackground(getResources().getDrawable(R.drawable.shape_rectangle_orange));
                     market_product.setBackgroundColor(Color.parseColor("#00FFFFFF"));
-                    market_myProduct.setBackgroundColor(Color.parseColor("#FF6D00"));
+//                    market_product.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+//                    market_myProduct.setBackgroundColor(Color.parseColor("#FF6D00"));
                     market_product.setOnClickListener(button_listener);
                     market_listView.setOnItemClickListener(null);
                     market_myProduct.setOnClickListener(null);
@@ -382,11 +389,11 @@ public class market_Frag extends Fragment {
                     FT.remove(fragment2);
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "market_Frag");
                     FT.remove(fragment2);
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+                FT.replace(R.id._fragment_frag1_blank,new Frag1(),"Frag1");
 
             }
             FT.commit();

@@ -49,23 +49,33 @@ public class jasonList_2_objList {
         Event_class event_class=new Event_class();
         try{
 
-            event_class.id=object.getInt("id");
-            event_class.category_id=object.getInt("category_id");
-            event_class.district_id=object.getInt("district_id");
-            event_class.reward_level_id=object.getInt("reward_level_id");
-            event_class.title=object.getString("title");
-            event_class.body=object.getString("body");
-            event_class.dateTime=object.getString("dateTime");
-            event_class.dateTime_2=object.getString("dateTime_2");
-            event_class.location=object.getString("location");
-            event_class.image=object.getString("image");
-            event_class.deadline=object.getString("deadline");
-            event_class.created_at=object.getString("created_at");
-            event_class.updated_at=object.getString("updated_at");
+
+            event_class.name=object.getString("name");
             event_class.slug=object.getString("slug");
+            event_class.type=object.getInt("type");
+            event_class.reward=object.getInt("reward");
+            event_class.cat=object.getString("cat");
+            event_class.district=object.getString("district");
+            event_class.location=object.getString("location");
             event_class.maximum=object.getInt("maximum");
-            event_class.people=object.getInt("people");                     //先不要用
-            event_class.numberOfPeople=object.getInt("numberOfPeople");     //改用這個
+            event_class.people=object.getInt("people");
+            event_class.dateTime=object.getString("dateTime");
+            event_class.imgUrl=object.getString("imgUrl");
+            //
+//            event_class.id=object.getInt("id");
+//            event_class.image=object.getString("image");
+//            event_class.category_id=object.getInt("category_id");
+//            event_class.district_id=object.getInt("district_id");
+//            event_class.reward_level_id=object.getInt("reward_level_id");
+//            event_class.title=object.getString("title");
+//            event_class.body=object.getString("body");
+//            event_class.dateTime_2=object.getString("dateTime_2");
+//            event_class.deadline=object.getString("deadline");
+//            event_class.created_at=object.getString("created_at");
+//            event_class.updated_at=object.getString("updated_at");
+
+                                //先不要用
+//            event_class.numberOfPeople=object.getInt("numberOfPeople");     //改用這個
         }catch (JSONException e){
             new AlertDialog.Builder(context)
                     .setTitle("錯誤")

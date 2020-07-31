@@ -29,20 +29,21 @@
             android:id="@+id/_market_product"
             android:layout_width="155dp"
             android:layout_height="match_parent"
-            android:background="#FF6D00"
+            android:layout_margin="2dp"
+            android:background="@drawable/shape_rectangle_orange"
             android:text="商品"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/_market_myProduct"
-            android:layout_width="152dp"
+            android:layout_width="155dp"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:background="#00FFFFFF"
             android:text="已兌換"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

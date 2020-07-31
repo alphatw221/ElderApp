@@ -20,10 +20,8 @@ import java.util.List;
 public class frag2_blank extends Fragment {
 
     private FrameLayout f;
-    private List<Event_class> e;
 
-    public frag2_blank(List<Event_class> e) {
-        this.e = e;
+    public frag2_blank() {
     }
 
     @Nullable
@@ -32,7 +30,7 @@ public class frag2_blank extends Fragment {
         View view = inflater.inflate(R.layout.fragment_frag2_blank, container, false);
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
 //        f = (FrameLayout) view.findViewById(R.id._frag_blank);
-        getFragmentManager().beginTransaction().add(R.id._fragment_frag2_blank,new Frag2(e),"Frag2").commit();
+        getFragmentManager().beginTransaction().add(R.id._fragment_frag2_blank,new Frag2(),"Frag2").commit();
 
         return view;
     }

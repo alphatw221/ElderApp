@@ -66,11 +66,11 @@ public class take_money_Frag extends Fragment {
                     FT.remove(fragment2);
                 } else {
 //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._frag1_fragment, fragment, "take_money_Frag");
+                    FT.add(R.id._fragment_frag1_blank, fragment, "take_money_Frag");
                     FT.remove(fragment2);
                 }
             } else{
-                FT.replace(R.id._frag1_fragment,new Frag1(),"Frag1");
+                FT.replace(R.id._fragment_frag1_blank,new Frag1(),"Frag1");
 
             }
 //            if ( fragment2!=null) {
