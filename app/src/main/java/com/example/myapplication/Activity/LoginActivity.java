@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 finish();
 
-            }else {
+            }else if(response.has("android_update_url")){
                 try {
                     update_url=response.getString("android_update_url");
                     new AlertDialog.Builder(context).setTitle("已有更新版本").setMessage("請更新後重新登入").setPositiveButton("是", new DialogInterface.OnClickListener() {
@@ -139,6 +139,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
 
+            }else{
+                new AlertDialog.Builder(LoginActivity.this)
+                        .setTitle("登入失敗")
+                        .setMessage("帳號或密碼錯誤")
+                        .show();
             }
 
         }

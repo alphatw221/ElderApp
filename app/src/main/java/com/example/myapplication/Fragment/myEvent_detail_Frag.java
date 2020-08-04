@@ -26,6 +26,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.myapplication.Activity.LoginActivity;
 import com.example.myapplication.Activity.TabActivity;
 import com.example.myapplication.Activity.UpdateMyDataActivity;
+import com.example.myapplication.Activity.getRewardActivity;
 import com.example.myapplication.Activity.signupActivity;
 import com.example.myapplication.Helper_Class.MySingleton;
 import com.example.myapplication.Model_Class.Event_class;
@@ -206,20 +207,15 @@ public class myEvent_detail_Frag extends Fragment {
                     MySingleton.getInstance(context).getRequestQueue().add(joinRequest);
                     break;
                 case R.id._myevent_detail_getreward:
-
-
-
-
-
-
-
+                    Intent i1 = new Intent(myEvent_detail_Frag.this.getContext(), getRewardActivity.class);
+                    startActivity(i1);
                     break;
                 case R.id._myevent_detail_signup:
-                    Intent i = new Intent(myEvent_detail_Frag.this.getContext(),signupActivity.class);
+                    Intent i2 = new Intent(myEvent_detail_Frag.this.getContext(),signupActivity.class);
 //                    intent.setClass(context, signupActivity.class);
-                    i.putExtra("slug",event_class.slug);
-                    i.putExtra("name",event_class.name);
-                    startActivity(i);
+                    i2.putExtra("slug",event_class.slug);
+                    i2.putExtra("name",event_class.name);
+                    startActivity(i2);
                     break;
             }
         }

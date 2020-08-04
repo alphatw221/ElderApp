@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!-- 顏色 -->
-    <solid android:color="#ffffff" />
+    <solid android:color="#B6B6B6" />
     <!-- 文字與邊框的間距 -->
     <!--    <padding-->
     <!--        android:top="10dp"-->
@@ -11,11 +11,11 @@
     <!--        android:left="10dp"-->
     <!--        />-->
     <!-- 設置圓角 -->
-    <corners android:radius="2dp" />
+    <corners android:radius="15dp" />
     <!-- 邊框線 -->
     <stroke
         android:width="0.5dp"
-        android:color="@android:color/black"
+        android:color="#000000"
         android:dashGap="0dp"
         android:dashWidth="0dp" />
 </shape>

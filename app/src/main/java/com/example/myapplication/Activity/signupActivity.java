@@ -123,42 +123,47 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result rawResult) {
         String[] result=rawResult.getText().split(",");
+        if(result[0].equals("arrive")){
+            JsonObjectRequest signinRequest = new JsonObjectRequest(1, url2 + result[1], null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if(response.getInt("s")==1){
+                            TheEventName=response.getString("name");
+                            signup_qrscanner_layout.setVisibility(View.GONE);
+                            signup_pass_layout.setVisibility(View.VISIBLE);
+                            signup_pass_name.setText(TheEventName);
+                        }else{
+                            new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
+                            signup_qrscanner.startCamera();
+                        }
+                    }catch (JSONException e){
 
-        JsonObjectRequest signinRequest = new JsonObjectRequest(1, url2 + result[1], null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    if(response.getInt("s")==1){
-                        TheEventName=response.getString("name");
-                        signup_qrscanner_layout.setVisibility(View.GONE);
-                        signup_pass_layout.setVisibility(View.VISIBLE);
-                        signup_pass_name.setText(TheEventName);
-                    }else{
-                        new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-                        signup_qrscanner.startCamera();
                     }
-                }catch (JSONException e){
-
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context).setMessage("連線錯誤").show();
-                signup_qrscanner.startCamera();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                String Token = getSharedPreferences("preFile", MODE_PRIVATE).getString("access_token", "");
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "Bearer " + Token);
-                return headers;
-            }
-        };
-        MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    new AlertDialog.Builder(context).setMessage("連線錯誤").show();
+                    signup_qrscanner.startCamera();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    String Token = getSharedPreferences("preFile", MODE_PRIVATE).getString("access_token", "");
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + Token);
+                    return headers;
+                }
+            };
+            MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
+        }else{
+            new AlertDialog.Builder(context).setMessage("請使用對應的QR碼").show();
+            signup_qrscanner.startCamera();
+        }
+
     }
 
 

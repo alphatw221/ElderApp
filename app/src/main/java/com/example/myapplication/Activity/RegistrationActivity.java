@@ -29,7 +29,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.myapplication.Fragment.Frag1;
 import com.example.myapplication.Fragment.give_money_Frag;
-import com.example.myapplication.Fragment.qrscanner_text;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
 import com.google.zxing.Result;
@@ -106,8 +105,8 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         qrscanner=findViewById(R.id._registration_qrscanner);
         qr_layout=findViewById(R.id._qr_layout);
         //--------------------初始設定---------------------------------------------------------------------------------------------------------------------------------
-        ArrayAdapter<String> adapterTest=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,test);
-        ArrayAdapter<String> adapter_how2Pay=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,how2Pay);
+        ArrayAdapter<String> adapterTest=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,test);
+        ArrayAdapter<String> adapter_how2Pay=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,how2Pay);
 
         adapterTest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter_how2Pay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -233,6 +232,11 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                                 intent.setClass(RegistrationActivity.this, TabActivity.class);
                                 startActivity(intent);
                                 finish();
+                            }else{
+                                new AlertDialog.Builder(RegistrationActivity.this)
+                                        .setTitle("註冊失敗")
+                                        .setMessage("請從新嘗試或聯絡客服人員")
+                                        .show();
                             }
                         }
                     };
@@ -242,15 +246,16 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             new AlertDialog.Builder(RegistrationActivity.this)
-                                    .setTitle("Error")
-                                    .setIcon(R.mipmap.ic_launcher)
-                                    .setMessage(error.toString())
+                                    .setTitle("連線錯誤")
+                                    .setMessage("請檢查網路連線或聯絡客服人員")
                                     .show();
                         }
                     };
                 //----------------------執行請求----------------------------------------------------------------
 //                new myJsonRequest(url,"post",key,value,context,RL,REL).Fire();
                     myJsonRequest.POST_Request.getJSON_object(url,key,value,context,RL,REL);
+            }else{
+                new AlertDialog.Builder(context).setMessage("部分資料有誤 請完成修改後重試").show();
             }
 
         }

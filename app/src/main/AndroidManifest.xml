@@ -14,7 +14,8 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.signupActivity"></activity>
+        <activity android:name=".Activity.getRewardActivity"></activity>
+        <activity android:name=".Activity.signupActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity
             android:name=".Activity.myAccountActivity"

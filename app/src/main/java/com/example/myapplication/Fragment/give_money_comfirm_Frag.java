@@ -24,7 +24,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.myapplication.Activity.TabActivity;
-import com.example.myapplication.Activity.give_money_comfirm_Activity;
 import com.example.myapplication.Helper_Class.MySingleton;
 import com.example.myapplication.Helper_Class.market_myOrder_listview_adapter;
 import com.example.myapplication.Helper_Class.myJsonRequest;
