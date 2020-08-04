@@ -238,6 +238,7 @@ public class market_Frag extends Fragment {
             
             market_listview_adapter.notifyDataSetChanged();
             market_listView.setAdapter(market_listview_adapter);
+            market_listView.setOnScrollListener(onScrollListener);
         }
     };
     //---------------------錯誤回報Listener1------------------------------------------------------------

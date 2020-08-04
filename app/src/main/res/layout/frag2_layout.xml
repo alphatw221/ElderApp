@@ -58,7 +58,7 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />-->
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:id="@+id/_event_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -69,54 +69,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-    <LinearLayout
-        android:id="@+id/_event_search_layout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#DD878787"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/_event_search_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:background="#DD878787"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="10dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">-->
 
 
-        <SearchView
-            android:id="@+id/_event_searchview"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_rectangle_black"
-            android:clickable="true" />
+<!--        <SearchView-->
+<!--            android:id="@+id/_event_searchview"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rectangle_black"-->
+<!--            android:clickable="true" />-->
 
-        <Spinner
-            android:id="@+id/_event_category_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_rectangle_black" />
+<!--        <Spinner-->
+<!--            android:id="@+id/_event_category_spinner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rectangle_black" />-->
 
-        <Spinner
-            android:id="@+id/_event_district_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_rectangle_black" />
+<!--        <Spinner-->
+<!--            android:id="@+id/_event_district_spinner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_rectangle_black" />-->
 
-        <Button
-            android:id="@+id/_event_rollback_btn"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#00FFFFFF"
-            android:text="收起"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+<!--        <Button-->
+<!--            android:id="@+id/_event_rollback_btn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="#00FFFFFF"-->
+<!--            android:text="收起"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold" />-->
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

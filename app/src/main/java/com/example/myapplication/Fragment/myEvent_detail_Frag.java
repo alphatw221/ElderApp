@@ -2,6 +2,7 @@ package com.example.myapplication.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +23,11 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.myapplication.Activity.LoginActivity;
 import com.example.myapplication.Activity.TabActivity;
+import com.example.myapplication.Activity.UpdateMyDataActivity;
+import com.example.myapplication.Activity.signupActivity;
 import com.example.myapplication.Helper_Class.MySingleton;
-import com.example.myapplication.Helper_Class.jasonList_2_objList;
-import com.example.myapplication.Helper_Class.myJsonRequest;
 import com.example.myapplication.Model_Class.Event_class;
 import com.example.myapplication.R;
 import com.squareup.picasso.Picasso;
@@ -36,41 +37,47 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class event_detial_Frag extends Fragment {
+
+public class myEvent_detail_Frag extends Fragment {
     private Event_class event_class;
-    public event_detial_Frag(Event_class event_class) {
+
+    public myEvent_detail_Frag(Event_class event_class) {
         this.event_class=event_class;
     }
-    private ImageButton event_detail_back;
-    private Button event_detail_join;
-    private TextView event_detail_title,event_detail_time,event_detail_endtime,event_detail_body,event_detail_reward;
-    private ImageView event_detail_image;
+
+    private ImageButton myevent_detail_back;
+    private Button myevent_detail_cancel,myevent_detail_getreward,myevent_detail_signin;
+    private TextView myevent_detail_title,myevent_detail_time,myevent_detail_endtime,myevent_detail_body,myevent_detail_reward;
+    private ImageView myevent_detail_image;
     private String url="https://www.happybi.com.tw/api/event/eventDetail/";
     private String url2="https://www.happybi.com.tw/api/joinevent/";
     private Context context;
     private boolean isParticipated;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.frag_event_detail,container,false);
-        this.context=getContext();
-        event_detail_back=view.findViewById(R.id._event_detail_back);
-        event_detail_join=view.findViewById(R.id._event_detail_join);
-        event_detail_image=view.findViewById(R.id._event_detail_image);
-        event_detail_title=view.findViewById(R.id._event_detail_title);
-        event_detail_time=view.findViewById(R.id._event_detail_time);
-        event_detail_endtime=view.findViewById(R.id._event_detail_endtime);
-        event_detail_body=view.findViewById(R.id._event_detail_body);
-        event_detail_reward=view.findViewById(R.id._event_detail_reward);
+        View view= inflater.inflate(R.layout.fragment_my_event_detail_,container,false);
+        context=this.getContext();
+        myevent_detail_back=view.findViewById(R.id._myevent_detail_back);
+        myevent_detail_cancel=view.findViewById(R.id._myevent_detail_cancel);
+        myevent_detail_image=view.findViewById(R.id._myevent_detail_image);
+        myevent_detail_title=view.findViewById(R.id._myevent_detail_title);
+        myevent_detail_time=view.findViewById(R.id._myevent_detail_time);
+        myevent_detail_endtime=view.findViewById(R.id._myevent_detail_endtime);
+        myevent_detail_body=view.findViewById(R.id._myevent_detail_body);
+        myevent_detail_reward=view.findViewById(R.id._myevent_detail_reward);
+        myevent_detail_getreward=view.findViewById(R.id._myevent_detail_getreward);
+        myevent_detail_signin=view.findViewById(R.id._myevent_detail_signup);
+
+        myevent_detail_back.setOnClickListener(btn_listener);
+        myevent_detail_cancel.setOnClickListener(btn_listener);
+        myevent_detail_getreward.setOnClickListener(btn_listener);
+        myevent_detail_signin.setOnClickListener(btn_listener);
 
         JsonObjectRequest eventDetailRequest=new JsonObjectRequest(0, url+event_class.slug , null, RL,REL){
             @Override
@@ -84,22 +91,53 @@ public class event_detial_Frag extends Fragment {
             }
         };
         MySingleton.getInstance(context).getRequestQueue().add(eventDetailRequest);
-
-
-        event_detail_back.setOnClickListener(btn_listener);
-        event_detail_join.setOnClickListener(btn_listener);
         return view;
     }
+
+    //---------------------回報Listener------------------------------------------------------------
+    private  Response.Listener RL=new Response.Listener<JSONObject>(){
+        @Override
+        public void onResponse(JSONObject response) {
+            JSONObject event=new JSONObject();
+            try {
+                event=response.getJSONObject("event");
+                isParticipated=response.getBoolean("isParticipated");
+
+                Picasso.get().load(event.getString("imgUrl")).into(myevent_detail_image);
+                myevent_detail_title.setText(event.getString("title"));
+                myevent_detail_time.setText(event.getString("dateTime"));
+                myevent_detail_endtime.setText(event.getString("deadline"));
+                myevent_detail_reward.setText(Integer.toString(event.getInt("reward"))+"獎勵");
+                myevent_detail_body.setText(event.getString("body"));
+
+            }catch (JSONException e){
+
+            }
+        }
+    };
+    //---------------------錯誤回報Listener------------------------------------------------------------
+    private Response.ErrorListener REL=new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            new AlertDialog.Builder(context)
+                    .setTitle("連線錯誤")
+                    .show();
+            //
+        }
+    };
+
+
+
     private Button.OnClickListener btn_listener=new Button.OnClickListener(){
 
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case  R.id._event_detail_back:
+                case  R.id._myevent_detail_back:
                     FragmentManager FM = getFragmentManager();
                     FragmentTransaction FT = FM.beginTransaction();
                     Fragment fragment=FM.findFragmentByTag("Frag2");
-                    Fragment fragment2=FM.findFragmentByTag("event_detail_Frag");
+                    Fragment fragment2=FM.findFragmentByTag("myevent_detail_Frag");
                     if ( fragment!=null) {
                         if ( fragment.isAdded()) {
                             FT.show(fragment);
@@ -115,8 +153,8 @@ public class event_detial_Frag extends Fragment {
                     }
                     FT.commit();
 
-                break;
-                case R.id._event_detail_join:
+                    break;
+                case R.id._myevent_detail_cancel:
                     JSONObject jsonObject=new JSONObject();
                     try {
 
@@ -166,49 +204,24 @@ public class event_detial_Frag extends Fragment {
                         }
                     };
                     MySingleton.getInstance(context).getRequestQueue().add(joinRequest);
+                    break;
+                case R.id._myevent_detail_getreward:
+
+
+
+
+
+
 
                     break;
-
+                case R.id._myevent_detail_signup:
+                    Intent i = new Intent(myEvent_detail_Frag.this.getContext(),signupActivity.class);
+//                    intent.setClass(context, signupActivity.class);
+                    i.putExtra("slug",event_class.slug);
+                    i.putExtra("name",event_class.name);
+                    startActivity(i);
+                    break;
             }
-        }
-    };
-
-
-
-    //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL=new Response.Listener<JSONObject>(){
-        @Override
-        public void onResponse(JSONObject response) {
-            JSONObject event=new JSONObject();
-            try {
-                event=response.getJSONObject("event");
-                isParticipated=response.getBoolean("isParticipated");
-
-                Picasso.get().load(event.getString("imgUrl")).into(event_detail_image);
-                event_detail_title.setText(event.getString("title"));
-                event_detail_time.setText(event.getString("dateTime"));
-                event_detail_endtime.setText(event.getString("deadline"));
-                event_detail_reward.setText(Integer.toString(event.getInt("reward"))+"獎勵");
-                event_detail_body.setText(event.getString("body"));
-
-            }catch (JSONException e){
-
-            }
-
-
-
-
-        }
-    };
-    //---------------------錯誤回報Listener------------------------------------------------------------
-    private Response.ErrorListener REL=new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
-                    .setTitle("連線錯誤")
-                    .show();
-
-            //
         }
     };
 

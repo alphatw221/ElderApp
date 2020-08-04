@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +22,11 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.myapplication.Activity.MainActivity;
+import com.example.myapplication.Helper_Class.QRCodeHelper;
 import com.example.myapplication.R;
 import com.example.myapplication.Activity.UpdateMyDataActivity;
 import com.example.myapplication.Helper_Class.myJsonRequest;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +38,10 @@ public class Frag3 extends Fragment {
             myAccount_birthday,myAccount_cellPhone,myAccount_tel,myAccount_address,myAccount_idcode;
     private Button myAccount_update,myAccount_apply,myAccount_agrement,myAccount_logout;
     private TextView myAccount_member,myAccount_valid,myAccount_expiry_date;
+    private ImageView myAccount_qr;
     private String url="https://www.happybi.com.tw/api/auth/myAccount";
     private SharedPreferences preferences;
+    private boolean firstset=false;
     private Context context;
 
 
@@ -52,7 +58,7 @@ public class Frag3 extends Fragment {
         myAccount_tel=(EditText)view.findViewById(R.id._myAccount_tel);
         myAccount_address=(EditText)view.findViewById(R.id._myAccount_address);
         myAccount_idcode=(EditText)view.findViewById(R.id._myAccount_idcode);
-//        myAccount_member=(TextView)view.findViewById(R.id._myAccount_member);
+        myAccount_qr=(ImageView) view.findViewById(R.id._myAccount_qr);
         myAccount_update=(Button)view.findViewById(R.id._myAccount_update);
         myAccount_agrement=(Button)view.findViewById(R.id._myAccount_agrement);
         myAccount_logout=(Button)view.findViewById(R.id._myAccount_logout);
@@ -102,6 +108,15 @@ public class Frag3 extends Fragment {
                     myAccount_valid.setText("有效");
                     myAccount_valid.setTextColor(Color.parseColor("#76FF03"));
                 }
+
+                Bitmap bitmap = QRCodeHelper
+                        .newInstance(context)
+                        .setContent(response.getString("id_code"))
+                        .setErrorCorrectionLevel(ErrorCorrectionLevel.Q)
+                        .setMargin(1)
+                        .getQRCOde();
+                myAccount_qr.setImageBitmap(bitmap);
+                firstset=true;
             }catch(JSONException e){
                 new AlertDialog.Builder(getActivity())
                         .setTitle("錯誤")
@@ -129,7 +144,7 @@ public class Frag3 extends Fragment {
             Intent intent = new Intent();
             intent.setClass(context, UpdateMyDataActivity.class);
             startActivity(intent);
-            getActivity().finish();
+//            getActivity().finish();
         }
     };
 
@@ -157,4 +172,16 @@ public class Frag3 extends Fragment {
             getActivity().finish();
         }
     };
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(firstset){
+            Object[] key=new Object[]{"token"};
+            Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
+//        new myJsonRequest(url,"post",key,value,getActivity().getApplicationContext(),RL,REL).Fire();
+            myJsonRequest.POST_Request.getJSON_object(url,key,value,getActivity().getApplicationContext(),RL,REL);
+        }
+    }
 }

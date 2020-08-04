@@ -47,6 +47,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
         update_comfirm.setOnClickListener(comfirm_listener);
         update_cancel.setOnClickListener(cancel_listener);
         context=this.getApplicationContext();
+
     }
     //---------------------回報Listener------------------------------------------------------------
     private  Response.Listener RL=new Response.Listener<JSONObject>(){
@@ -106,9 +107,10 @@ public class UpdateMyDataActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-            startActivity(intent);
+
+//            Intent intent = new Intent();
+//            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
+//            startActivity(intent);
             finish();
         }
     };
@@ -126,9 +128,9 @@ public class UpdateMyDataActivity extends AppCompatActivity {
                             .setIcon(R.mipmap.ic_launcher)
                             .setMessage(response.getString("m"))
                             .show();
-                    Intent intent = new Intent();
-                    intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
+//                    startActivity(intent);
                     finish();
                 }else{
                     new AlertDialog.Builder(UpdateMyDataActivity.this)
@@ -149,11 +151,13 @@ public class UpdateMyDataActivity extends AppCompatActivity {
                     .setIcon(R.mipmap.ic_launcher)
                     .setMessage("系統錯誤")
                     .show();
-            Intent intent = new Intent();
-            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent();
+//            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
+//            startActivity(intent);
             finish();
             //
         }
     };
+
+
 }

@@ -14,14 +14,19 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".Activity.LoginActivity"></activity>
-        <activity android:name=".Activity.myAccountActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".Activity.EventActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".Activity.HomeActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".Activity.give_money_comfirm_Activity" />
-<!--        <activity android:name=".Fragment.give_money_Frag" />-->
-<!--        <activity android:name=".Fragment.take_money_Frag" />-->
+        <activity android:name=".Activity.signupActivity"></activity>
+        <activity android:name=".Activity.LoginActivity" />
+        <activity
+            android:name=".Activity.myAccountActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".Activity.EventActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:launchMode="singleInstance" />
+        <activity android:name=".Activity.give_money_comfirm_Activity" /> <!-- <activity android:name=".Fragment.give_money_Frag" /> -->
+        <!-- <activity android:name=".Fragment.take_money_Frag" /> -->
         <activity android:name=".Activity.TransactionActivity" />
         <activity android:name=".Activity.UpdateMyDataActivity" />
         <activity
@@ -35,22 +40,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-<!--        <service-->
-<!--            android:name=".Http_Get"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
-<!--        <service-->
-<!--            android:name=".Http_Post"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
-        <service android:name="com.example.myapplication.Helper_Class.MyFirebaseService">
+        </activity> <!-- <service -->
+        <!-- android:name=".Http_Get" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> -->
+        <!-- <service -->
+        <!-- android:name=".Http_Post" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> -->
+        <service android:name=".Helper_Class.MyFirebaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

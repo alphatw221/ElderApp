@@ -1,7 +1,13 @@
 package com.example.myapplication.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,27 +27,43 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.myapplication.Fragment.Frag1;
+import com.example.myapplication.Fragment.give_money_Frag;
+import com.example.myapplication.Fragment.qrscanner_text;
 import com.example.myapplication.R;
 import com.example.myapplication.Helper_Class.myJsonRequest;
+import com.google.zxing.Result;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegistrationActivity extends AppCompatActivity {
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+public class RegistrationActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     //-------------------宣告全域變數----------------------------------------------------------------------------------------------------------------------------------
     private Spinner District_Spinner,how2Pay_Spinner;
-    private EditText account,PW,PWcomfirm,name,cellPhone,phone,idCode,address;
+    private EditText account,PW,PWcomfirm,name,cellPhone,phone,idCode,address,inviter;
     private TextView account_error,PW_error,PWcomfirm_error,
             name_error,cellPhone_error,gender_error,idCode_error,
             district_error,address_error,how2Pay_error;
     private RadioButton male,female;
     private RadioGroup genderGroup;
-    private Button go_back,submit;
+    private Button go_back,submit,show_qr_btn;
     private DatePicker birthday_datePicker;
+    private ZXingScannerView qrscanner;
+    private ConstraintLayout qr_layout;
     String[]test={"請選擇地區","桃園","中壢","平鎮","八德","龜山","蘆竹","大園","觀音","新屋","楊梅","龍潭","大溪","復興"};
     String[] how2Pay={"請選擇付款方式","推薦人代收","自行繳費"};
     private SharedPreferences preference;
     private Context context;
+    private Activity activity;
+    private ZXingScannerView.ResultHandler resultHandler=this;
     //-----------------------------------------------------------------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
         //-------------------開始抓取物件----------------------------------------------------------------------------------------------------------------------------------
         go_back=(Button) findViewById(R.id._return);
         submit=(Button)findViewById(R.id._subbmit);
+        show_qr_btn=(Button)findViewById(R.id._show_qr_btn);
 
         genderGroup=(RadioGroup) findViewById(R.id._genderGroup);
         male=(RadioButton) findViewById(R.id._male);
@@ -67,6 +90,7 @@ public class RegistrationActivity extends AppCompatActivity {
         phone=(EditText)findViewById(R.id._phone);
         idCode=(EditText)findViewById(R.id._idCode);
         address=(EditText)findViewById(R.id._address);
+        inviter=(EditText)findViewById(R.id._inviter);
 
         account_error=(TextView)findViewById(R.id._account_error);
         PW_error=(TextView)findViewById(R.id._PW_error);
@@ -78,6 +102,9 @@ public class RegistrationActivity extends AppCompatActivity {
         district_error=(TextView)findViewById(R.id._district_error);
         address_error=(TextView)findViewById(R.id._address_error);
         how2Pay_error=(TextView)findViewById(R.id._how2pay_error);
+
+        qrscanner=findViewById(R.id._registration_qrscanner);
+        qr_layout=findViewById(R.id._qr_layout);
         //--------------------初始設定---------------------------------------------------------------------------------------------------------------------------------
         ArrayAdapter<String> adapterTest=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,test);
         ArrayAdapter<String> adapter_how2Pay=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,how2Pay);
@@ -92,9 +119,64 @@ public class RegistrationActivity extends AppCompatActivity {
 
         go_back.setOnClickListener(go_backListener);
         submit.setOnClickListener(submitListener);
+        show_qr_btn.setOnClickListener(show_qr_Listener);
+
+
         preference=getSharedPreferences("preFile",MODE_PRIVATE);
         context=this.getApplicationContext();
+        activity=this;
     }
+
+    //-----------------------------顯示qr_Listener------------------------------------------------------------------------------------------------------------------------
+    private Button.OnClickListener show_qr_Listener=new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+//            qrscanner.setVisibility(View.VISIBLE);
+//            qrscanner.setResultHandler(resultHandler);
+            qr_layout.setVisibility(View.VISIBLE);
+            Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
+//            qrscanner.startCamera();
+//            FragmentManager FM=getSupportFragmentManager();
+//            FragmentTransaction FT=FM.beginTransaction();
+//            FT.replace(R.id._registration_qrscanner,new qrscanner_text(),"qrscanner").commit();
+        }
+    };
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
+//        qrscanner.startCamera();
+//    }
+
+    @Override
+    public void handleResult(Result rawResult) {
+        inviter.setText(rawResult.getText());
+        qrscanner.stopCamera();
+        qr_layout.setVisibility(View.GONE);
+    }
+
+    private PermissionListener permissionListener=new PermissionListener() {
+        @Override
+        public void onPermissionGranted(PermissionGrantedResponse response) {
+//            qrscanner.setResultHandler(RegistrationActivity.this);
+            qrscanner.setResultHandler(resultHandler);
+            qrscanner.startCamera();
+        }
+
+        @Override
+        public void onPermissionDenied(PermissionDeniedResponse response) {
+            qr_layout.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+        }
+    };
+
+
 
 //-------------------------------地區下拉Listener----------------------------------------------------------------------------------------------------------------------
     private Spinner.OnItemSelectedListener DistrictListener=new Spinner.OnItemSelectedListener(){
@@ -222,10 +304,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent();
-            intent.setClass(RegistrationActivity.this, MainActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent();
+//            intent.setClass(RegistrationActivity.this, MainActivity.class);
+//            startActivity(intent);
             finish();
         }
     };
+
+
 }

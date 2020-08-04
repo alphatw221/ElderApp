@@ -92,7 +92,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {   
 //        event_location.setText(mDataset.get(position).location);
         event_people.setText(Integer.toString(mDataset.get(position).people)+"/"+Integer.toString(mDataset.get(position).maximum));
         event_happybi.setText(Integer.toString(mDataset.get(position).reward)+"獎勵");
-        if(mDataset.get(position).dateTime.equals("null")){
+        if(mDataset.get(position).dateTime==null){
             event_dateTime.setText("");
         }else{
             event_dateTime.setText(mDataset.get(position).dateTime);
@@ -109,47 +109,47 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {   
 
 
 
-    public void filter(String text,int category,int district) {
-        int size=mDataset_copy.size();
-        List<Event_class> temp =new ArrayList<>();
-
-        mDataset.clear();
-        mDataset.addAll(mDataset_copy);
-        if(text.isEmpty()&&district==0&&category==0){
-            //不做事
-        } else {
-            if(!text.isEmpty()){
-                for(int i=0;i<size;i++){
-                    if(mDataset_copy.get(i).title.indexOf(text)<0 ){
-                        mDataset.remove(mDataset_copy.get(i));
-
-                    }
-                }
-            }
-            if(district!=0){
-                size=mDataset.size();
-                temp.clear();
-                temp.addAll(mDataset);
-                for(int i=0;i<size;i++){
-                    if(temp.get(i).district_id!=district ){
-                        mDataset.remove(temp.get(i));
-
-                    }
-                }
-            }
-
-            if(category!=0){
-                size=mDataset.size();
-                temp.clear();
-                temp.addAll(mDataset);
-                for(int i=0;i<size;i++){
-                    if(temp.get(i).category_id!=category ){
-                        mDataset.remove(temp.get(i));
-
-                    }
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
+//    public void filter(String text,int category,int district) {
+//        int size=mDataset_copy.size();
+//        List<Event_class> temp =new ArrayList<>();
+//
+//        mDataset.clear();
+//        mDataset.addAll(mDataset_copy);
+//        if(text.isEmpty()&&district==0&&category==0){
+//            //不做事
+//        } else {
+//            if(!text.isEmpty()){
+//                for(int i=0;i<size;i++){
+//                    if(mDataset_copy.get(i).title.indexOf(text)<0 ){
+//                        mDataset.remove(mDataset_copy.get(i));
+//
+//                    }
+//                }
+//            }
+//            if(district!=0){
+//                size=mDataset.size();
+//                temp.clear();
+//                temp.addAll(mDataset);
+//                for(int i=0;i<size;i++){
+//                    if(temp.get(i).district_id!=district ){
+//                        mDataset.remove(temp.get(i));
+//
+//                    }
+//                }
+//            }
+//
+//            if(category!=0){
+//                size=mDataset.size();
+//                temp.clear();
+//                temp.addAll(mDataset);
+//                for(int i=0;i<size;i++){
+//                    if(temp.get(i).category_id!=category ){
+//                        mDataset.remove(temp.get(i));
+//
+//                    }
+//                }
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
 }

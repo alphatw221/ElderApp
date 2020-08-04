@@ -5,429 +5,492 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Activity.RegistrationActivity"
-    android:fillViewport="true"
-    app:layout_constraintBottom_toTopOf="@+id/_return"
-
-        >
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    >
-
-    <EditText
-        android:id="@+id/_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="帳號"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="208dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="帳號(建議使用手機或Email)"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="桃園市銀髮族協會"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="會員註冊"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="密碼"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_account"
-        app:layout_constraintTop_toBottomOf="@+id/_account" />
-
-    <EditText
-        android:id="@+id/_PW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="密碼"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="確認密碼"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_PW"
-        app:layout_constraintTop_toBottomOf="@+id/_PW" />
-
-    <EditText
-        android:id="@+id/_PWcomfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="確認密碼"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="姓名"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_PWcomfirm"
-        app:layout_constraintTop_toBottomOf="@+id/_PWcomfirm" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="手機"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_person_name"
-        app:layout_constraintTop_toBottomOf="@+id/_person_name" />
-
-    <EditText
-        android:id="@+id/_person_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="姓名"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="家用電話"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_cellPhone"
-        app:layout_constraintTop_toBottomOf="@+id/_cellPhone" />
-
-    <EditText
-        android:id="@+id/_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="家用電話"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    <EditText
-        android:id="@+id/_cellPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="手機"
-        android:inputType="phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <RadioGroup
-        android:id="@+id/_genderGroup"
-        android:layout_width="180dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
+    tools:context=".Activity.RegistrationActivity">
 
 
-        <RadioButton
-            android:id="@+id/_male"
-            android:layout_width="88dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/_return"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".Activity.RegistrationActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="男性" />
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/_female"
-            android:layout_width="87dp"
-            android:layout_height="match_parent"
-            android:text="女性" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="桃園市銀髮族協會"
+                android:textColor="#FF9100"
+                android:textSize="24sp" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="會員註冊"
+                android:textColor="#000000" />
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="身分證字號"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/_birthday" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="出生年月日"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_genderGroup"
-        app:layout_constraintTop_toBottomOf="@+id/_genderGroup" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="性別"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_phone"
-        app:layout_constraintTop_toBottomOf="@+id/_phone" />
-
-    <EditText
-        android:id="@+id/_idCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="身分證字號"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="地區"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_idCode"
-        app:layout_constraintTop_toBottomOf="@+id/_idCode" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="帳號(建議使用手機或Email)"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
 
 
-    <Spinner
-        android:id="@+id/_district"
-        android:layout_width="163dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView19"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+            <EditText
+                android:id="@+id/_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="帳號"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="地址"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView19"
-        app:layout_constraintTop_toBottomOf="@+id/_district" />
+            <TextView
+                android:id="@+id/_account_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
 
-    <EditText
-        android:id="@+id/_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="地址"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="密碼"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="付款方式"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/_address"
-        app:layout_constraintTop_toBottomOf="@+id/_address" />
+            <EditText
+                android:id="@+id/_PW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="密碼"
+                android:inputType="textPassword"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
 
-    <Spinner
-        android:id="@+id/_how2pay"
-        android:layout_width="164dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="64dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            <TextView
+                android:id="@+id/_PW_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
 
-    <DatePicker
-        android:id="@+id/_birthday"
-        android:layout_width="392dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="8dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-    <TextView
-        android:id="@+id/_account_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_account"
-        app:layout_constraintTop_toBottomOf="@+id/_account" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="確認密碼"
+                android:textColor="#000000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/_PW_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_PW"
-        app:layout_constraintTop_toBottomOf="@+id/_PW" />
+            <EditText
+                android:id="@+id/_PWcomfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="確認密碼"
+                android:inputType="textPassword"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/_PWcomfirm_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_PWcomfirm"
-        app:layout_constraintTop_toBottomOf="@+id/_PWcomfirm" />
+            <TextView
+                android:id="@+id/_PWcomfirm_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
 
-    <TextView
-        android:id="@+id/_name_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_person_name"
-        app:layout_constraintTop_toBottomOf="@+id/_person_name" />
 
-    <TextView
-        android:id="@+id/_cellPhone_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_cellPhone"
-        app:layout_constraintTop_toBottomOf="@+id/_cellPhone" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/_gender_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_genderGroup"
-        app:layout_constraintTop_toBottomOf="@+id/_genderGroup" />
+            <EditText
+                android:id="@+id/_person_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="姓名"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/_idCode_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_idCode"
-        app:layout_constraintTop_toBottomOf="@+id/_idCode" />
+            <TextView
+                android:id="@+id/_name_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
 
-    <TextView
-        android:id="@+id/_district_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_district"
-        app:layout_constraintTop_toBottomOf="@+id/_district" />
 
-    <TextView
-        android:id="@+id/_address_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_address"
-        app:layout_constraintTop_toBottomOf="@+id/_address" />
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="手機"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
 
-    <TextView
-        android:id="@+id/_how2pay_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#DD2C00"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/_how2pay"
-        app:layout_constraintTop_toBottomOf="@+id/_how2pay" />
-</androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/_cellPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="手機"
+                android:inputType="phone"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/_cellPhone_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+
+                />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="家用電話"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="家用電話"
+                android:inputType="phone"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="性別"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <RadioGroup
+                android:id="@+id/_genderGroup"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:orientation="horizontal"
+                android:textColorHint="#9A9A9A">
+
+
+                <RadioButton
+                    android:id="@+id/_male"
+                    android:layout_width="88dp"
+                    android:layout_height="match_parent"
+                    android:text="男性"
+                    android:textColor="#000000" />
+
+
+                <RadioButton
+                    android:id="@+id/_female"
+                    android:layout_width="87dp"
+                    android:layout_height="match_parent"
+                    android:text="女性"
+                    android:textColor="#000000" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/_gender_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="出生年月日"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <DatePicker
+                android:id="@+id/_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="117dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#BCBCBC"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="身分證字號"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/_idCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="身分證字號"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/_idCode_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                />
+
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="地區"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <Spinner
+                android:id="@+id/_district"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A" />
+
+
+            <TextView
+                android:id="@+id/_district_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="地址"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="地址"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/_address_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="付款方式"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <Spinner
+                android:id="@+id/_how2pay"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/_how2pay_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="推薦人手機或會員編號"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:id="@+id/_inviter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_line_black"
+                android:ems="10"
+                android:hint="推薦人手機或會會員編號"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHint="#9A9A9A"
+                android:textSize="18sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/_qr_layout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone">
+
+                <me.dm7.barcodescanner.zxing.ZXingScannerView
+                    android:id="@+id/_registration_qrscanner"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/_show_qr_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/shape_rectangle_orange"
+                android:text="掃描QR Code" />
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
     <Button
         android:id="@+id/_return"
@@ -439,7 +502,7 @@
         android:text="返回"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/_subbmit"
-        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintHeight_percent="0.1"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintWidth_percent="0.5" />
@@ -453,7 +516,7 @@
         android:text="送出"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.15"
+        app:layout_constraintHeight_percent="0.1"
         app:layout_constraintWidth_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
