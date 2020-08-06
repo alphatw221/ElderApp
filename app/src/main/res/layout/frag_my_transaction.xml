@@ -50,11 +50,30 @@
 
 
     <!--    </ScrollView>-->
-
-    <ListView
-        android:id="@+id/_my_transaction_listview"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/_my_transaction_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+        <ProgressBar
+            android:id="@+id/_my_transaction_progressbar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="#ffffff"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
 
 

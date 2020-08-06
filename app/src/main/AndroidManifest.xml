@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication">
+    package="com.elderApp.ElderApp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,46 +17,29 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.getRewardActivity"></activity>
-        <activity android:name=".Activity.signupActivity" />
-        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name="com.elderApp.ElderApp.Activity.getRewardActivity"></activity>
+        <activity android:name="com.elderApp.ElderApp.Activity.signupActivity" />
+        <activity android:name="com.elderApp.ElderApp.Activity.LoginActivity" />
+        <activity android:name="com.elderApp.ElderApp.Activity.UpdateMyDataActivity" />
         <activity
-            android:name=".Activity.myAccountActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".Activity.EventActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".Activity.HomeActivity"
-            android:launchMode="singleInstance" />
-        <activity android:name=".Activity.give_money_comfirm_Activity" /> <!-- <activity android:name=".Fragment.give_money_Frag" /> -->
-        <!-- <activity android:name=".Fragment.take_money_Frag" /> -->
-        <activity android:name=".Activity.TransactionActivity" />
-        <activity android:name=".Activity.UpdateMyDataActivity" />
-        <activity
-            android:name=".Activity.TabActivity"
+            android:name="com.elderApp.ElderApp.Activity.TabActivity"
             android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.RegistrationActivity" />
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name="com.elderApp.ElderApp.Activity.RegistrationActivity" />
+        <activity android:name="com.elderApp.ElderApp.Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <service -->
-        <!-- android:name=".Http_Get" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="true" /> -->
-        <!-- <service -->
-        <!-- android:name=".Http_Post" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="true" /> -->
-        <service android:name=".Helper_Class.MyFirebaseService">
+        </activity>
+        <service android:name="com.elderApp.ElderApp.Helper_Class.MyFirebaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+
     </application>
 
 </manifest>

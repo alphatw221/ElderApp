@@ -21,11 +21,11 @@
 
         <TextView
             android:id="@+id/_transaction_message"
-            android:layout_width="180dp"
-            android:layout_height="65dp"
+            android:layout_width="182dp"
+            android:layout_height="106dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="訊息"
             android:textColor="#000000"
             android:textSize="18sp"
@@ -37,10 +37,11 @@
             android:id="@+id/_transaction_object"
             android:layout_width="164dp"
             android:layout_height="38dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
             android:text="對象"
             android:textColor="#000000"
             android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/_transaction_message"
             app:layout_constraintTop_toBottomOf="@+id/_transaction_message" />
 

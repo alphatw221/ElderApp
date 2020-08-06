@@ -96,7 +96,6 @@
                     android:layout_marginBottom="10dp"
                     android:background="#00FFFFFF"
                     android:gravity="center_vertical"
-                    android:text="時間"
                     android:textColor="#AAAAAA" />
 
                 <TextView
@@ -107,7 +106,6 @@
                     android:layout_marginBottom="10dp"
                     android:background="#00FFFFFF"
                     android:gravity="center_vertical"
-                    android:text="結束時間"
                     android:textColor="#AAAAAA" />
 
 

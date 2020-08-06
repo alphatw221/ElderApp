@@ -442,6 +442,8 @@
 
 
             <TextView
+                android:id="@+id/_inviter_textview"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -451,6 +453,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/_inviter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -486,6 +489,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/_show_qr_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -498,9 +502,13 @@
 
 
 
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"/>
 
         </LinearLayout>
+
+
     </ScrollView>
 
 

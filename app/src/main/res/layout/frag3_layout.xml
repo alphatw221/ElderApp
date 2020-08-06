@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#FFFFFF"
     android:fillViewport="true"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        >
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
 
-            <TextView
-                android:id="@+id/textView33"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
-                android:text="個人檔案"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:text="個人檔案"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -38,12 +36,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="220dp"
-            android:background="#000000"
+            android:background="#FFFFFF"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -55,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="姓名"
-                android:textColor="#FFFFFF" />
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_name"
@@ -68,14 +65,18 @@
                 android:focusable="false"
                 android:inputType="textPersonName"
                 android:text="test"
-                android:textColor="#FFFFFF" />
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="帳號" />
+                android:text="帳號"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_account"
@@ -87,14 +88,19 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000" />
 
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="性別" />
+                android:text="性別"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_gender"
@@ -106,14 +112,19 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="生日" />
+                android:text="生日"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_birthday"
@@ -125,14 +136,19 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView26"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="手機" />
+                android:text="手機"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_cellPhone"
@@ -144,14 +160,19 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="住家電話" />
+                android:text="住家電話"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_tel"
@@ -163,14 +184,18 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView29"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="地址" />
+                android:text="地址"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_address"
@@ -182,14 +207,19 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
 
             <TextView
                 android:id="@+id/textView30"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="身分證" />
+                android:text="身分證"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <EditText
                 android:id="@+id/_myAccount_idcode"
@@ -201,25 +231,35 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:backgroundTint="#000000"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="效期到期日"
-                android:layout_marginLeft="10dp"/>
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/_myAccount_expiry_date"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
-                android:text="111111"/>
+                android:text="111111"
+                android:textColor="#000000"
+                android:textColorHint="#000000" />
+
             <TextView
                 android:id="@+id/xxxxxxxx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="會員資格" />
+                android:text="會員資格"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/_myAccount_valid"
@@ -257,16 +297,20 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="407dp">
 
                 <Button
                     android:id="@+id/_myAccount_update"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="74dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/background_border_line_grey"
                     android:text="修改資料"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -275,13 +319,18 @@
 
                 <Button
                     android:id="@+id/_myAccount_apply"
-                    android:layout_width="match_parent"
-                    android:layout_height="71dp"
+                    android:layout_width="0dp"
+                    android:layout_height="74dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
-                    android:background="#FFAB00"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/shape_rectangle_orange"
                     android:text="申請續會"
                     android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="@+id/_myAccount_update"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/_myAccount_update" />
 
                 <Button
@@ -326,10 +375,7 @@
             app:srcCompat="@mipmap/user_default" />
 
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </ScrollView>
