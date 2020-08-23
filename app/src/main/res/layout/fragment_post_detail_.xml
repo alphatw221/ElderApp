@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:id="@+id/_post_detail_back_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FF6D00"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/_post_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_input_delete" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/_post_detail_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/_post_detail_edittextblock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_post_detail_back_layout"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/_post_detail_cardview"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    app:cardCornerRadius="25dp">
+
+                    <ImageView
+                        android:id="@+id/_post_detail_author_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/_post_detail_author"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:text="使用者名稱"
+                    android:textColor="#ff000000"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/_post_detail_dateTime"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="時間"
+                android:textColor="#8A8A8A"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/_post_cardview" />
+
+            <TextView
+                android:id="@+id/_post_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="標題"
+                android:textColor="#ff000000"
+                android:textSize="25sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/_post_dateTime" />
+
+            <ImageView
+                android:id="@+id/_post_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/_post_detail_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
+                android:text="內文"
+                android:textColor="#ff000000"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/_post_title" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#A8A8A8"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        app:srcCompat="@drawable/ic_heart"
+                        tools:srcCompat="@drawable/ic_heart" />
+
+                    <TextView
+                        android:id="@+id/_post_detail_like_number"
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_comments"
+                        tools:srcCompat="@drawable/ic_comments" />
+
+                    <TextView
+                        android:id="@+id/_post_detail_comments_number"
+                        android:layout_width="25dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0" />
+
+
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/_post_detail_like_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:background="#00FFFFFF"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_heart_stroke_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/_post_detail_nocomment"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="目前無人回應(留言搶頭香)"
+                android:textColor="#BABABA"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+<!--            <ListView-->
+<!--                android:id="@+id/_post_detail_listview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                >-->
+
+<!--            </ListView>-->
+            <LinearLayout
+                android:id="@+id/_post_detail_comment_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/_post_detail_edittextblock"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_margin="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/_post_detail_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:background="@drawable/border_line_black"
+            android:hint="留言..."
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#BABABA" />
+
+        <Button
+            android:id="@+id/_post_detail_comment_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:background="@drawable/background_border_line_grey"
+            android:text="發布" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ public class event_detial_Frag extends Fragment {
     private String url2="https://www.happybi.com.tw/api/joinevent/";
     private Context context;
     private boolean isParticipated;
+    private WebView event_detail_webview;
 
 
 
@@ -68,6 +70,7 @@ public class event_detial_Frag extends Fragment {
         event_detail_endtime=view.findViewById(R.id._event_detail_endtime);
         event_detail_body=view.findViewById(R.id._event_detail_body);
         event_detail_reward=view.findViewById(R.id._event_detail_reward);
+        event_detail_webview=view.findViewById(R.id._event_detail_webview);
 
         JsonObjectRequest eventDetailRequest=new JsonObjectRequest(0, url+event_class.slug , null, RL,REL){
             @Override
@@ -185,12 +188,15 @@ public class event_detial_Frag extends Fragment {
                 event_detail_title.setText(event.getString("title"));
 
                 if(event.getInt("type")==1){
-                    event_detail_time.setText(event.getString("dateTime"));
-                    event_detail_endtime.setText(event.getString("deadline"));
+                    event_detail_time.setText("活動時間:"+event.getString("dateTime"));
+                    event_detail_endtime.setText("報名截止:"+event.getString("deadline"));
+                }else{
+                    event_detail_time.setVisibility(View.GONE);
+                    event_detail_endtime.setVisibility(View.GONE);
                 }
                 event_detail_reward.setText(Integer.toString(event.getInt("reward"))+"獎勵");
-                event_detail_body.setText(event.getString("body"));
-
+//                event_detail_body.setText(event.getString("body"));
+                event_detail_webview.loadData(event.getString("body"),"text/html","UTF-8");
 
             }catch (JSONException e){
                 Log.d("error",e.toString());

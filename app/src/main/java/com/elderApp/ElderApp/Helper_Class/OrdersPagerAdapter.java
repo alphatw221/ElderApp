@@ -8,12 +8,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.elderApp.ElderApp.Fragment.frag1_blank;
 import com.elderApp.ElderApp.Fragment.frag2_blank;
 import com.elderApp.ElderApp.Fragment.frag3_blank;
+import com.elderApp.ElderApp.Fragment.frag4_blank;
 import com.elderApp.ElderApp.Model_Class.Event_class;
 
 import java.util.List;
 
 public class OrdersPagerAdapter extends FragmentStateAdapter {
-    private Fragment Frag1,Frag2,Frag3;
+    private Fragment Frag1,Frag2,Frag3,Frag4;
     private List<Event_class> e;
 
     public OrdersPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -29,6 +30,8 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new frag2_blank();
             case 2:
+                return new frag4_blank();
+            case 3:
                 return new frag3_blank();
 
         }
@@ -36,7 +39,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 
 

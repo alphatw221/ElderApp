@@ -1,17 +1,22 @@
 package com.elderApp.ElderApp.Fragment;
 
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,18 +31,26 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.MainActivity;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.QRCodeHelper;
+import com.elderApp.ElderApp.Helper_Class.jasonList_2_objList;
+import com.elderApp.ElderApp.Model_Class.Event_class;
 import com.elderApp.ElderApp.R;
 import com.elderApp.ElderApp.Activity.UpdateMyDataActivity;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Frag3 extends Fragment {
@@ -45,13 +58,15 @@ public class Frag3 extends Fragment {
             myAccount_birthday,myAccount_cellPhone,myAccount_tel,myAccount_address,myAccount_idcode;
     private Button myAccount_update,myAccount_apply,myAccount_agrement,myAccount_logout;
     private TextView myAccount_member,myAccount_valid,myAccount_expiry_date;
-    private ImageView myAccount_qr;
+    private ImageView myAccount_qr,myAccount_image;
     private String url="https://www.happybi.com.tw/api/auth/myAccount";
     private String url2="https://www.happybi.com.tw/api/extendMemberShip";
     private SharedPreferences preferences;
     private boolean firstset=false;
     private Context context;
     private int user_id;
+    private ImageButton myAccount_image_edit;
+    private Bitmap bitmap;
 
 
     @Nullable
@@ -74,6 +89,8 @@ public class Frag3 extends Fragment {
         myAccount_apply=(Button)view.findViewById(R.id._myAccount_apply);
         myAccount_valid=view.findViewById(R.id._myAccount_valid);
         myAccount_expiry_date=view.findViewById(R.id._myAccount_expiry_date);
+        myAccount_image_edit=view.findViewById(R.id._myAccount_image_edit);
+        myAccount_image=view.findViewById(R.id._myAccount_image);
         //---------------------發出請求------------------------------------------------------------
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
@@ -84,6 +101,7 @@ public class Frag3 extends Fragment {
         myAccount_agrement.setOnClickListener(agreement_listener);
         myAccount_update.setOnClickListener(update_listener);
         myAccount_apply.setOnClickListener(apply_listener);
+        myAccount_image_edit.setOnClickListener(image_edit_listener);
         preferences=this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE);
         context=this.getContext();
         //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,6 +135,9 @@ public class Frag3 extends Fragment {
                     myAccount_valid.setText("有效");
                     myAccount_valid.setTextColor(Color.parseColor("#76FF03"));
                 }
+                if(response.getString("img")!=null){
+                    Picasso.get().load(response.getString("img")).into(myAccount_image);
+                }
 
                 Bitmap bitmap = QRCodeHelper
                         .newInstance(context)
@@ -146,6 +167,77 @@ public class Frag3 extends Fragment {
                     .show();
         }
     };
+    //-----------------編輯相片Listener-----------------------------------------------------------------------------------------------------------------------
+    private Button.OnClickListener image_edit_listener =new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent,1);
+        }
+    };
+
+    //---------------------------------------------------------
+    private String bitmap2String(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[]imageByte=byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageByte,Base64.DEFAULT);
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1&&resultCode==RESULT_OK&&data!=null){
+            Uri path=data.getData();
+            try {
+                bitmap= MediaStore.Images.Media.getBitmap(context.getContentResolver(),path);
+            }catch (IOException e){ }
+            String url3="https://www.happybi.com.tw/api/auth/uploadImage";
+            JSONObject jsonObject=new JSONObject();
+            try{
+                jsonObject.put("image",bitmap2String(bitmap));
+            }catch (JSONException e){}
+            JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(1,url3,jsonObject,new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    try{
+                        if(response.getString("status").equals("success")){
+                            Picasso.get().load(response.getString("imgUrl")).resize(100,100).centerCrop().into(myAccount_image);
+                        }else{
+                            new AlertDialog.Builder(context)
+                                    .setMessage("連線失敗請重試")
+                                    .show();
+                        }
+                    }catch (JSONException e){}
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("連線錯誤")
+                            .setMessage("請重新登入")
+                            .show();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                    Map<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization","Bearer "+Token);
+                    return headers;
+                }
+
+            };
+            MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
+
+        }
+    }
+
     //-----------------修改資料按鈕Listener-----------------------------------------------------------------------------------------------------------------------
     private Button.OnClickListener update_listener =new Button.OnClickListener(){
         @Override

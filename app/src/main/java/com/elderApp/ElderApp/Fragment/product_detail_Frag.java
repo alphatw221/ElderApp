@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public class product_detail_Frag extends Fragment {
     List<String> location_slug_list=new ArrayList<>();
     List<Integer> location_id_list=new ArrayList<>();
     private int select_location_position;
+    private WebView product_detail_webview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class product_detail_Frag extends Fragment {
         product_detail_listview=(ListView)view.findViewById(R.id._product_detail_listview);
         product_detail_spinner=(Spinner)view.findViewById(R.id._product_detail_spinner);
         product_detail_exchange=(Button)view.findViewById(R.id._product_detail_exchange);
+        product_detail_webview=view.findViewById(R.id._product_detail_webview);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 
         product_detail_back.setOnClickListener(backListener);
@@ -140,7 +143,9 @@ public class product_detail_Frag extends Fragment {
                     Picasso.get().load(url).into(product_detail_image);
                     product_detail_name.setText("商品："+product.getString("name"));
                     product_detail_price.setText("樂幣："+product.getString("price"));
-                    product_detail_info.setText("商品資訊:\n\n"+product.getString("info"));
+//                    product_detail_info.setText("商品資訊:\n\n"+product.getString("info"));
+                    product_detail_info.setText("商品資訊:\n");
+                    product_detail_webview.loadData(product.getString("info"),"text/html","UTF-8");
                 }catch (JSONException e){
 
                 }

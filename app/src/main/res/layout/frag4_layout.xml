@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF9100"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/_post_constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFAB00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/_post_create_btn"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="#00FFFFFF"
+            android:gravity="center"
+            android:text="發布文章"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/_post_show_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="@drawable/shape_rectangle_orange"
+            android:gravity="center"
+            android:text="所有文章"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/_post_mypost_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/_post_mypost_btn"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="#00FFFFFF"
+            android:gravity="center"
+            android:text="我的文章"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ListView
+        android:id="@+id/_post_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#FF9100"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/_post_page_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_post_constraintLayout3" />
+
+    <ProgressBar
+        android:id="@+id/_post_progressbar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="#ffffff"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/_post_page_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#FFAB00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/_post_last_page"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="#00FFFFFF"
+            android:gravity="center"
+            android:text="上一頁"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/_post_page_status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="1-x/x"
+            android:layout_margin="2dp"
+            android:background="#00FFFFFF"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/_post_last_page"
+            app:layout_constraintEnd_toStartOf="@+id/_post_next_page"
+            />
+        <Button
+            android:id="@+id/_post_next_page"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:background="#00FFFFFF"
+            android:gravity="center"
+            android:text="下一頁"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -56,6 +57,7 @@ public class myEvent_detail_Frag extends Fragment {
     private String url2="https://www.happybi.com.tw/api/cancelevent/";
     private Context context;
     private boolean isParticipated;
+    private WebView myevent_detail_webview;
 
     @Nullable
     @Override
@@ -72,6 +74,7 @@ public class myEvent_detail_Frag extends Fragment {
         myevent_detail_reward=view.findViewById(R.id._myevent_detail_reward);
         myevent_detail_getreward=view.findViewById(R.id._myevent_detail_getreward);
         myevent_detail_signin=view.findViewById(R.id._myevent_detail_signup);
+        myevent_detail_webview=view.findViewById(R.id._myevent_detail_webview);
 
         myevent_detail_back.setOnClickListener(btn_listener);
         myevent_detail_cancel.setOnClickListener(btn_listener);
@@ -105,12 +108,15 @@ public class myEvent_detail_Frag extends Fragment {
                 Picasso.get().load(event.getString("imgUrl")).into(myevent_detail_image);
                 myevent_detail_title.setText(event.getString("title"));
                 if(event.getInt("type")==1){
-                    myevent_detail_time.setText(event.getString("dateTime"));
-                    myevent_detail_endtime.setText(event.getString("deadline"));
+                    myevent_detail_time.setText("活動時間:"+event.getString("dateTime"));
+                    myevent_detail_endtime.setText("報名截止:"+event.getString("deadline"));
+                }else{
+                    myevent_detail_time.setVisibility(View.GONE);
+                    myevent_detail_endtime.setVisibility(View.GONE);
                 }
                 myevent_detail_reward.setText(Integer.toString(event.getInt("reward"))+"獎勵");
-                myevent_detail_body.setText(event.getString("body"));
-
+//                myevent_detail_body.setText(event.getString("body"));
+                myevent_detail_webview.loadData(event.getString("body"),"text/html","UTF-8");
             }catch (JSONException e){
 
             }
