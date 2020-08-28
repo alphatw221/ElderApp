@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         password=(TextView)findViewById(R.id.editText2);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         pushtoken=getSharedPreferences("preFile",MODE_PRIVATE).getString("pushtoken","");
-        context=this.getApplicationContext();
+        context=this;
         user=new User();
         login.setOnClickListener(login_listener);
         signup.setOnClickListener(signup_listener);
@@ -120,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                 String url2="https://www.happybi.com.tw/api/auth/set_pushtoken";
 
 
-
-
                 StringRequest stringRequest=new StringRequest(1, url2, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -186,6 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                             context.startActivity(i);
                         }
                     }).setNegativeButton("否",null).show();
+//                    new AlertDialog.Builder(context).setMessage("已有更新版本").show();
                 }catch (JSONException e){
 
                 }

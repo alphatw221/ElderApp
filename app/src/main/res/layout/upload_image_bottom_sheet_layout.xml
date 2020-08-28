@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF">
+
+    <Button
+        android:id="@+id/_upload_image_bottom_sheet_cancel"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_upload_image_bottom_sheet"
+        android:text="關閉"
+
+        android:textColor="#00B0FF"
+        android:textSize="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_upload_image_bottom_sheet_linearLayout" />
+
+    <LinearLayout
+
+        android:id="@+id/_upload_image_bottom_sheet_linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_upload_image_bottom_sheet"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/_upload_image_bottom_sheet_capture"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/transparent"
+            android:text="拍照"
+            android:textColor="#00B0FF"
+            android:textSize="22dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#9C9C9C" />
+
+        <Button
+            android:id="@+id/_upload_image_bottom_sheet_select"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:background="@android:color/transparent"
+            android:text="選取照片"
+            android:textColor="#00B0FF"
+            android:textSize="22dp" />
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:background="#9C9C9C" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/_upload_image_bottom_sheet_remove"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="65dp"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:text="刪除照片"-->
+<!--            android:textColor="#00B0FF"-->
+<!--            android:textSize="22dp" />-->
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

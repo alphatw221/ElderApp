@@ -68,10 +68,12 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
                     try {
                         if(response.getInt("s")==1){
                             new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-
+                            finish();
                         }else{
                             new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-                            getreward_qrscanner.startCamera();
+//                            getreward_qrscanner.stopCamera();
+//                            getreward_qrscanner.startCamera();
+                            Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                         }
                     }catch (JSONException e){
 
@@ -81,7 +83,9 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     new AlertDialog.Builder(context).setMessage("連線錯誤").show();
-                    getreward_qrscanner.startCamera();
+//                    getreward_qrscanner.stopCamera();
+//                    getreward_qrscanner.startCamera();
+                    Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                 }
             }) {
                 @Override
@@ -97,7 +101,9 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
             MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
         }else{
             new AlertDialog.Builder(context).setMessage("請使用對應的QR碼").show();
-            getreward_qrscanner.startCamera();
+//            getreward_qrscanner.stopCamera();
+//            getreward_qrscanner.startCamera();
+            Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
         }
     }
 

@@ -44,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Frag1 extends Fragment {
     private TextView person_name,person_rank,person_happybi,person_org_rank,home_title;
-    private ImageButton takeBi,giveBi,myTrans,exchange;
+    private ImageButton takeBi,giveBi,myTrans,exchange,web_market;
     private Button person_org_rank_btn;
     private ConstraintLayout person_org_rank_layout;
     private WebView webView;
@@ -78,6 +78,7 @@ public class Frag1 extends Fragment {
         webView=(WebView)view.findViewById(R.id._web_view);
         frag1_base=(ScrollView)view.findViewById(R.id._frag1_base);
         frameLayout=view.findViewById(R.id._frag1_fragment);
+        web_market=view.findViewById(R.id._web_market);
         context=this.getContext();
         //---------------------發出請求------------------------------------------------------------
         Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
@@ -98,6 +99,7 @@ public class Frag1 extends Fragment {
         giveBi.setOnClickListener(giveBi_listener);
         myTrans.setOnClickListener(myTrans_listener);
         exchange.setOnClickListener(exchange_listener);
+        web_market.setOnClickListener(web_market_listener);
 
         webView.loadUrl("https://www.happybi.com.tw/slider.html");
         WebSettings webSettings = webView.getSettings();
@@ -251,8 +253,40 @@ public class Frag1 extends Fragment {
             FT.commit();
         }
     };
+    //-----------------網路商城按鈕Listener-----------------------------------------------------------------------------------------------------------------------
+    private Button.OnClickListener web_market_listener=new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager FM = getFragmentManager();
+            FragmentTransaction FT = FM.beginTransaction();
+            Fragment fragment=FM.findFragmentByTag("webview_Frag");
+            Fragment fragment2=FM.findFragmentByTag("Frag1");
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.hide(fragment2);
+
+                } else {
+                    //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                    FT.add(R.id._fragment_frag1_blank, fragment, "webview_Frag");
+                    FT.hide(fragment2);
+                }
+            } else{
+                String url="https://www.happybi.com.tw/product/list?token="+Token;
+                FT.add(R.id._fragment_frag1_blank,new webview_Frag(url),"webview_Frag");
+                FT.hide(fragment2);
+            }
+            FT.commit();
+        }
+    };
+
 
     public void setUser(User u){
         this.user=u;
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 }

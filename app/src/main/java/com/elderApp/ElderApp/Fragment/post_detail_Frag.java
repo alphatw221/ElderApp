@@ -95,12 +95,13 @@ public class post_detail_Frag extends Fragment {
         post_detail_back=view.findViewById(R.id._post_detail_back);
         post_detail_like_btn=view.findViewById(R.id._post_detail_like_btn);
         post_detail_comment_btn=view.findViewById(R.id._post_detail_comment_btn);
-//        post_detail_listview=view.findViewById(R.id._post_detail_listview);
         post_detail_comment_list=view.findViewById(R.id._post_detail_comment_list);
         post_detail_nocomment=view.findViewById(R.id._post_detail_nocomment);
         post_detail_scrollview=view.findViewById(R.id._post_detail_scrollview);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             post_detail_scrollview.setOnScrollChangeListener(onScrollChangeListener);
+        }else{
+            new AlertDialog.Builder(context).setMessage("裝置版本過舊,留言板功能無法正常運行,建議更換裝置");
         }
 
         post_detail_comment_btn.setOnClickListener(btn_listener);
@@ -108,7 +109,6 @@ public class post_detail_Frag extends Fragment {
         post_detail_back.setOnClickListener(btn_listener);
 
         adapter=new comment_listview_adapter(commentList,context);
-//        post_detail_listview.setAdapter(adapter);
 
         show_post_detail();
         get_comments(page);
@@ -240,6 +240,8 @@ public class post_detail_Frag extends Fragment {
                                 likes++;
                                 post_detail_like_number.setText(Integer.toString(likes));
                                 hasLiked=true;
+                            }else if(response.has("alert")){
+                                new AlertDialog.Builder(context).setMessage(response.getString("alert")).show();
                             }
                         }catch (JSONException e){ }
                     }
@@ -378,7 +380,13 @@ public class post_detail_Frag extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         JSONObject jsonObject1=new JSONObject();
+
                         try {
+                            if(response.has("alert")){
+                                new AlertDialog.Builder(context).setMessage(response.getString("alert")).show();
+                                return;
+                            }
+
                             jsonObject1=response.getJSONObject("comment");
                             commentList.put(jsonObject1);
                             if(!hasNextPage){

@@ -179,9 +179,27 @@ public class myEvent_detail_Frag extends Fragment {
                                     new AlertDialog.Builder(context)
                                             .setTitle(response.getString("m"))
                                             .show();
+                                    FragmentManager FM = getFragmentManager();
+                                    FragmentTransaction FT = FM.beginTransaction();
+                                    Fragment fragment=FM.findFragmentByTag("Frag2");
+                                    Fragment fragment2=FM.findFragmentByTag("myevent_detail_Frag");
+                                    if ( fragment!=null) {
+                                        if ( fragment.isAdded()) {
+                                            FT.show(fragment);
+                                            FT.remove(fragment2);
+
+                                        } else {
+//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+                                            FT.add(R.id._fragment_frag2_blank, fragment, "Frag2");
+                                            FT.remove(fragment2);
+                                        }
+                                    } else{
+                                        FT.replace(R.id._fragment_frag2_blank,new Frag2(),"Frag2");
+                                    }
+                                    FT.commit();
                                 }else{
                                     new AlertDialog.Builder(context)
-                                            .setTitle("參加失敗")
+                                            .setTitle("操作失敗失敗")
                                             .setMessage(response.getString("m"))
                                             .show();
                                 }

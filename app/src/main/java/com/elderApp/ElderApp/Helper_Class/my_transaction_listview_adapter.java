@@ -52,7 +52,11 @@ public class my_transaction_listview_adapter extends BaseAdapter {
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 
         transaction_date.setText(list.get(position).created_at);
-        transaction_message.setText(list.get(position).event);
+        if(!list.get(position).event.equals("null")){
+            transaction_message.setText(list.get(position).event);
+        }else{
+            transaction_message.setText("無訊息");
+        }
         transaction_object.setText((list.get(position).target_name));
 
 

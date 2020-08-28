@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -128,7 +129,7 @@ public class product_detail_Frag extends Fragment {
                 }
                 location_listview_adapter location_listview_adapter=new location_listview_adapter(context,locationList);
                 product_detail_listview.setAdapter(location_listview_adapter);
-
+                setListViewHeightBasedOnChildren(product_detail_listview);
                 try {
                     for(int i=0;i<locationList.length();i++){
 
@@ -290,5 +291,26 @@ public class product_detail_Frag extends Fragment {
            }).setNegativeButton("否",null).show();
         }
     };
+
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 }
 

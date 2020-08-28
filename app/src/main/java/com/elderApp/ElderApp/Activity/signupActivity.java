@@ -132,7 +132,7 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
                             signup_pass_name.setText(TheEventName);
                         }else{
                             new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-                            signup_qrscanner.startCamera();
+                            Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                         }
                     }catch (JSONException e){
 
@@ -142,7 +142,7 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     new AlertDialog.Builder(context).setMessage("連線錯誤").show();
-                    signup_qrscanner.startCamera();
+                    Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                 }
             }) {
                 @Override
@@ -158,7 +158,7 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
             MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
         }else{
             new AlertDialog.Builder(context).setMessage("請使用對應的QR碼").show();
-            signup_qrscanner.startCamera();
+            Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
         }
 
     }
