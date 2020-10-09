@@ -17,6 +17,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.R;
 import com.google.zxing.Result;
@@ -141,7 +142,7 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    new AlertDialog.Builder(context).setMessage("連線錯誤").show();
+                    new ios_style_alert_dialog_1.Builder(context).setMessage("連線錯誤").show();
                     Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                 }
             }) {
@@ -157,7 +158,7 @@ public class signupActivity extends AppCompatActivity implements ZXingScannerVie
             };
             MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
         }else{
-            new AlertDialog.Builder(context).setMessage("請使用對應的QR碼").show();
+            new ios_style_alert_dialog_1.Builder(context).setMessage("請使用對應的QR碼").show();
             Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
         }
 

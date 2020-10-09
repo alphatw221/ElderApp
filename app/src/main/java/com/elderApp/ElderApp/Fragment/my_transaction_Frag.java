@@ -21,6 +21,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.jasonList_2_objList;
 import com.elderApp.ElderApp.Model_Class.Transaction_class;
@@ -113,7 +114,7 @@ public class my_transaction_Frag extends Fragment {
     private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
+            new ios_style_alert_dialog_1.Builder(context)
                     .setTitle("連線錯誤")
                     .setMessage("請重新登入")
                     .show();
@@ -207,7 +208,7 @@ public class my_transaction_Frag extends Fragment {
     private Response.ErrorListener REL2=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
+            new ios_style_alert_dialog_1.Builder(context)
                     .setTitle("連線錯誤")
                     .setMessage("請重新登入")
                     .show();

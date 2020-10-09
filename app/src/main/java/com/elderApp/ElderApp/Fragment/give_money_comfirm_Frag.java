@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.elderApp.ElderApp.Activity.TabActivity;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Model_Class.User;
 import com.elderApp.ElderApp.R;
@@ -146,9 +147,8 @@ public class give_money_comfirm_Frag extends Fragment {
     private  Response.Listener RL=new Response.Listener<String>(){
         @Override
         public void onResponse(String response) {
-            new AlertDialog.Builder(context)
+            new ios_style_alert_dialog_1.Builder(context)
                     .setTitle("支付結果")
-                    .setIcon(R.mipmap.ic_launcher)
                     .setMessage(response.toString())
                     .show();
 
@@ -165,9 +165,8 @@ public class give_money_comfirm_Frag extends Fragment {
     private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
+            new ios_style_alert_dialog_1.Builder(context)
                     .setTitle("錯誤")
-                    .setIcon(R.mipmap.ic_launcher)
                     .setMessage("支付失敗"+error.toString())
                     .show();
 

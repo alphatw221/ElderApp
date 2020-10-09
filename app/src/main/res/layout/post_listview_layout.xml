@@ -107,7 +107,7 @@
         <TextView
             android:id="@+id/_post_dateTime"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="時間"
             android:textColor="#8A8A8A"
@@ -118,7 +118,7 @@
         <TextView
             android:id="@+id/_post_title"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"

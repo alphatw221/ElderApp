@@ -13,7 +13,7 @@
 
         android:background="@drawable/shape_rectangle_background"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/_event_detail_join"
+        app:layout_constraintBottom_toTopOf="@+id/_event_detail_btn_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -134,12 +134,54 @@
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/_event_detail_join"
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/_event_detail_btn_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFC400"
-        android:text="參加"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <Button
+            android:id="@+id/_event_detail_join"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FFC400"
+            android:text="參加"/>
+
+        <LinearLayout
+            android:id="@+id/_event_detail_getreward_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/_event_detail_getreward"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#C15656"
+                android:text="領取活動獎勵" />
+
+            <Button
+                android:id="@+id/_event_detail_signup"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#598E9A"
+                android:text="簽到(取得通行證)" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/_event_detail_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#555555"
+            android:text="取消參加"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,8 +70,9 @@ public class post_listview_adapter extends BaseAdapter {
         try{
             JSONObject jsonObject=postList.getJSONObject(position);
             String url=jsonObject.getString("user_image");
-            Picasso.get().load(url).resize(100,100).centerCrop().into(post_author_image);
-
+            if(!url.isEmpty()){
+                Picasso.get().load(url).resize(100,100).centerCrop().into(post_author_image);
+            }
             if(!jsonObject.isNull("post_image")){
                 Picasso.get().load(jsonObject.getString("post_image")).resize(250,200).centerCrop().into(post_image);
                 post_image.setVisibility(View.VISIBLE);

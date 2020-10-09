@@ -22,6 +22,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.jasonList_2_objList;
 import com.elderApp.ElderApp.Helper_Class.post_listview_adapter;
@@ -227,7 +228,7 @@ public class Frag4 extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -246,6 +247,7 @@ public class Frag4 extends Fragment {
 
         MySingleton.getInstance(context).getRequestQueue().add(allPostRequest);
     }
+
     private void show_my_post(Integer page){
         post_progressbar.setVisibility(View.VISIBLE);
         String url="https://www.happybi.com.tw/api/post/myPostList";
@@ -272,7 +274,7 @@ public class Frag4 extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();

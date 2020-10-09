@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.TabActivity;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Model_Class.User;
 import com.elderApp.ElderApp.R;
@@ -49,7 +50,6 @@ public class Frag1 extends Fragment {
     private ConstraintLayout person_org_rank_layout;
     private WebView webView;
     private Context context;
-    private String url="https://www.happybi.com.tw/api/auth/me";
     private User user;
     private FrameLayout frameLayout;
     public ScrollView frag1_base;
@@ -65,6 +65,7 @@ public class Frag1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.frag1_layout,container,false);
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
+        Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
         person_name=(TextView) view.findViewById(R.id._person_name);
         person_rank=(TextView) view.findViewById(R.id._person_rank);
         person_happybi=(TextView) view.findViewById(R.id._person_happybi);
@@ -81,19 +82,7 @@ public class Frag1 extends Fragment {
         web_market=view.findViewById(R.id._web_market);
         context=this.getContext();
         //---------------------發出請求------------------------------------------------------------
-        Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(1,url,null,RL,REL){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization","Bearer "+Token);
-                return headers;
-            }
-        };
-        MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
+        user_me_request();
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         takeBi.setOnClickListener(takeBi_listener);
         giveBi.setOnClickListener(giveBi_listener);
@@ -110,52 +99,6 @@ public class Frag1 extends Fragment {
         //----------------------------------------------------------------------------------------------------------------------------------------------------
         return view;
     }
-    //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL=new Response.Listener<JSONObject>(){
-        @Override
-        public void onResponse(JSONObject response) {
-
-            try {
-                person_name.setText("姓名:"+response.getString("name"));
-                person_happybi.setText("剩餘樂幣:"+response.getString("wallet"));
-                person_rank.setText("榮譽等級:"+Integer.toString(response.getInt("rank")));
-                int i=response.optInt("org_rank");
-                if(i>0){
-                    if(response.getInt("org_rank")==1){
-                        person_org_rank_layout.setVisibility(View.GONE);
-                    }else{
-                        String[] s={"","平民","小天使","大天使","守護天使","領航天使"};
-                        person_org_rank.setText("職務:"+s[response.getInt("org_rank")]);
-                        person_org_rank_btn.setOnClickListener(new Button.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent i =new Intent(Intent.ACTION_VIEW);
-                                i.setData(Uri.parse("https://www.happybi.com.tw/memberGroupMembers?token="+Token));
-                                context.startActivity(i);
-                            }
-                        });
-                    }
-                }else{
-                    person_org_rank_layout.setVisibility(View.GONE);
-                }
-            }catch (JSONException e){
-                Log.d("json error",e.toString());
-            }
-
-        }
-    };
-    //---------------------錯誤回報Listener1------------------------------------------------------------
-    private Response.ErrorListener REL=new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
-                    .setTitle("連線錯誤")
-                    .setMessage("請重新登入")
-                    .show();
-        }
-    };
-
 
 
     //-----------------收樂幣按鈕Listener-----------------------------------------------------------------------------------------------------------------------
@@ -241,11 +184,10 @@ public class Frag1 extends Fragment {
             if ( fragment!=null) {
                 if ( fragment.isAdded()) {
                     FT.show(fragment);
-
+                    FT.remove(fragment2);
                 } else {
-//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
                     FT.add(R.id._frag1_fragment, fragment, "market_Frag");
-
+                    FT.remove(fragment2);
                 }
             } else{
                 FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
@@ -268,7 +210,6 @@ public class Frag1 extends Fragment {
                     FT.hide(fragment2);
 
                 } else {
-                    //                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
                     FT.add(R.id._fragment_frag1_blank, fragment, "webview_Frag");
                     FT.hide(fragment2);
                 }
@@ -286,7 +227,60 @@ public class Frag1 extends Fragment {
         this.user=u;
     }
     //----------------------------------------------------------------------------------------------------------------------------------------
+    private void user_me_request(){
+        String url="https://www.happybi.com.tw/api/auth/me";
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(1, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    person_name.setText("姓名:"+response.getString("name"));
+                    person_happybi.setText("剩餘樂幣:"+response.getString("wallet"));
+                    person_rank.setText("榮譽等級:"+Integer.toString(response.getInt("rank")));
+                    int i=response.optInt("org_rank");
+                    if(i>0){
+                        if(response.getInt("org_rank")==1){
+                            person_org_rank_layout.setVisibility(View.GONE);
+                        }else{
+                            String[] s={"","平民","小天使","大天使","守護天使","領航天使"};
+                            person_org_rank.setText("職務:"+s[response.getInt("org_rank")]);
+                            person_org_rank_btn.setOnClickListener(new Button.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
+                                    Intent i =new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse("https://www.happybi.com.tw/memberGroupMembers?token="+Token));
+                                    context.startActivity(i);
+
+                                }
+                            });
+                        }
+                    }else{
+                        person_org_rank_layout.setVisibility(View.GONE);
+                    }
+                }catch (JSONException e){
+                    Log.d("json error",e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                new ios_style_alert_dialog_1.Builder(context)
+                        .setTitle("連線錯誤")
+                        .setMessage("請重新登入")
+                        .show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization","Bearer "+Token);
+                return headers;
+            }
+        };
+        MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
+    }
 
 
 }

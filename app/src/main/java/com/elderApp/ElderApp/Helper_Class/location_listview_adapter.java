@@ -59,12 +59,14 @@ public class location_listview_adapter extends BaseAdapter {
 
         //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
         TextView product_detail_listview_location=(TextView)convertView.findViewById(R.id._product_detail_listview_location);
+        TextView product_detail_listview_amount =convertView.findViewById(R.id._product_detail_listview_amount);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 //        Location_class lc=list.get(position);
         try {
             String location=locationList.getJSONObject(position).getString("name");
             Integer amount=locationList.getJSONObject(position).getInt("quantity");
-            product_detail_listview_location.setText(location+"(數量："+amount.toString()+")");
+            product_detail_listview_location.setText(location);
+            product_detail_listview_amount.setText("(數量:"+amount.toString()+")");
         }catch (JSONException c){
 
         }

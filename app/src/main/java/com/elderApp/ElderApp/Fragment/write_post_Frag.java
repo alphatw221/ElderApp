@@ -33,6 +33,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -284,9 +285,9 @@ public class write_post_Frag extends Fragment {
                     public void onResponse(JSONObject response) {
                         try {
                             if(response.getString("m").equals("success")){
-                                new AlertDialog.Builder(context).setMessage("發布成功").show();
+                                new ios_style_alert_dialog_1.Builder(context).setMessage("發布成功").show();
                             }else if(response.has("alert")){
-                                new AlertDialog.Builder(context).setMessage(response.getString("alert")).show();
+                                new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("alert")).show();
                             }
                             FragmentManager FM = getFragmentManager();
                             FragmentTransaction FT = FM.beginTransaction();
@@ -310,7 +311,7 @@ public class write_post_Frag extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();

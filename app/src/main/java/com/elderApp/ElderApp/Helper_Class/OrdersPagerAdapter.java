@@ -25,7 +25,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            default:
+            case 0:
                 return new frag1_blank();
             case 1:
                 return new frag2_blank();
@@ -35,6 +35,7 @@ public class OrdersPagerAdapter extends FragmentStateAdapter {
                 return new frag3_blank();
 
         }
+        return new frag1_blank();
     }
 
     @Override

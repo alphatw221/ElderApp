@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.R;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
 
@@ -46,7 +48,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
         //-----------------初始設定----------------------------------------------------------------
         update_comfirm.setOnClickListener(comfirm_listener);
         update_cancel.setOnClickListener(cancel_listener);
-        context=this.getApplicationContext();
+        context=this;
 
     }
     //---------------------回報Listener------------------------------------------------------------
@@ -60,7 +62,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
                 update_address.setText(response.getString("address"));
                 update_idcode.setText(response.getString("id_number"));
             }catch (JSONException e){
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -71,7 +73,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
     private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(UpdateMyDataActivity.this)
+            new ios_style_alert_dialog_1.Builder(UpdateMyDataActivity.this)
                     .setTitle("錯誤")
                     .setMessage("系統錯誤")
                     .show();
@@ -105,10 +107,6 @@ public class UpdateMyDataActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-
-//            Intent intent = new Intent();
-//            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-//            startActivity(intent);
             finish();
         }
     };
@@ -121,19 +119,22 @@ public class UpdateMyDataActivity extends AppCompatActivity {
         public void onResponse(JSONObject response) {
             try{
                 if(response.getString("s").equals("1")){
-                    new AlertDialog.Builder(UpdateMyDataActivity.this)
+                    new ios_style_alert_dialog_1.Builder(context)
                             .setTitle("更新成功")
-                            .setIcon(R.mipmap.ic_launcher)
                             .setMessage(response.getString("m"))
+                            .setPositiveButton("確定",new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
                             .show();
-//                    Intent intent = new Intent();
-//                    intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-//                    startActivity(intent);
-                    finish();
+
                 }else{
-                    new AlertDialog.Builder(UpdateMyDataActivity.this)
+
+                    new ios_style_alert_dialog_1.Builder(context)
                             .setTitle("更新失敗")
-                            .setIcon(R.mipmap.ic_launcher)
                             .setMessage(response.getString("m"))
                             .show();
                 }
@@ -144,16 +145,15 @@ public class UpdateMyDataActivity extends AppCompatActivity {
     private Response.ErrorListener REL2=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(UpdateMyDataActivity.this)
+            new ios_style_alert_dialog_1.Builder(UpdateMyDataActivity.this)
                     .setTitle("錯誤")
-                    .setIcon(R.mipmap.ic_launcher)
                     .setMessage("系統錯誤")
                     .show();
-//            Intent intent = new Intent();
-//            intent.setClass(UpdateMyDataActivity.this,TabActivity.class);
-//            startActivity(intent);
+            new ios_style_alert_dialog_1.Builder(context)
+                    .setTitle("錯誤")
+                    .setMessage("系統錯誤,請重試")
+                    .show();
             finish();
-            //
         }
     };
 

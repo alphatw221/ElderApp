@@ -36,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.MainActivity;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.QRCodeHelper;
 import com.elderApp.ElderApp.R;
@@ -176,7 +177,7 @@ public class Frag3 extends Fragment {
 
                 user_id=response.getInt("id");
             }catch(JSONException e){
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setMessage("JSON錯誤")
                         .show();
             }
@@ -186,7 +187,7 @@ public class Frag3 extends Fragment {
     private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(getActivity())
+            new ios_style_alert_dialog_1.Builder(getActivity())
                     .setTitle("連線錯誤")
                     .setMessage("請重新登入")
                     .show();
@@ -337,7 +338,7 @@ public class Frag3 extends Fragment {
                         if(response.getString("status").equals("success")){
                             Picasso.get().load(response.getString("imgUrl")).resize(100,100).centerCrop().into(myAccount_image);
                         }else{
-                            new AlertDialog.Builder(context)
+                            new ios_style_alert_dialog_1.Builder(context)
                                     .setMessage("連線失敗請重試")
                                     .show();
                         }
@@ -346,7 +347,7 @@ public class Frag3 extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    new AlertDialog.Builder(context)
+                    new ios_style_alert_dialog_1.Builder(context)
                             .setTitle("連線錯誤")
                             .setMessage("請重新登入")
                             .show();
@@ -401,7 +402,7 @@ public class Frag3 extends Fragment {
                 public void onResponse(JSONObject response) {
                     JSONArray myEventList=new JSONArray();
                     try {
-                        new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
+                        new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("m")).show();
                     }catch (JSONException e){
 
                     }
@@ -409,7 +410,7 @@ public class Frag3 extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    new AlertDialog.Builder(context)
+                    new ios_style_alert_dialog_1.Builder(context)
                             .setTitle("連線錯誤")
                             .setMessage("請重新登入")
                             .show();
@@ -441,7 +442,7 @@ public class Frag3 extends Fragment {
     private Button.OnClickListener logout_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            preferences.edit().remove("access_token").commit();
+            preferences.edit().remove("email").remove("password").remove("access_token").commit();
             Intent intent = new Intent();
             intent.setClass(context, MainActivity.class);
             startActivity(intent);

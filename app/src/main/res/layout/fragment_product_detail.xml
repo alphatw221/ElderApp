@@ -58,10 +58,21 @@
                 android:background="#00FFFFFF"
                 tools:src="@tools:sample/avatars" />
 
+            <Button
+                android:id="@+id/_product_detail_purchase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_rectangle_red"
+                android:text="前往商城購買" />
+
             <TextView
                 android:id="@+id/_product_detail_name"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:layout_marginLeft="10dp"
                 android:text="TextView"
@@ -71,7 +82,7 @@
                 android:id="@+id/_product_detail_price"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:text="TextView"
                 android:textColor="#000000" />
@@ -97,7 +108,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="請選擇兌換地點"
+                android:text="請選擇兌換地點:"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000" />
 
@@ -108,11 +120,21 @@
                 android:background="#FFAB00"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:spinnerMode="dialog" />
+                android:spinnerMode="dialog"
+                android:visibility="gone"/>
+
+            <RadioGroup
+                android:id="@+id/_product_detail_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"/>
 
             <TextView
                 android:id="@+id/_product_detail_info"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"

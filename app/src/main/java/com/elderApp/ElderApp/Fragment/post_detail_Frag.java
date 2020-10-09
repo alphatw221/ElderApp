@@ -33,6 +33,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.comment_listview_adapter;
 import com.elderApp.ElderApp.R;
@@ -184,7 +185,8 @@ public class post_detail_Frag extends Fragment {
                             jsonObject=response.getJSONObject("post");
                             isAuthor=response.getBoolean("isAuthor");
                             hasLiked=response.getBoolean("hasLiked");
-                            Picasso.get().load(jsonObject.getString("user_image")).resize(100,100).centerCrop().into(post_detail_author_image);
+                            String url=jsonObject.getString("user_image");
+                            Picasso.get().load(url).resize(100,100).centerCrop().into(post_detail_author_image);
                             if(!jsonObject.isNull("post_image")&& !jsonObject.getString("post_image").equals("")){
                                 post_detail_image.setVisibility(View.VISIBLE);
                                 Picasso.get().load(jsonObject.getString("post_image")).into(post_detail_image);
@@ -207,7 +209,7 @@ public class post_detail_Frag extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -241,14 +243,14 @@ public class post_detail_Frag extends Fragment {
                                 post_detail_like_number.setText(Integer.toString(likes));
                                 hasLiked=true;
                             }else if(response.has("alert")){
-                                new AlertDialog.Builder(context).setMessage(response.getString("alert")).show();
+                                new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("alert")).show();
                             }
                         }catch (JSONException e){ }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -287,7 +289,7 @@ public class post_detail_Frag extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -332,7 +334,7 @@ public class post_detail_Frag extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();
@@ -383,7 +385,7 @@ public class post_detail_Frag extends Fragment {
 
                         try {
                             if(response.has("alert")){
-                                new AlertDialog.Builder(context).setMessage(response.getString("alert")).show();
+                                new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("alert")).show();
                                 return;
                             }
 
@@ -405,7 +407,7 @@ public class post_detail_Frag extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
                         .setMessage("請重新登入")
                         .show();

@@ -16,6 +16,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.R;
 import com.google.zxing.Result;
@@ -67,12 +68,10 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
                 public void onResponse(JSONObject response) {
                     try {
                         if(response.getInt("s")==1){
-                            new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-                            finish();
+                            new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("m")).show();
+//                            finish();
                         }else{
-                            new AlertDialog.Builder(context).setMessage(response.getString("m")).show();
-//                            getreward_qrscanner.stopCamera();
-//                            getreward_qrscanner.startCamera();
+                            new ios_style_alert_dialog_1.Builder(context).setMessage(response.getString("m")).show();
                             Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                         }
                     }catch (JSONException e){
@@ -82,9 +81,7 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    new AlertDialog.Builder(context).setMessage("連線錯誤").show();
-//                    getreward_qrscanner.stopCamera();
-//                    getreward_qrscanner.startCamera();
+                    new ios_style_alert_dialog_1.Builder(context).setMessage("連線錯誤").show();
                     Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
                 }
             }) {
@@ -100,9 +97,7 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
             };
             MySingleton.getInstance(context).getRequestQueue().add(signinRequest);
         }else{
-            new AlertDialog.Builder(context).setMessage("請使用對應的QR碼").show();
-//            getreward_qrscanner.stopCamera();
-//            getreward_qrscanner.startCamera();
+            new ios_style_alert_dialog_1.Builder(context).setMessage("請使用對應的QR碼").show();
             Dexter.withActivity(activity).withPermission(Manifest.permission.CAMERA).withListener(permissionListener).check();
         }
     }
@@ -117,7 +112,7 @@ public class getRewardActivity extends AppCompatActivity implements ZXingScanner
 
         @Override
         public void onPermissionDenied(PermissionDeniedResponse response) {
-            new AlertDialog.Builder(context).setMessage("請設定允許存取相機以領取獎勵").show();
+            new ios_style_alert_dialog_1.Builder(context).setMessage("請設定允許存取相機以領取獎勵").show();
             finish();
         }
 

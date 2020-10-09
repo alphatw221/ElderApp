@@ -3,6 +3,7 @@ package com.elderApp.ElderApp.Fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.elderApp.ElderApp.AlertDialog.LocationDetailAlertDialog;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.location_listview_adapter;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
@@ -59,11 +63,12 @@ public class product_detail_Frag extends Fragment {
         product_class=pc;
     }
     private ImageButton product_detail_back;
-    private Button product_detail_exchange;
+    private Button product_detail_exchange,product_detail_purchase;
     private TextView product_detail_name,product_detail_price,product_detail_info;
     private ImageView product_detail_image;
     private ListView product_detail_listview;
     private Spinner product_detail_spinner;
+    private RadioGroup prodcut_detail_radio_group;
     private Context context;
     private List<Location_class> location_list=new ArrayList<>();
     private List<LocationQuantity_class> locationquantity_list;
@@ -72,7 +77,7 @@ public class product_detail_Frag extends Fragment {
     List<String> location_name_list=new ArrayList<>();
     List<String> location_slug_list=new ArrayList<>();
     List<Integer> location_id_list=new ArrayList<>();
-    private int select_location_position;
+    private String buynowUrl;
     private WebView product_detail_webview;
 
     @Override
@@ -85,7 +90,6 @@ public class product_detail_Frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_product_detail, container, false);
-        //------------抓取物件----------------------------------------------------------------------------------------------------------------------------
         context=this.getContext();
         product_detail_name=(TextView)view.findViewById(R.id._product_detail_name);
         product_detail_price=(TextView)view.findViewById(R.id._product_detail_price);
@@ -95,22 +99,20 @@ public class product_detail_Frag extends Fragment {
         product_detail_listview=(ListView)view.findViewById(R.id._product_detail_listview);
         product_detail_spinner=(Spinner)view.findViewById(R.id._product_detail_spinner);
         product_detail_exchange=(Button)view.findViewById(R.id._product_detail_exchange);
+        product_detail_purchase=(Button)view.findViewById(R.id._product_detail_purchase);
         product_detail_webview=view.findViewById(R.id._product_detail_webview);
-        //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
+        prodcut_detail_radio_group=view.findViewById(R.id._product_detail_radio_group);
 
-        product_detail_back.setOnClickListener(backListener);
+        product_detail_back.setOnClickListener(btn_listener);
+        product_detail_purchase.setOnClickListener(btn_listener);
+        product_detail_exchange.setOnClickListener(btn_listener);
         product_detail_listview.setOnItemClickListener(click_listener);
-        product_detail_spinner.setOnItemSelectedListener(spinnerListener);
 
-
-        //---------------------發出請求------------------------------------------------------------
         getProductDetail();
-        //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
         return view;
     }
-    //----------------------------------------------------------------------------------------------------------------------------------------------------
 
     private void getProductDetail(){
         String url="https://www.happybi.com.tw/api/product/productDetail/"+product_class.slug;
@@ -124,39 +126,38 @@ public class product_detail_Frag extends Fragment {
                 try {
                     product=response.getJSONObject("product");
                     locationList=response.getJSONArray("locationList");
-                }catch (JSONException e){
-                    Log.d("error",e.toString());
-                }
+                }catch (JSONException e){ }
                 location_listview_adapter location_listview_adapter=new location_listview_adapter(context,locationList);
                 product_detail_listview.setAdapter(location_listview_adapter);
                 setListViewHeightBasedOnChildren(product_detail_listview);
                 try {
                     for(int i=0;i<locationList.length();i++){
+                        View v2=LayoutInflater.from(context).inflate(R.layout.radio_btn_location_layout,null);
 
                             location_name_list.add(locationList.getJSONObject(i).getString("name"));
                             location_slug_list.add(locationList.getJSONObject(i).getString("slug"));
                             location_id_list.add(locationList.getJSONObject(i).getInt("location_id"));
-
+                        ((RadioButton)v2.findViewById(R.id._radio_btn_location)).setText(locationList.getJSONObject(i).getString("name"));
+                        ((RadioButton)v2.findViewById(R.id._radio_btn_location)).setId(i);
+                        prodcut_detail_radio_group.addView(v2);
 
                     }
 
                     String url=product.getString("imgUrl");
+                    buynowUrl=product.getString("buynowUrl");
                     Picasso.get().load(url).into(product_detail_image);
                     product_detail_name.setText("商品："+product.getString("name"));
                     product_detail_price.setText("樂幣："+product.getString("price"));
 //                    product_detail_info.setText("商品資訊:\n\n"+product.getString("info"));
                     product_detail_info.setText("商品資訊:\n");
                     product_detail_webview.loadData(product.getString("info"),"text/html","UTF-8");
-                }catch (JSONException e){
+                }catch (JSONException e){ }
 
-                }
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,location_name_list);
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                product_detail_spinner.setAdapter(adapter);
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,location_name_list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                product_detail_spinner.setAdapter(adapter);
-                product_detail_exchange.setOnClickListener(exchangeListener);
 //
-                //---------------------載圖片------------------------------------------------------------
 
 
             }
@@ -165,21 +166,15 @@ public class product_detail_Frag extends Fragment {
         Response.ErrorListener REL1=new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                new AlertDialog.Builder(context)
+
+                new ios_style_alert_dialog_1.Builder(context)
                         .setTitle("連線錯誤")
-                        .setMessage("請重新登入")
+                        .setMessage("請從新登入")
                         .show();
             }
         };
         myJsonRequest.GET_Request.getJSON_object(url,null,null,context,RL1,REL1);
-
-
     }
-    //----------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
 
 
     //---------------------------------------listview_click Listener---------------------------------------------------
@@ -200,20 +195,74 @@ public class product_detail_Frag extends Fragment {
         }
 
     };
-    //-------------------------------地點下拉Listener----------------------------------------------------------------------------------------------------------------------
-    private Spinner.OnItemSelectedListener spinnerListener=new Spinner.OnItemSelectedListener(){
-
+    private Button.OnClickListener btn_listener=new Button.OnClickListener(){
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id._product_detail_back:
+                    FragmentManager FM = getFragmentManager();
+                    FragmentTransaction FT = FM.beginTransaction();
+                    Fragment fragment=FM.findFragmentByTag("market_Frag");
+                    Fragment fragment2=FM.findFragmentByTag("product_detail_Frag");
+                    if ( fragment!=null) {
+                        if ( fragment.isAdded()) {
+                            FT.show(fragment);
+                            FT.remove(fragment2);
+                        } else {
+                            FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+                            FT.remove(fragment2);
+                        }
+                    } else{
+                        FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
+                    }
+                    FT.commit();
+                    break;
+                case R.id._product_detail_exchange:
+                    if(prodcut_detail_radio_group.getCheckedRadioButtonId()!=-1){
+                        int id=prodcut_detail_radio_group.getCheckedRadioButtonId();
+                        new ios_style_alert_dialog_1.Builder(context)
+                                .setTitle("確認兌換")
+                                .setMessage("兌換地點:"+location_name_list.get(id))
+                                .setPositiveButton("確定",new DialogInterface.OnClickListener(){
 
-            select_location_position=position;
-        }
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        exchange_product();
+                                    }
+                                })
+                                .setNegativeButton("取消",null)
+                                .show();
+                    }else{
+                        new ios_style_alert_dialog_1.Builder(context)
+                                .setMessage("未選擇兌換地點")
+                                .show();
+                    }
+                    break;
+                case R.id._product_detail_purchase:
+                    FragmentManager FM2 = getFragmentManager();
+                    FragmentTransaction FT2 = FM2.beginTransaction();
+                    Fragment fragment3=FM2.findFragmentByTag("webview_Frag");
+                    Fragment fragment4=FM2.findFragmentByTag("product_detail_Frag");
+                    if ( fragment3!=null) {
+                        if ( fragment3.isAdded()) {
+                            FT2.show(fragment3);
+                            FT2.hide(fragment4);
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
+                        } else {
+                            FT2.add(R.id._fragment_frag1_blank, fragment3, "webview_Frag");
+                            FT2.hide(fragment4);
+                        }
+                    } else{
+                        String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                        FT2.add(R.id._fragment_frag1_blank,new webview_Frag(buynowUrl+"?token="+Token),"webview_Frag");
+                        FT2.hide(fragment4);
+                    }
+                    FT2.commit();
+                    break;
+            }
         }
     };
+
     //--------------------------------------------返回Listener--------------------------------------------------------
     private ImageButton.OnClickListener backListener = new ImageButton.OnClickListener() {
 
@@ -225,21 +274,17 @@ public class product_detail_Frag extends Fragment {
             FragmentTransaction FT = FM.beginTransaction();
             Fragment fragment=FM.findFragmentByTag("market_Frag");
             Fragment fragment2=FM.findFragmentByTag("product_detail_Frag");
-//            if ( fragment!=null) {
-//                if ( fragment.isAdded()) {
-//                    FT.show(fragment);
-//                    FT.remove(fragment2);
-//                } else {
-////                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-//                    FT.add(R.id._fragment_frag1_blank, fragment, "market_Frag");
-//                    FT.remove(fragment2);
-//                }
-//            } else{
-//                FT.replace(R.id._fragment_frag1_blank,new market_Frag(),"market_Frag");
-//
-//            }
-            FT.replace(R.id._fragment_frag1_blank,new market_Frag(),"market_Frag");
-
+            if ( fragment!=null) {
+                if ( fragment.isAdded()) {
+                    FT.show(fragment);
+                    FT.remove(fragment2);
+                } else {
+                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+                    FT.remove(fragment2);
+                }
+            } else{
+                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
+            }
             FT.commit();
         }
     };
@@ -250,45 +295,25 @@ public class product_detail_Frag extends Fragment {
 
         @Override
         public void onClick(View v) {
-           new AlertDialog.Builder(getActivity()).setTitle("確定兌換").setMessage("兌換地點:"+location_name_list.get(select_location_position)).setPositiveButton("是", new DialogInterface.OnClickListener() {
-               @Override
-               public void onClick(DialogInterface dialog, int which) {
+            if(prodcut_detail_radio_group.getCheckedRadioButtonId()!=-1){
+                int id=prodcut_detail_radio_group.getCheckedRadioButtonId();
+                new ios_style_alert_dialog_1.Builder(context)
+                        .setTitle("確認兌換")
+                        .setMessage("兌換地點:"+location_name_list.get(id))
+                        .setPositiveButton("確定",new DialogInterface.OnClickListener(){
 
-                   StringRequest stringRequest=new StringRequest(Request.Method.POST, "https://www.happybi.com.tw/api/purchase/"+product_class.slug, new Response.Listener<String>() {
-                       @Override
-                       public void onResponse(String response) {
-                           if(response.equals("success")){
-                               new AlertDialog.Builder(getActivity()).setMessage("兌換成功!").show();
-                           }else{
-                               new AlertDialog.Builder(getActivity()).setMessage(response).show();
-                           }
-
-                       }
-                   }, new Response.ErrorListener() {
-                       @Override
-                       public void onErrorResponse(VolleyError error) {
-                           try {
-                               String body = new String(error.networkResponse.data,"UTF-8");
-                               new AlertDialog.Builder(getActivity()).setMessage(body).show();
-                           } catch (UnsupportedEncodingException e) {
-                               e.printStackTrace();
-                           }
-
-                       }
-                   }){
-                       @Override
-                       protected Map<String, String> getParams() throws AuthFailureError {
-                           String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
-                           Map<String, String> body = new HashMap<String, String>();
-                           body.put("token", Token);
-                           body.put("location_id", location_id_list.get(select_location_position).toString());
-                           return body;
-                       }
-                   };
-                   MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
-
-               }
-           }).setNegativeButton("否",null).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                exchange_product();
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .show();
+            }else{
+                new ios_style_alert_dialog_1.Builder(context)
+                        .setMessage("未選擇兌換地點")
+                        .show();
+            }
         }
     };
 
@@ -311,6 +336,42 @@ public class product_detail_Frag extends Fragment {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    private void exchange_product(){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, "https://www.happybi.com.tw/api/purchase/"+product_class.slug, new Response.Listener<String>() {
+                       @Override
+                       public void onResponse(String response) {
+                           if(response.equals("success")){
+                               new ios_style_alert_dialog_1.Builder(context).setMessage("兌換成功").show();
+                           }else{
+                               new ios_style_alert_dialog_1.Builder(context).setMessage(response).show();
+                           }
+
+                       }
+                   }, new Response.ErrorListener() {
+                       @Override
+                       public void onErrorResponse(VolleyError error) {
+                           try {
+                               String body = new String(error.networkResponse.data,"UTF-8");
+                               new ios_style_alert_dialog_1.Builder(context).setMessage(body).show();
+                           } catch (UnsupportedEncodingException e) {
+                               e.printStackTrace();
+                           }
+
+                       }
+                   }){
+                       @Override
+                       protected Map<String, String> getParams() throws AuthFailureError {
+                           String Token=getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","");
+                           Map<String, String> body = new HashMap<String, String>();
+                           body.put("token", Token);
+                           int id=prodcut_detail_radio_group.getCheckedRadioButtonId();
+                           body.put("location_id", location_id_list.get(id).toString());
+                           return body;
+                       }
+                   };
+                   MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
     }
 }
 

@@ -27,6 +27,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.TabActivity;
 import com.elderApp.ElderApp.Activity.getRewardActivity;
 import com.elderApp.ElderApp.Activity.signupActivity;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Model_Class.Event_class;
 import com.elderApp.ElderApp.R;
@@ -126,7 +127,7 @@ public class myEvent_detail_Frag extends Fragment {
     private Response.ErrorListener REL=new Response.ErrorListener(){
         @Override
         public void onErrorResponse(VolleyError error) {
-            new AlertDialog.Builder(context)
+            new ios_style_alert_dialog_1.Builder(context)
                     .setTitle("連線錯誤")
                     .show();
             //
@@ -176,7 +177,7 @@ public class myEvent_detail_Frag extends Fragment {
                             JSONArray myEventList=new JSONArray();
                             try {
                                 if(response.getInt("s")==1){
-                                    new AlertDialog.Builder(context)
+                                    new ios_style_alert_dialog_1.Builder(context)
                                             .setTitle(response.getString("m"))
                                             .show();
                                     FragmentManager FM = getFragmentManager();
@@ -198,7 +199,7 @@ public class myEvent_detail_Frag extends Fragment {
                                     }
                                     FT.commit();
                                 }else{
-                                    new AlertDialog.Builder(context)
+                                    new ios_style_alert_dialog_1.Builder(context)
                                             .setTitle("操作失敗失敗")
                                             .setMessage(response.getString("m"))
                                             .show();
@@ -213,7 +214,7 @@ public class myEvent_detail_Frag extends Fragment {
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            new AlertDialog.Builder(context)
+                            new ios_style_alert_dialog_1.Builder(context)
                                     .setTitle("取消失敗 請檢查連線")
                                     .show();
                         }

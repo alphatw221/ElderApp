@@ -26,6 +26,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.R;
 import com.google.zxing.Result;
@@ -258,14 +259,14 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                                         public void onResponse(JSONObject response) {
                                             try {
                                                 if(response.getInt("s")==1){
-                                                    new AlertDialog.Builder(context).setMessage("已完成會員註冊").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                                    new ios_style_alert_dialog_1.Builder(context).setMessage("已完成會員註冊").setPositiveButton("是", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
                                                             finish();
                                                         }
                                                     }).show();
                                                 }else{
-                                                    new AlertDialog.Builder(context).setMessage("註冊失敗，請從新註冊或聯繫客服人員").show();
+                                                    new ios_style_alert_dialog_1.Builder(context).setMessage("註冊失敗，請從新註冊或聯繫客服人員").show();
                                                 }
                                             }catch (JSONException e){ }
                                         }
@@ -275,7 +276,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                                             String m;
                                             try{
                                                 m=new String(error.networkResponse.data,"UTF-8");
-                                                new AlertDialog.Builder(context)
+                                                new ios_style_alert_dialog_1.Builder(context)
                                                         .setTitle("註冊失敗")
                                                         .setMessage(m)
                                                         .show();
@@ -294,7 +295,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                                     MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest1);
                                 }else{
                                     //推薦人資料有誤
-                                    new AlertDialog.Builder(context).setMessage("註冊失敗:推薦人資料有誤").show();
+                                    new ios_style_alert_dialog_1.Builder(context).setMessage("註冊失敗:推薦人資料有誤").show();
                                 }
                             }catch (JSONException e){ }
                         }
@@ -304,7 +305,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                             String m;
                             try{
                                 m=new String(error.networkResponse.data,"UTF-8");
-                                new AlertDialog.Builder(context)
+                                new ios_style_alert_dialog_1.Builder(context)
                                         .setMessage(m)
                                         .show();
                             }catch (UnsupportedEncodingException e){}
@@ -351,14 +352,14 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                         public void onResponse(JSONObject response) {
                             try {
                                 if(response.getInt("s")==1){
-                                    new AlertDialog.Builder(context).setMessage("已完成會員註冊").setPositiveButton("是", new DialogInterface.OnClickListener() {
+                                    new ios_style_alert_dialog_1.Builder(context).setMessage("已完成會員註冊").setPositiveButton("是", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             finish();
                                         }
                                     }).show();
                                 }else{
-                                    new AlertDialog.Builder(context).setMessage("註冊失敗，請從新註冊或聯繫客服人員").show();
+                                    new ios_style_alert_dialog_1.Builder(context).setMessage("註冊失敗，請從新註冊或聯繫客服人員").show();
                                 }
                             }catch (JSONException e){ }
                         }
@@ -368,7 +369,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                             String m;
                             try{
                                 m=new String(error.networkResponse.data,"UTF-8");
-                                new AlertDialog.Builder(context)
+                                new ios_style_alert_dialog_1.Builder(context)
                                         .setTitle("註冊失敗")
                                         .setMessage(m)
                                         .show();
@@ -390,7 +391,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                     MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
                 }
             }else{
-                new AlertDialog.Builder(context).setMessage("部分資料有誤 請完成修改後重試").show();
+                new ios_style_alert_dialog_1.Builder(context).setMessage("部分資料有誤 請完成修改後重試").show();
             }
 
         }
