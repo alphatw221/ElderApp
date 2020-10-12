@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
+import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.R;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
@@ -130,6 +131,22 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         preference=getSharedPreferences("preFile",MODE_PRIVATE);
         context=this;
         activity=this;
+
+        getAssociation();
+    }
+
+    private void getAssociation(){
+        apiService.getAssociationRequest(this.context,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response.toString());
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                System.out.println(error.toString());
+            }
+        });
     }
 
     //-----------------------------顯示qr_Listener------------------------------------------------------------------------------------------------------------------------
