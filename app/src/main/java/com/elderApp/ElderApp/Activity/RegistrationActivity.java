@@ -38,6 +38,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +50,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class RegistrationActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     //-------------------宣告全域變數----------------------------------------------------------------------------------------------------------------------------------
-    private Spinner District_Spinner,how2Pay_Spinner;
+    private Spinner Association_Spinner,District_Spinner,how2Pay_Spinner;
     private EditText account,PW,PWcomfirm,name,cellPhone,phone,idCode,address,inviter;
     private TextView account_error,PW_error,PWcomfirm_error,
             name_error,cellPhone_error,gender_error,idCode_error,
@@ -60,6 +61,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
     private DatePicker birthday_datePicker;
     private ZXingScannerView qrscanner;
     private ConstraintLayout qr_layout;
+    String[] associationArray = {"請選擇","桃園銀髮協會","社區發展協會"};
     String[]test={"請選擇地區","桃園","中壢","平鎮","八德","龜山","蘆竹","大園","觀音","新屋","楊梅","龍潭","大溪","復興"};
     String[] how2Pay={"請選擇付款方式","推薦人代收","自行繳費"};
     String url="https://www.happybi.com.tw/api/inviterCheck";
@@ -83,6 +85,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         male=(RadioButton) findViewById(R.id._male);
         female=(RadioButton) findViewById(R.id._female);
 
+        Association_Spinner=(Spinner) findViewById(R.id._associationSpinner);
         District_Spinner=(Spinner) findViewById(R.id._district);
         how2Pay_Spinner=(Spinner)findViewById(R.id._how2pay);
         birthday_datePicker=(DatePicker) findViewById(R.id._birthday);
@@ -112,14 +115,19 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         qrscanner=findViewById(R.id._registration_qrscanner);
         qr_layout=findViewById(R.id._qr_layout);
         //--------------------初始設定---------------------------------------------------------------------------------------------------------------------------------
+        ArrayAdapter<String> adapterAssociation = new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,associationArray);
         ArrayAdapter<String> adapterTest=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,test);
         ArrayAdapter<String> adapter_how2Pay=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,how2Pay);
 
+        adapterAssociation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterTest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter_how2Pay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        Association_Spinner.setAdapter(adapterAssociation);
         District_Spinner.setAdapter(adapterTest);
         how2Pay_Spinner.setAdapter(adapter_how2Pay);
+
+        Association_Spinner.setOnItemSelectedListener(AssociationListener);
         District_Spinner.setOnItemSelectedListener(DistrictListener);
         how2Pay_Spinner.setOnItemSelectedListener(how2PayListener);
 
@@ -136,10 +144,18 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
     }
 
     private void getAssociation(){
-        apiService.getAssociationRequest(this.context,new Response.Listener<JSONObject>() {
+        apiService.getAssociationRequest(this.context,new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 System.out.println(response.toString());
+                for(int i = 0; i < response.length(); i++){
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        System.out.println(obj.getString("name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }, new Response.ErrorListener(){
             @Override
@@ -198,6 +214,20 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         }
     };
 
+//-------------------------------組織下拉Listener----------------------------------------------------------------------------------------------------------------------
+
+    private Spinner.OnItemSelectedListener AssociationListener = new Spinner.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            parent.getSelectedItem().toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
 
 //-------------------------------地區下拉Listener----------------------------------------------------------------------------------------------------------------------
