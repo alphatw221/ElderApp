@@ -43,6 +43,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +62,9 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
     private DatePicker birthday_datePicker;
     private ZXingScannerView qrscanner;
     private ConstraintLayout qr_layout;
-    String[] associationArray = {"請選擇","桃園銀髮協會","社區發展協會"};
+    Integer selectedAssociationId = null;
+    String[] associationArray = {};
+    HashMap<String,Integer> associationMap = new HashMap<>();
     String[]test={"請選擇地區","桃園","中壢","平鎮","八德","龜山","蘆竹","大園","觀音","新屋","楊梅","龍潭","大溪","復興"};
     String[] how2Pay={"請選擇付款方式","推薦人代收","自行繳費"};
     String url="https://www.happybi.com.tw/api/inviterCheck";
@@ -115,19 +118,16 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         qrscanner=findViewById(R.id._registration_qrscanner);
         qr_layout=findViewById(R.id._qr_layout);
         //--------------------初始設定---------------------------------------------------------------------------------------------------------------------------------
-        ArrayAdapter<String> adapterAssociation = new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,associationArray);
         ArrayAdapter<String> adapterTest=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,test);
         ArrayAdapter<String> adapter_how2Pay=new ArrayAdapter<String>(this,R.layout.registration_spinner_layout,how2Pay);
 
-        adapterAssociation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterTest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter_how2Pay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Association_Spinner.setAdapter(adapterAssociation);
         District_Spinner.setAdapter(adapterTest);
         how2Pay_Spinner.setAdapter(adapter_how2Pay);
 
-        Association_Spinner.setOnItemSelectedListener(AssociationListener);
+
         District_Spinner.setOnItemSelectedListener(DistrictListener);
         how2Pay_Spinner.setOnItemSelectedListener(how2PayListener);
 
@@ -148,14 +148,31 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
             @Override
             public void onResponse(JSONArray response) {
                 System.out.println(response.toString());
+                ArrayList<String> associationList = new ArrayList<>();
+                associationList.add("請選擇");
+
                 for(int i = 0; i < response.length(); i++){
                     try {
                         JSONObject obj = response.getJSONObject(i);
+                        String name = obj.getString("name");
+                        Integer id = obj.getInt("id");
+
                         System.out.println(obj.getString("name"));
+                        System.out.println(obj.getInt("id"));
+
+                        associationList.add(name);
+                        associationMap.put(name,id);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+                String[] stringArray = new String[associationList.size()];
+                associationArray = associationList.toArray(stringArray);
+
+                ArrayAdapter<String> adapterAssociation = new ArrayAdapter<String>(context,R.layout.registration_spinner_layout,associationArray);
+                adapterAssociation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Association_Spinner.setAdapter(adapterAssociation);
+                Association_Spinner.setOnItemSelectedListener(AssociationListener);
             }
         }, new Response.ErrorListener(){
             @Override
@@ -220,7 +237,14 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            parent.getSelectedItem().toString();
+
+            String selectedItem = parent.getSelectedItem().toString();
+            System.out.println(selectedItem);
+
+            selectedAssociationId = null;
+            if(associationMap.containsKey(selectedItem)){
+                selectedAssociationId = associationMap.get(selectedItem);
+            }
         }
 
         @Override
