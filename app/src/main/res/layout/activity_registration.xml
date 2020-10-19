@@ -44,6 +44,13 @@
                 android:text="欲加入組織"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
+            <TextView
+                android:id="@+id/_association_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#DD2C00"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"/>
 
             <Spinner
                 android:id="@+id/_associationSpinner"

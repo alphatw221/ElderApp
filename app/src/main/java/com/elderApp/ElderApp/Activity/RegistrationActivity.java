@@ -53,7 +53,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
     //-------------------宣告全域變數----------------------------------------------------------------------------------------------------------------------------------
     private Spinner Association_Spinner,District_Spinner,how2Pay_Spinner;
     private EditText account,PW,PWcomfirm,name,cellPhone,phone,idCode,address,inviter;
-    private TextView account_error,PW_error,PWcomfirm_error,
+    private TextView association_error,account_error,PW_error,PWcomfirm_error,
             name_error,cellPhone_error,gender_error,idCode_error,
             district_error,address_error,how2Pay_error,inviter_textview;
     private RadioButton male,female;
@@ -103,6 +103,8 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         address=(EditText)findViewById(R.id._address);
         inviter=(EditText)findViewById(R.id._inviter);
 
+
+        association_error=(TextView)findViewById(R.id._association_error);
         account_error=(TextView)findViewById(R.id._account_error);
         PW_error=(TextView)findViewById(R.id._PW_error);
         PWcomfirm_error=(TextView)findViewById(R.id._PWcomfirm_error);
@@ -310,6 +312,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                                     String birthday_Date=Integer.toString(birthday_datePicker.getYear()) + "-" + Integer.toString(birthday_datePicker.getMonth()) + "-" + Integer.toString(birthday_datePicker.getDayOfMonth());
                                     JSONObject jsonObject=new JSONObject();
                                     try{
+                                        jsonObject.put("association_id",selectedAssociationId);
                                         jsonObject.put("id_number",idCode.getText().toString());
                                         jsonObject.put("name",name.getText().toString());
                                         jsonObject.put("email",account.getText().toString());
@@ -401,6 +404,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
                     String birthday_Date=Integer.toString(birthday_datePicker.getYear()) + "-" + Integer.toString(birthday_datePicker.getMonth()) + "-" + Integer.toString(birthday_datePicker.getDayOfMonth());
                     JSONObject jsonObject=new JSONObject();
                     try{
+                        jsonObject.put("association_id",selectedAssociationId);
                         jsonObject.put("id_number",idCode.getText().toString());
                         jsonObject.put("name",name.getText().toString());
                         jsonObject.put("email",account.getText().toString());
@@ -472,6 +476,10 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
         //---------------------驗證副程式------------------------------------------------------------
         private boolean verification(){
             boolean Flag=true;
+            if(selectedAssociationId == null){
+                association_error.setText("請選擇");
+                Flag=false;
+            }else association_error.setText("");
             if(TextUtils.isEmpty(account.getText().toString())){
                 account_error.setText("此欄位必填");
                 Flag=false;
