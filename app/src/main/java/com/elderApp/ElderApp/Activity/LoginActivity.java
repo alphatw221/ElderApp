@@ -121,9 +121,12 @@ public class LoginActivity extends AppCompatActivity {
                         user.name = response.getString("name");
                         user.wallet = response.getInt("wallet");
                         user.rank = response.getInt("rank");
+
+                        uploadPushToken();
+                        navigateToIndexPage();
                     }catch(JSONException e){
                     }
-                    upload_push_token();
+
                 }
 
             }
@@ -158,121 +161,30 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-//    private void login_request() {
-//        String url = "https://www.happybi.com.tw/api/auth/login";
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("email", account.getText().toString());
-//            jsonObject.put("password", password.getText().toString());
-//            jsonObject.put("androidVer", versionCode);
-//        } catch (JSONException e) {
-//        }
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(1, url, jsonObject,
-//                new Response.Listener<JSONObject>() {
-//
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            if (response.has("access_token")) {
-//                                preference.edit().putString("access_token", response.getString("access_token")).commit();
-//                                preference.edit().putString("email",account.getText().toString()).commit();
-//                                preference.edit().putString("password",password.getText().toString()).commit();
-//                                user.access_token = response.getString("access_token");
-//                                user.user_id = response.getInt("user_id");
-//                                user.id_code = response.getString("id_code");
-//                                user.email = response.getString("email");
-//                                user.name = response.getString("name");
-//                                user.wallet = response.getInt("wallet");
-//                                user.rank = response.getInt("rank");
-////                                user.org_rank=response.getInt("org_rank");
-//                                upload_push_token();
-//                            } else if (response.has("android_update_url")) {
-//                                update_url = response.getString("android_update_url");
-//                                new ios_style_alert_dialog_1.Builder(context).setTitle("已有更新版本").setMessage("請更新後重新登入").setPositiveButton("是", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        Intent i = new Intent(Intent.ACTION_VIEW);
-//                                        i.setData(Uri.parse(update_url));
-//                                        context.startActivity(i);
-//                                    }
-//                                }).setNegativeButton("否", null).show();
-//                            }
-//                        } catch (JSONException e) {
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                if (error.networkResponse != null) {
-//                    new ios_style_alert_dialog_1.Builder(context)
-//                            .setTitle("登入失敗")
-//                            .setMessage("帳號或密碼錯誤")
-//                            .show();
-//                } else {
-//                    new ios_style_alert_dialog_1.Builder(context)
-//                            .setTitle("登入失敗")
-//                            .setMessage("請檢查網路連線")
-//                            .show();
-//                }
-//            }
-//        }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/x-www-form-urlencoded");
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//        };
-//        MySingleton.getInstance(context).getRequestQueue().add(jsonObjectRequest);
-//    }
-
-    private void upload_push_token() {
-        String url2 = "https://www.happybi.com.tw/api/auth/set_pushtoken";
-
-        StringRequest stringRequest = new StringRequest(1, url2, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("User", user);
-                startActivity(intent);
-                finish();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                new ios_style_alert_dialog_1.Builder(context).setMessage("連線錯誤").show();
-            }
-        }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                String Token = getSharedPreferences("preFile", MODE_PRIVATE).getString("access_token", "");
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/x-www-form-urlencoded");
-                headers.put("Content-Type", "application/json");
-                headers.put("Authorization", "Bearer " + Token);
-                return headers;
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("pushtoken", pushtoken);
-                } catch (JSONException e) {
-
-                }
-                return jsonObject.toString().getBytes();
-            }
-
-            ;
-        };
-        MySingleton.getInstance(context).getRequestQueue().add(stringRequest);
+    /**
+     * 導向到首頁
+     */
+    private void navigateToIndexPage(){
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("User", user);
+        startActivity(intent);
+        finish();
     }
+
+
+    private void uploadPushToken(){
+        apiService.uploadPushTokenRequest(context,pushtoken,new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response) { }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+    }
+
+
+
 }
 
 
