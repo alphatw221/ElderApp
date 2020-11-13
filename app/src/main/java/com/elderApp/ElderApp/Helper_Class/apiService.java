@@ -1,6 +1,7 @@
 package com.elderApp.ElderApp.Helper_Class;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -95,6 +96,9 @@ public class apiService {
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
+
+
+
     /**
      * 上傳手機的 push token
      * @param context
@@ -125,6 +129,19 @@ public class apiService {
         System.out.println("getAssociationRequest");
         String requestUrl = host.concat("/api/getAllAssociation");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,requestUrl,null,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得使用者資料
+     * @param context
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMeRequest(Context context,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMeRequest");
+        String requestUrl = host.concat("/api/auth/me");
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,new JSONObject(),responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 

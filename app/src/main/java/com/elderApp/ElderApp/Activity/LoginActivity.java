@@ -110,17 +110,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.has("access_token")) {
 
                     try {
-                        preference.edit().putString("access_token", response.getString("access_token")).commit();
-                        preference.edit().putString("email",_email).commit();
-                        preference.edit().putString("password",_password).commit();
+                        preference.edit()
+                                .putString("access_token", response.getString("access_token"))
+                                .putString("email",_email)
+                                .putString("password",_password)
+                                .commit();
 
-                        user.access_token = response.getString("access_token");
-                        user.user_id = response.getInt("user_id");
-                        user.id_code = response.getString("id_code");
-                        user.email = response.getString("email");
-                        user.name = response.getString("name");
-                        user.wallet = response.getInt("wallet");
-                        user.rank = response.getInt("rank");
+                        user = User.getInstance(response);
 
                         uploadPushToken();
                         navigateToIndexPage();

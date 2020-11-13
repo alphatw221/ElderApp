@@ -1,5 +1,7 @@
 package com.elderApp.ElderApp.Model_Class;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -13,8 +15,24 @@ public class User implements Serializable {
     public int rank;
     public String img;
     public String access_token;
-    public Integer org_rank;
+    public int org_rank;
+
     public User(){
 
+    }
+
+    public static User getInstance(JSONObject response){
+        User user = new User();
+
+        user.access_token = response.optString("access_token");
+        user.user_id = response.optInt("user_id");
+        user.id_code = response.optString("id_code");
+        user.email = response.optString("email");
+        user.name = response.optString("name");
+        user.wallet = response.optInt("wallet");
+        user.rank = response.optInt("rank");
+        user.org_rank=response.optInt("org_rank");
+        
+        return user;
     }
 }
