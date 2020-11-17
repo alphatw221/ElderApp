@@ -14,7 +14,7 @@
         android:id="@+id/_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#FF6D00"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabGravity="fill"

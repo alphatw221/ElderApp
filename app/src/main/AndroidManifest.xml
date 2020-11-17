@@ -9,7 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
@@ -19,29 +21,32 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.elderApp.ElderApp.Activity.getRewardActivity"></activity>
-        <activity android:name="com.elderApp.ElderApp.Activity.signupActivity" />
-        <activity android:name="com.elderApp.ElderApp.Activity.LoginActivity" />
-        <activity android:name="com.elderApp.ElderApp.Activity.UpdateMyDataActivity" />
         <activity
-            android:name="com.elderApp.ElderApp.Activity.TabActivity"
+            android:name=".Activity.TakeMoneyActivity"
+            android:label="@string/title_activity_take_money"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Activity.getRewardActivity" />
+        <activity android:name=".Activity.signupActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.UpdateMyDataActivity" />
+        <activity
+            android:name=".Activity.TabActivity"
             android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.elderApp.ElderApp.Activity.RegistrationActivity" />
-        <activity android:name="com.elderApp.ElderApp.Activity.MainActivity">
+        <activity android:name=".Activity.RegistrationActivity" />
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <service android:name="com.elderApp.ElderApp.Helper_Class.MyFirebaseService">
+        <service android:name=".Helper_Class.MyFirebaseService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -54,11 +59,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
-
-
     </application>
 
 </manifest>

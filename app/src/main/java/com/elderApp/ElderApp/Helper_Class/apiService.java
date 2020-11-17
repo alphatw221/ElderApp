@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class apiService {
 
-    private static String host = "https://www.happybi.com.tw";
+    public static String host = "https://www.happybi.com.tw";
 
     /**
      * 預設的POST請求

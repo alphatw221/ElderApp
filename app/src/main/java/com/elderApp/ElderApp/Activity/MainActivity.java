@@ -57,18 +57,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
         }
 
+
+        //------------檢查token---------------------
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                //------------檢查token----------------------------------------------------------------------------------------------------------------------------
-                try {
-                    if (preference.contains("email") && preference.contains("password")) {
-                        login_request();
-                    } else {
-                        navigate_loginActivity();
-                    }
-                } catch (Exception e) { }
+                if(preference.contains("email") && preference.contains("password")){
+                    login_request();
+                }else{
+                    navigate_loginActivity();
+                }
             }
         }, 2 * 1000); // wait for 2 seconds
 

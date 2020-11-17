@@ -25,6 +25,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import org.json.JSONException;
@@ -128,58 +129,27 @@ public class TabActivity extends AppCompatActivity {
                 TabActivity.user.email = response.optString("email");
                 TabActivity.user.org_rank = response.optInt("org_rank");
 
+                Intent intent = new Intent("update-user-info");
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                reLogin();
+                navigate_mainActivity();
             }
         });
     }
 
-
-    private void reLogin(){
-        final String _email = preferences.getString("email","");
-        final String _password = preferences.getString("password","");
-
-        apiService.loginRequest(this.context,_email,_password,this.versionCode,new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response) {
-
-                if (response.has("access_token")) {
-
-                    preferences.edit()
-                            .putString("access_token", response.optString("access_token"))
-                            .putString("email", response.optString("email"))
-                            .putString("password", _password)
-                            .commit();
-
-                    user = User.getInstance(response);
-
-                }else{
-                    navigate_loginActivity();
-                }
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                navigate_loginActivity();
-            }
-        });
-    }
 
     @Override
-    public  void onBackPressed(){
-//        getSharedPreferences("preFile",MODE_PRIVATE).edit().remove("access_token").commit();
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 
-
-    /**
-     * 導向到 loginActivity
-     */
-    private void navigate_loginActivity(){
+    private void navigate_mainActivity(){
         Intent intent = new Intent();
-        intent.setClass(TabActivity.this, LoginActivity.class);
+        intent.setClass(TabActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
