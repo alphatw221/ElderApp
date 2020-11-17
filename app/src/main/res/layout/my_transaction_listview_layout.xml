@@ -4,69 +4,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:background="#FF9100">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@drawable/shape_rectangle"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/background_ios_style_alert_dialog"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/_transaction_message"
-            android:layout_width="182dp"
-            android:layout_height="106dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="訊息"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp">
 
-        <TextView
-            android:id="@+id/_transaction_object"
-            android:layout_width="164dp"
-            android:layout_height="38dp"
-            android:layout_marginBottom="8dp"
-            android:text="對象"
-            android:textColor="#000000"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/_transaction_message"
-            app:layout_constraintTop_toBottomOf="@+id/_transaction_message" />
+            <TextView
+                android:id="@+id/_transaction_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="訊息"
+                android:textColor="#000000"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/_transaction_date"
-            android:layout_width="158dp"
-            android:layout_height="28dp"
-            android:ems="10"
-            android:text="2020-04-05"
-            android:textColor="#505050"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/_transaction_message"
-            app:layout_constraintTop_toTopOf="@+id/_transaction_message" />
+            <TextView
+                android:id="@+id/_transaction_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+300"
+                android:textColor="#D32828"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/_transaction_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="53dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="8dp"
-            android:text="+300"
-            android:textColor="#D32828"
-            android:textSize="36sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/_transaction_object"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="對象"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/_transaction_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020-04-05"
+                    android:textColor="#505050"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/_transaction_object"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

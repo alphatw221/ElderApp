@@ -51,7 +51,7 @@ public class my_transaction_listview_adapter extends BaseAdapter {
         TextView transaction_date=(TextView)convertView.findViewById(R.id._transaction_date);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 
-        transaction_date.setText(list.get(position).created_at);
+        transaction_date.setText("("+list.get(position).created_at+")");
         if(!list.get(position).event.equals("null")){
             transaction_message.setText(list.get(position).event);
         }else{
@@ -62,10 +62,10 @@ public class my_transaction_listview_adapter extends BaseAdapter {
 
         if(list.get(position).give_take==1){
             transaction_amount.setText("+"+Integer.toString(list.get(position).amount));
-            transaction_amount.setTextColor(Color.GREEN);
+            transaction_amount.setTextColor(Color.rgb(74,181,102));
         }else{
             transaction_amount.setText("-"+Integer.toString(list.get(position).amount));
-            transaction_amount.setTextColor(Color.RED);
+            transaction_amount.setTextColor(Color.rgb(223,75,90));
         }
 
         return convertView;

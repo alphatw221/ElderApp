@@ -2,38 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout7"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF9100"
+    android:background="@color/colorPrimary"
+    android:gravity="fill"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FF6D00">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        tools:layout_conversion_absoluteHeight="45dp"
+        tools:layout_conversion_absoluteWidth="411dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="731dp">
 
         <ImageButton
             android:id="@+id/_my_transaction_back"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
             android:background="#00FFFFFF"
-            android:src="@android:drawable/ic_input_delete" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FFAB00">
+            android:src="@android:drawable/ic_input_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:text="我的帳簿"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,6 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <!--    <ScrollView-->
     <!--        android:layout_height="match_parent"-->
     <!--        android:layout_width="match_parent">-->
@@ -52,26 +55,39 @@
     <!--    </ScrollView>-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_conversion_absoluteWidth="411dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="776dp">
 
         <ListView
             android:id="@+id/_my_transaction_listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="0dp"
+            tools:layout_conversion_absoluteWidth="411dp"></ListView>
 
         <ProgressBar
             android:id="@+id/_my_transaction_progressbar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="#ffffff"
+            android:indeterminateTintMode="src_atop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="#ffffff"
-            />
+            tools:layout_conversion_absoluteHeight="50dp"
+            tools:layout_conversion_absoluteWidth="50dp"
+            tools:layout_editor_absoluteX="181dp"
+            tools:layout_editor_absoluteY="752dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

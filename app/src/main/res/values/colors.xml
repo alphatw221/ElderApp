@@ -7,7 +7,7 @@
     <color name="colorPrimary">#FEA735</color>
     <color name="colorPrimaryDark">#ED6F39</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="tabSelectedIconColor">#FFC400</color>
+    <color name="tabSelectedIconColor">#FEA735</color>
     <color name="tabUnselectedIconColor">#ffffff</color>
     <color name="get_money_green">#18A048</color>
     <color name="give_money_red">#D32828</color>

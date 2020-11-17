@@ -96,6 +96,7 @@ public class TabActivity extends AppCompatActivity {
                     case 2:
                         tab.setText("動態");
                         tab.setIcon(R.drawable.ic_baseline_art_track_24);
+                        break;
                     case 3:
                         tab.setText("我的帳戶");
                         tab.setIcon(R.drawable.ic_folder_shared_black_24dp);
