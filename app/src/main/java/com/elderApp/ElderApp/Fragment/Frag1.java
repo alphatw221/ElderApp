@@ -39,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.LoginActivity;
 import com.elderApp.ElderApp.Activity.MainActivity;
+import com.elderApp.ElderApp.Activity.MyTransactionActivity;
 import com.elderApp.ElderApp.Activity.TabActivity;
 import com.elderApp.ElderApp.Activity.TakeMoneyActivity;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
@@ -190,22 +191,27 @@ public class Frag1 extends Fragment {
     private Button.OnClickListener myTrans_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            FragmentManager FM = getFragmentManager();
-            FragmentTransaction FT = FM.beginTransaction();
-            Fragment fragment=FM.findFragmentByTag("my_transaction_Frag");
-            Fragment fragment2=FM.findFragmentByTag("Frag1");
-            if ( fragment!=null) {
-                if ( fragment.isAdded()) {
-                    FT.show(fragment);
 
-                } else {
-                    FT.add(R.id._fragment_frag1_blank, fragment, "my_transaction_Frag");
+            Intent intent = new Intent(context, MyTransactionActivity.class);
+            startActivity(intent);
 
-                }
-            } else{
-                FT.replace(R.id._fragment_frag1_blank,new my_transaction_Frag(),"my_transaction_Frag");
-            }
-            FT.commit();
+
+//            FragmentManager FM = getFragmentManager();
+//            FragmentTransaction FT = FM.beginTransaction();
+//            Fragment fragment=FM.findFragmentByTag("my_transaction_Frag");
+//            Fragment fragment2=FM.findFragmentByTag("Frag1");
+//            if ( fragment!=null) {
+//                if ( fragment.isAdded()) {
+//                    FT.show(fragment);
+//
+//                } else {
+//                    FT.add(R.id._fragment_frag1_blank, fragment, "my_transaction_Frag");
+//
+//                }
+//            } else{
+//                FT.replace(R.id._fragment_frag1_blank,new my_transaction_Frag(),"my_transaction_Frag");
+//            }
+//            FT.commit();
         }
     };
     //-----------------商品兌換按鈕Listener-----------------------------------------------------------------------------------------------------------------------

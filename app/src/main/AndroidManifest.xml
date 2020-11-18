@@ -21,10 +21,11 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activity.MyTransactionActivity"></activity>
         <activity
             android:name=".Activity.TakeMoneyActivity"
             android:label="@string/title_activity_take_money"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.getRewardActivity" />
         <activity android:name=".Activity.signupActivity" />
         <activity android:name=".Activity.LoginActivity" />
@@ -59,7 +60,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

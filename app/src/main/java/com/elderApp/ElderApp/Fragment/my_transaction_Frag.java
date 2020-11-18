@@ -42,11 +42,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class my_transaction_Frag extends Fragment {
+
     private ListView my_transaction_listview;
-//    private String url="https://www.happybi.com.tw/api/trans-history/";
     private String url="https://www.happybi.com.tw/api/transaction/myTransactionHistory/";
     private int page=1;
     private boolean hasNextPage;
+
     private Context context;
     private User user;
     private ImageButton backButton;

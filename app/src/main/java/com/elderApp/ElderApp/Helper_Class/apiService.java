@@ -50,8 +50,8 @@ public class apiService {
      * @param errorListener
      * @return
      */
-    private static JsonObjectRequest AuthorizationPostRequest(final Context context, String requestUrl, JSONObject postData, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,requestUrl,postData,responseListener,errorListener){
+    private static JsonObjectRequest AuthorizationPostRequest(final Context context, String requestUrl,int method, JSONObject postData, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(method,requestUrl,postData,responseListener,errorListener){
             @Override
             public Map<String, String> getHeaders() {
                 String token = context.getSharedPreferences("preFile", context.MODE_PRIVATE).getString("access_token", "");
@@ -115,7 +115,7 @@ public class apiService {
         }catch (JSONException e){
             return;
         }
-        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,postData,responseListener,errorListener);
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
@@ -141,7 +141,22 @@ public class apiService {
     public static void getMeRequest(Context context,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
         System.out.println("getMeRequest");
         String requestUrl = host.concat("/api/auth/me");
-        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,new JSONObject(),responseListener,errorListener);
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,new JSONObject(),responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得我的交易紀錄
+     * @param context
+     * @param page
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMyTransactionRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMyTransactionRequest");
+        String requestUrl = host + "/api/transaction/myTransactionHistory" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
