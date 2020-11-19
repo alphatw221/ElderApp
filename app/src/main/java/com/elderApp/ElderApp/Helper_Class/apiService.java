@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.Activity.TabActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +43,7 @@ public class apiService {
     }
 
     /**
-     * 帶有使用者jwt的POST請求
+     * 帶有使用者jwt的請求
      * @param context
      * @param requestUrl
      * @param postData
@@ -55,8 +56,6 @@ public class apiService {
             @Override
             public Map<String, String> getHeaders() {
                 String token = context.getSharedPreferences("preFile", context.MODE_PRIVATE).getString("access_token", "");
-                System.out.println("token:");
-                System.out.println(token);
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 params.put("Content-Type", "application/json");
@@ -95,9 +94,6 @@ public class apiService {
         JsonObjectRequest request = DefaultPostRequest(requestUrl,postData,responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
-
-
-
 
     /**
      * 上傳手機的 push token
@@ -157,6 +153,103 @@ public class apiService {
         String requestUrl = host + "/api/transaction/myTransactionHistory" + "?page=" + page;
         JSONObject postData = new JSONObject();
         JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得我的帳戶資訊
+     * @param context
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMyAccountRequest(Context context,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMyAccountRequest");
+        String requestUrl = host + "/api/auth/myAccount";
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得我參加的活動
+     * @param context
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMyEventRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMyEventRequest");
+        String requestUrl = host + "/api/event/myEventList" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得所有的活動
+     * @param context
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getAllEventRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getAllEventRequest");
+        String requestUrl = host + "/api/event/eventList" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得活動詳細內容
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getEventDetailRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getEventDetailRequest");
+        String requestUrl = host + "/api/event/eventDetail/" + slug;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取消參加活動
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void cancelEventRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("cancelEventRequest");
+        String requestUrl = host + "/api/cancelevent/" + slug;
+        JSONObject postData = new JSONObject();
+        try{
+            postData.put("id",TabActivity.user.user_id);
+        }catch (JSONException e){
+            return;
+        }
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 參加活動
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void joinEventRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("joinEventRequest");
+        String requestUrl = host + "/api/joinevent/" + slug;
+        JSONObject postData = new JSONObject();
+        try{
+            postData.put("id",TabActivity.user.user_id);
+        }catch (JSONException e){
+            return;
+        }
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 

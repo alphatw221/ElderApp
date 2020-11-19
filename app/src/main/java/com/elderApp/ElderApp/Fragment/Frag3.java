@@ -1,7 +1,6 @@
 package com.elderApp.ElderApp.Fragment;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -26,7 +24,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -39,6 +36,7 @@ import com.elderApp.ElderApp.Activity.MainActivity;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.QRCodeHelper;
+import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.R;
 import com.elderApp.ElderApp.Activity.UpdateMyDataActivity;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
@@ -54,8 +52,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,10 +65,10 @@ public class Frag3 extends Fragment {
     private Button upload_image_bottom_sheet_cancel,upload_image_bottom_sheet_capture,upload_image_bottom_sheet_select,upload_image_bottom_sheet_remove;
     private TextView myAccount_member,myAccount_valid,myAccount_expiry_date;
     private ImageView myAccount_qr,myAccount_image;
-    private String url="https://www.happybi.com.tw/api/auth/myAccount";
+
     private String url2="https://www.happybi.com.tw/api/extendMemberShip";
     private SharedPreferences preferences;
-    private boolean firstset=false;
+
     private Context context;
     private int user_id;
     private ImageButton myAccount_image_edit;
@@ -104,25 +100,21 @@ public class Frag3 extends Fragment {
         myAccount_image_edit=view.findViewById(R.id._myAccount_image_edit);
         myAccount_image=view.findViewById(R.id._myAccount_image);
 
-        bottomSheetDialog=new BottomSheetDialog(context);
-        View view1=LayoutInflater.from(context).inflate(R.layout.upload_image_bottom_sheet_layout,null);
-        upload_image_bottom_sheet_cancel=view1.findViewById(R.id._upload_image_bottom_sheet_cancel);
+        bottomSheetDialog = new BottomSheetDialog(context);
+        View popupButtonView = LayoutInflater.from(context).inflate(R.layout.upload_image_bottom_sheet_layout,null);
+        upload_image_bottom_sheet_cancel=popupButtonView.findViewById(R.id._upload_image_bottom_sheet_cancel);
         upload_image_bottom_sheet_cancel.setOnClickListener(btn_listener);
-        upload_image_bottom_sheet_capture=view1.findViewById(R.id._upload_image_bottom_sheet_capture);
+        upload_image_bottom_sheet_capture=popupButtonView.findViewById(R.id._upload_image_bottom_sheet_capture);
         upload_image_bottom_sheet_capture.setOnClickListener(btn_listener);
-        upload_image_bottom_sheet_select=view1.findViewById(R.id._upload_image_bottom_sheet_select);
+        upload_image_bottom_sheet_select=popupButtonView.findViewById(R.id._upload_image_bottom_sheet_select);
         upload_image_bottom_sheet_select.setOnClickListener(btn_listener);
-//        upload_image_bottom_sheet_remove=view1.findViewById(R.id._upload_image_bottom_sheet_remove);
-//        upload_image_bottom_sheet_remove.setOnClickListener(btn_listener);
-        bottomSheetDialog.setContentView(view1);
-        ViewGroup parent = (ViewGroup) view1.getParent();
+
+        bottomSheetDialog.setContentView(popupButtonView);
+        ViewGroup parent = (ViewGroup) popupButtonView.getParent();
         parent.setBackgroundResource(android.R.color.transparent);
 
         //---------------------發出請求------------------------------------------------------------
-        Object[] key=new Object[]{"token"};
-        Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-//        new myJsonRequest(url,"post",key,value,getActivity().getApplicationContext(),RL,REL).Fire();
-        myJsonRequest.POST_Request.getJSON_object(url,key,value,getActivity().getApplicationContext(),RL,REL);
+        getMyAccount();
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
         myAccount_logout.setOnClickListener(logout_listener);
         myAccount_agrement.setOnClickListener(agreement_listener);
@@ -134,8 +126,24 @@ public class Frag3 extends Fragment {
         //----------------------------------------------------------------------------------------------------------------------------------------------------
         return view;
     }
+
+
+    private void getMyAccount(){
+        apiService.getMyAccountRequest(context, responseListener, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                new ios_style_alert_dialog_1
+                        .Builder(getActivity())
+                        .setTitle("連線錯誤")
+                        .setMessage("請重新登入")
+                        .show();
+            }
+        });
+    }
+
+
     //---------------------回報Listener------------------------------------------------------------
-    private  Response.Listener RL=new Response.Listener<JSONObject>(){
+    private  Response.Listener responseListener = new Response.Listener<JSONObject>(){
         @Override
         public void onResponse(JSONObject response) {
             try{
@@ -156,11 +164,11 @@ public class Frag3 extends Fragment {
                 }
 
                 if(response.getInt("valid")==0){
-                    myAccount_valid.setText("代付款");
-                    myAccount_valid.setTextColor(Color.parseColor("#FF0000"));
+                    myAccount_valid.setText("待付款");
+                    myAccount_valid.setTextColor(Color.parseColor("#DF4B5A"));
                 }else {
                     myAccount_valid.setText("有效");
-                    myAccount_valid.setTextColor(Color.parseColor("#76FF03"));
+                    myAccount_valid.setTextColor(Color.parseColor("#4AB566"));
                 }
                 if(response.getString("img")!=null){
                     Picasso.get().load(response.getString("img")).into(myAccount_image);
@@ -173,30 +181,23 @@ public class Frag3 extends Fragment {
                         .setMargin(1)
                         .getQRCOde();
                 myAccount_qr.setImageBitmap(bitmap);
-                firstset=true;
-
                 user_id=response.getInt("id");
+
             }catch(JSONException e){
-                new ios_style_alert_dialog_1.Builder(context)
+                new ios_style_alert_dialog_1
+                        .Builder(context)
                         .setMessage("JSON錯誤")
                         .show();
             }
         }
     };
-    //---------------------錯誤回報Listener------------------------------------------------------------
-    private Response.ErrorListener REL=new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            new ios_style_alert_dialog_1.Builder(getActivity())
-                    .setTitle("連線錯誤")
-                    .setMessage("請重新登入")
-                    .show();
-        }
-    };
 
 
-    private Button.OnClickListener btn_listener=new Button.OnClickListener(){
 
+
+
+
+    private Button.OnClickListener btn_listener = new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
             switch (v.getId()){
@@ -212,7 +213,6 @@ public class Frag3 extends Fragment {
                     break;
                 case R.id._upload_image_bottom_sheet_capture:
                     if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-//                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 110);
                         requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},110);
                     } else {
                         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -232,10 +232,6 @@ public class Frag3 extends Fragment {
                     }
                     bottomSheetDialog.cancel();
                     break;
-//                case R.id._upload_image_bottom_sheet_remove:
-//                    bottomSheetDialog.cancel();
-//                    break;
-
             }
         }
     };
@@ -451,13 +447,5 @@ public class Frag3 extends Fragment {
     };
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(firstset){
-            Object[] key=new Object[]{"token"};
-            Object[] value=new Object[]{this.getActivity().getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
-            myJsonRequest.POST_Request.getJSON_object(url,key,value,getActivity().getApplicationContext(),RL,REL);
-        }
-    }
+
 }

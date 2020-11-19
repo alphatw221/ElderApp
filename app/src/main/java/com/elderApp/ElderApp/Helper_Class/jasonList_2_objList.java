@@ -2,6 +2,7 @@ package com.elderApp.ElderApp.Helper_Class;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.EventLog;
 
 import com.elderApp.ElderApp.Model_Class.Event_class;
 import com.elderApp.ElderApp.Model_Class.LocationQuantity_class;
@@ -28,64 +29,20 @@ public class jasonList_2_objList {
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public static List convert_2_Event_list(Context context,JSONArray jsonArray){
-
-        List<Event_class> list=new ArrayList();
+    public static List<Event_class> eventList(JSONArray jsonArray){
+        List<Event_class> list = new ArrayList();
         for (int i=0;i<jsonArray.length();i++){
             try{
-                list.add(convert_2_event(jsonArray.getJSONObject(i)));
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                list.add(Event_class.getInstance(jsonObject));
             }catch (JSONException e){
-                new AlertDialog.Builder(context)
-                        .setTitle("錯誤")
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setMessage(e.toString())
-                        .show();
+                return null;
             }
         }
         return list;
     }
 
-    static private Event_class convert_2_event(JSONObject object){
-        Event_class event_class=new Event_class();
-        try{
 
-
-            event_class.name=object.getString("name");
-            event_class.slug=object.getString("slug");
-            event_class.type=object.getInt("type");
-            event_class.reward=object.getInt("reward");
-            event_class.cat=object.getString("cat");
-            event_class.district=object.getString("district");
-            event_class.location=object.getString("location");
-            event_class.maximum=object.getInt("maximum");
-            event_class.people=object.getInt("people");
-            event_class.dateTime=object.getString("dateTime");
-            event_class.imgUrl=object.getString("imgUrl");
-
-            //
-//            event_class.id=object.getInt("id");
-//            event_class.image=object.getString("image");
-//            event_class.category_id=object.getInt("category_id");
-//            event_class.district_id=object.getInt("district_id");
-//            event_class.reward_level_id=object.getInt("reward_level_id");
-//            event_class.title=object.getString("title");
-//            event_class.body=object.getString("body");
-//            event_class.dateTime_2=object.getString("dateTime_2");
-//            event_class.deadline=object.getString("deadline");
-//            event_class.created_at=object.getString("created_at");
-//            event_class.updated_at=object.getString("updated_at");
-
-                                //先不要用
-//            event_class.numberOfPeople=object.getInt("numberOfPeople");     //改用這個
-        }catch (JSONException e){
-            new AlertDialog.Builder(context)
-                    .setTitle("錯誤")
-                    .setIcon(R.mipmap.ic_launcher)
-                    .setMessage(e.toString())
-                    .show();
-        }
-        return event_class;
-    }
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
     public static List<Transaction_class> convert_2_transaction_list(Context context,JSONArray jsonArray){

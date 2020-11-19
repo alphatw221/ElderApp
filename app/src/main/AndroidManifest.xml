@@ -21,7 +21,8 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MyTransactionActivity"></activity>
+        <activity android:name=".Activity.EventDetailActivity"></activity>
+        <activity android:name=".Activity.MyTransactionActivity" />
         <activity
             android:name=".Activity.TakeMoneyActivity"
             android:label="@string/title_activity_take_money"

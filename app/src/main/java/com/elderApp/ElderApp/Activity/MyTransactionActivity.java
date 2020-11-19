@@ -112,7 +112,6 @@ public class MyTransactionActivity extends AppCompatActivity {
         public void onScrollStateChanged(AbsListView view, int scrollState) { }
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
             if(totalItemCount == 0){return;}
             if(!hasNextPage){ return; }
             if(totalItemCount - visibleItemCount == firstVisibleItem){
