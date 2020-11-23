@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#FF9100">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FF6D00">
+        android:layout_height="52dp"
+        android:background="@color/colorPrimaryDark">
 
         <ImageButton
             android:id="@+id/_market_back"
@@ -23,55 +23,77 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FFAB00">
+        android:layout_height="64dp"
+        android:background="@color/colorPrimary"
+        android:padding="8dp">
 
-        <Button
-            android:id="@+id/_market_product"
-            android:layout_width="155dp"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            android:background="@drawable/shape_rectangle_orange"
-            android:text="商品"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/_market_myProduct"
-            android:layout_width="155dp"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            android:background="#00FFFFFF"
-            android:text="已兌換"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/_market_product"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_rectangle_orange"
+                android:text="商品"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/_market_myProduct"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/_market_myProduct"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#00FFFFFF"
+                android:text="已兌換"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/_market_product"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ListView
             android:id="@+id/_market_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FF9100"></ListView>
+            android:background="@color/colorPrimary"></ListView>
 
+        <ListView
+            android:id="@+id/_order_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:visibility="gone"></ListView>
 
 
         <ProgressBar
             android:id="@+id/_market_progressbar"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:indeterminate="true"
+            android:indeterminateTint="#ffffff"
+            android:indeterminateTintMode="src_atop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="#ffffff"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

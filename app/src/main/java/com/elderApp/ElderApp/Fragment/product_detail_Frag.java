@@ -96,8 +96,8 @@ public class product_detail_Frag extends Fragment {
         product_detail_info=(TextView)view.findViewById(R.id._product_detail_info);
         product_detail_image=(ImageView)view.findViewById(R.id._product_detail_image);
         product_detail_back=(ImageButton)view.findViewById(R.id._product_detail_back);
-        product_detail_listview=(ListView)view.findViewById(R.id._product_detail_listview);
-        product_detail_spinner=(Spinner)view.findViewById(R.id._product_detail_spinner);
+//        product_detail_listview=(ListView)view.findViewById(R.id._product_detail_listview);
+//        product_detail_spinner=(Spinner)view.findViewById(R.id._product_detail_spinner);
         product_detail_exchange=(Button)view.findViewById(R.id._product_detail_exchange);
         product_detail_purchase=(Button)view.findViewById(R.id._product_detail_purchase);
         product_detail_webview=view.findViewById(R.id._product_detail_webview);
@@ -148,7 +148,7 @@ public class product_detail_Frag extends Fragment {
                     Picasso.get().load(url).into(product_detail_image);
                     product_detail_name.setText("商品："+product.getString("name"));
                     product_detail_price.setText("樂幣："+product.getString("price"));
-//                    product_detail_info.setText("商品資訊:\n\n"+product.getString("info"));
+
                     product_detail_info.setText("商品資訊:\n");
                     product_detail_webview.loadData(product.getString("info"),"text/html","UTF-8");
                 }catch (JSONException e){ }

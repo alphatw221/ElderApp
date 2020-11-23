@@ -39,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.LoginActivity;
 import com.elderApp.ElderApp.Activity.MainActivity;
+import com.elderApp.ElderApp.Activity.MarketActivity;
 import com.elderApp.ElderApp.Activity.MyTransactionActivity;
 import com.elderApp.ElderApp.Activity.TabActivity;
 import com.elderApp.ElderApp.Activity.TakeMoneyActivity;
@@ -195,23 +196,6 @@ public class Frag1 extends Fragment {
             Intent intent = new Intent(context, MyTransactionActivity.class);
             startActivity(intent);
 
-
-//            FragmentManager FM = getFragmentManager();
-//            FragmentTransaction FT = FM.beginTransaction();
-//            Fragment fragment=FM.findFragmentByTag("my_transaction_Frag");
-//            Fragment fragment2=FM.findFragmentByTag("Frag1");
-//            if ( fragment!=null) {
-//                if ( fragment.isAdded()) {
-//                    FT.show(fragment);
-//
-//                } else {
-//                    FT.add(R.id._fragment_frag1_blank, fragment, "my_transaction_Frag");
-//
-//                }
-//            } else{
-//                FT.replace(R.id._fragment_frag1_blank,new my_transaction_Frag(),"my_transaction_Frag");
-//            }
-//            FT.commit();
         }
     };
     //-----------------商品兌換按鈕Listener-----------------------------------------------------------------------------------------------------------------------
@@ -219,22 +203,26 @@ public class Frag1 extends Fragment {
 
         @Override
         public void onClick(View v) {
-            FragmentManager FM = getFragmentManager();
-            FragmentTransaction FT = FM.beginTransaction();
-            Fragment fragment=FM.findFragmentByTag("market_Frag");
-            Fragment fragment2=FM.findFragmentByTag("Frag1");
-            if ( fragment!=null) {
-                if ( fragment.isAdded()) {
-                    FT.show(fragment);
-                    FT.remove(fragment2);
-                } else {
-                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
-                    FT.remove(fragment2);
-                }
-            } else{
-                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
-            }
-            FT.commit();
+
+            Intent intent = new Intent(context, MarketActivity.class);
+            startActivity(intent);
+
+//            FragmentManager FM = getFragmentManager();
+//            FragmentTransaction FT = FM.beginTransaction();
+//            Fragment fragment=FM.findFragmentByTag("market_Frag");
+//            Fragment fragment2=FM.findFragmentByTag("Frag1");
+//            if ( fragment!=null) {
+//                if ( fragment.isAdded()) {
+//                    FT.show(fragment);
+//                    FT.remove(fragment2);
+//                } else {
+//                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
+//                    FT.remove(fragment2);
+//                }
+//            } else{
+//                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
+//            }
+//            FT.commit();
         }
     };
     //-----------------網路商城按鈕Listener-----------------------------------------------------------------------------------------------------------------------

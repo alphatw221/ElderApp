@@ -3,10 +3,12 @@ package com.elderApp.ElderApp.Helper_Class;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.elderApp.ElderApp.Activity.TabActivity;
 
 import org.json.JSONArray;
@@ -185,7 +187,7 @@ public class apiService {
     }
 
     /**
-     * 取得所有的活動
+     * 取得所有的活動fra
      * @param context
      * @param responseListener
      * @param errorListener
@@ -253,4 +255,71 @@ public class apiService {
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
+    /**
+     * 取得可兌換商品列表
+     * @param context
+     * @param page
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getProductListRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getProductListRequest");
+        String requestUrl = host + "/api/productList" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得我的兌換紀錄
+     * @param context
+     * @param page
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMyOrderRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMyOrderRequest");
+        String requestUrl = host + "/api/order/myOrderList" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 取得產品詳細資料
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getProductRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getProductRequest");
+        String requestUrl = host + "/api/product/productDetail/" + slug;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 兌換產品
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void purchaseProductRequest(final Context context, String slug, final int location_id, Response.Listener<String> responseListener, Response.ErrorListener errorListener){
+        System.out.println("purchaseProductRequest");
+        String requestUrl = host + "/api/purchase/" + slug;
+        StringRequest request = new StringRequest(Request.Method.POST,requestUrl,responseListener,errorListener){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                String token = context.getSharedPreferences("preFile", context.MODE_PRIVATE).getString("access_token", "");
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token",token);
+                params.put("location_id",String.valueOf(location_id));
+                return params;
+            }
+        };
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
 }

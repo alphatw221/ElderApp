@@ -53,7 +53,7 @@ public class market_listview_adapter extends BaseAdapter {
         String url=list.get(position).imgUrl;
         Picasso.get().load(url).into(product_image);
 
-        market_listview_name.setText("商品："+list.get(position).name);
+        market_listview_name.setText(list.get(position).name);
         market_listview_price.setText("樂幣："+Integer.toString(list.get(position).price));
         return convertView;
     }

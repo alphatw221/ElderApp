@@ -16,24 +16,25 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
 
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="#FF6D00"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/_product_detail_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:background="#00FFFFFF"
-                android:src="@android:drawable/ic_input_delete" />
+        <ImageButton
+            android:id="@+id/_product_detail_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_input_delete" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,8 +55,9 @@
             <ImageView
                 android:id="@+id/_product_detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="180dp"
                 android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
                 tools:src="@tools:sample/avatars" />
 
             <Button
@@ -88,40 +90,12 @@
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView2"
-
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="#00FFFFFF"
-                android:layout_marginLeft="10dp"
-                android:text="兌換據點："
-                android:textColor="#000000" />
-
-            <ListView
-                android:id="@+id/_product_detail_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="#FFFFFF"
-                android:isScrollContainer="false" />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="請選擇兌換地點:"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000" />
-
-            <Spinner
-                android:id="@+id/_product_detail_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#FFAB00"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:spinnerMode="dialog"
-                android:visibility="gone"/>
 
             <RadioGroup
                 android:id="@+id/_product_detail_radio_group"
@@ -134,11 +108,11 @@
             <TextView
                 android:id="@+id/_product_detail_info"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:background="#00FFFFFF"
-                android:text="TextView"
+                android:text="商品資訊："
                 android:textColor="#000000" />
 
             <WebView
@@ -161,7 +135,7 @@
         android:id="@+id/_product_detail_exchange"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#FFC400"
+        android:background="@color/colorPrimary"
         android:text="確認兌換"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

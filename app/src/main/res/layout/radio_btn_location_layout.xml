@@ -2,10 +2,12 @@
 <RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/_radio_btn_location"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
     android:button="@drawable/toggle_btn_location"
+    android:paddingLeft="8dp"
     android:text="123"
     android:textColor="#000000"
-    android:textSize="18sp"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"></RadioButton>
+    android:textSize="24sp"></RadioButton>

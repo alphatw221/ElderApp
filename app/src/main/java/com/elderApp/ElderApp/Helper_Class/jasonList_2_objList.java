@@ -101,6 +101,19 @@ public class jasonList_2_objList {
 
     //----------------------------------------------------------------------------------------------------------------------------------------------------
 
+    public static List<Product_class> productList(JSONArray jsonArray){
+        List<Product_class> list = new ArrayList();
+        for (int i=0;i<jsonArray.length();i++){
+            try{
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                list.add(Product_class.getInstance(jsonObject));
+            }catch (JSONException e){
+                return null;
+            }
+        }
+        return list;
+    }
+
     public static List convert_2_Product_list(Context context,JSONArray jsonArray){
 
         List<Product_class> list=new ArrayList();
@@ -213,6 +226,19 @@ public class jasonList_2_objList {
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public static List<Order_class> orderList(JSONArray jsonArray){
+        List<Order_class> list = new ArrayList();
+        for (int i=0;i<jsonArray.length();i++){
+            try{
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                list.add(Order_class.getInstance(jsonObject));
+            }catch (JSONException e){
+                return null;
+            }
+        }
+        return  list;
+    }
 
     public static List convert_2_Order_list(Context context,JSONArray jsonArray)
     {

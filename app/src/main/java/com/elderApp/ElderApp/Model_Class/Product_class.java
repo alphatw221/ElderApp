@@ -1,5 +1,12 @@
 package com.elderApp.ElderApp.Model_Class;
 
+import android.app.AlertDialog;
+
+import com.elderApp.ElderApp.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Product_class {
 
 
@@ -7,4 +14,16 @@ public class Product_class {
 
     public String name,slug,img,imgUrl,info;
 
+
+    public static Product_class getInstance(JSONObject jsonObject){
+        Product_class object = new Product_class();
+        try{
+            object.imgUrl = jsonObject.getString("imgUrl");
+            object.name = jsonObject.getString("name");
+            object.price = jsonObject.getInt("price");
+            object.pay_cash_price = jsonObject.getInt("pay_cash_price");
+            object.slug = jsonObject.getString("slug");
+        }catch (JSONException e){ }
+        return object;
+    }
 }

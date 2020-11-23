@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="wrap_content"
     android:background="#FF9100">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_margin="15dp"
-        android:background="@drawable/shape_rectangle"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/background_ios_style_alert_dialog"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,79 +20,123 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/_market_myorder_listview_image"
-            android:layout_width="145dp"
-            android:layout_height="195dp"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.3"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/_market_myorder_listview_recieve"
-            android:layout_width="145dp"
-            android:layout_height="195dp"
-            android:background="#00FFFFFF"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.3"
-            app:srcCompat="@drawable/receive" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7">
 
-        <TextView
-            android:id="@+id/_market_myorder_listview_name"
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-            app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/_market_myorder_listview_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/_market_myorder_listview_location"
-            android:layout_width="150dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="#FF000000"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_name" />
+                <ImageView
+                    android:id="@+id/_market_myorder_listview_recieve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="#00FFFFFF"
+                    android:scaleType="fitCenter"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.3"
+                    app:srcCompat="@drawable/receive"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
 
-        <TextView
-            android:id="@+id/_market_myorder_listview_address"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="#FF000000"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_location" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/_market_myorder_listview_time"
-            android:layout_width="150dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textColor="#FF000000"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/_market_myorder_listview_image"
-            app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_address" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                app:layout_constraintBottom_toTopOf="@+id/_market_myorder_listview_name"
+                app:layout_constraintTop_toTopOf="@+id/_market_myorder_listview_name">
+
+                <TextView
+                    android:id="@+id/_market_myorder_listview_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+                <TextView
+                    android:id="@+id/_market_myorder_listview_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="#FF000000"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_name"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+                <TextView
+                    android:id="@+id/_market_myorder_listview_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="#FF000000"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_location"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+                <TextView
+                    android:id="@+id/_market_myorder_listview_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="#FF000000"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_market_myorder_listview_address"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
