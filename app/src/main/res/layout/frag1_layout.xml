@@ -24,27 +24,6 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="81dp"
-                android:background="@color/colorPrimaryDark"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="銀髮學院"
-                    android:textColor="#ffffffff"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -197,17 +176,8 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <WebView
-                android:id="@+id/_web_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
 
-            </WebView>
-
-            <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content">-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -276,6 +246,12 @@
                     android:layout_height="185dp"
                     android:src="@drawable/market_image_button" />
             </androidx.cardview.widget.CardView>
+
+            <WebView
+                android:id="@+id/_web_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </WebView>
 
 
         </LinearLayout>

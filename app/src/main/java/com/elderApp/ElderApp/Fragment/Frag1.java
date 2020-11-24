@@ -43,6 +43,7 @@ import com.elderApp.ElderApp.Activity.MarketActivity;
 import com.elderApp.ElderApp.Activity.MyTransactionActivity;
 import com.elderApp.ElderApp.Activity.TabActivity;
 import com.elderApp.ElderApp.Activity.TakeMoneyActivity;
+import com.elderApp.ElderApp.Activity.WebViewActivity;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.apiService;
@@ -207,22 +208,6 @@ public class Frag1 extends Fragment {
             Intent intent = new Intent(context, MarketActivity.class);
             startActivity(intent);
 
-//            FragmentManager FM = getFragmentManager();
-//            FragmentTransaction FT = FM.beginTransaction();
-//            Fragment fragment=FM.findFragmentByTag("market_Frag");
-//            Fragment fragment2=FM.findFragmentByTag("Frag1");
-//            if ( fragment!=null) {
-//                if ( fragment.isAdded()) {
-//                    FT.show(fragment);
-//                    FT.remove(fragment2);
-//                } else {
-//                    FT.add(R.id._frag1_fragment, fragment, "market_Frag");
-//                    FT.remove(fragment2);
-//                }
-//            } else{
-//                FT.replace(R.id._frag1_fragment,new market_Frag(),"market_Frag");
-//            }
-//            FT.commit();
         }
     };
     //-----------------網路商城按鈕Listener-----------------------------------------------------------------------------------------------------------------------
@@ -231,25 +216,10 @@ public class Frag1 extends Fragment {
         @Override
         public void onClick(View v) {
 
-            FragmentManager FM = getFragmentManager();
-            FragmentTransaction FT = FM.beginTransaction();
-            Fragment fragment = FM.findFragmentByTag("webview_Frag");
-            Fragment fragment2 = FM.findFragmentByTag("Frag1");
-            if ( fragment!=null) {
-                if ( fragment.isAdded()) {
-                    FT.show(fragment);
-                    FT.hide(fragment2);
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("url",apiService.host + "/product/list?token=" + TabActivity.user.access_token);
+            startActivity(intent);
 
-                } else {
-                    FT.add(R.id._fragment_frag1_blank, fragment, "webview_Frag");
-                    FT.hide(fragment2);
-                }
-            } else{
-                String url="https://www.happybi.com.tw/product/list?token="+TabActivity.user.access_token;
-                FT.add(R.id._fragment_frag1_blank,new webview_Frag(url),"webview_Frag");
-                FT.hide(fragment2);
-            }
-            FT.commit();
         }
     };
 
@@ -270,10 +240,9 @@ public class Frag1 extends Fragment {
             person_org_rank_btn.setOnClickListener(new Button.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i =new Intent(Intent.ACTION_VIEW);
-
-                    i.setData(Uri.parse(apiService.host + "/memberGroupMembers?token="+TabActivity.user.access_token));
-                    context.startActivity(i);
+                    Intent intent = new Intent(context, WebViewActivity.class);
+                    intent.putExtra("url",apiService.host + "/memberGroupMembers?token=" + TabActivity.user.access_token);
+                    startActivity(intent);
                 }
             });
         }else{

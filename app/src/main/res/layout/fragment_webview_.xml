@@ -4,15 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragment.webview_Frag">
+    android:layout_height="match_parent">
 
     <LinearLayout
 
         android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="#FF6D00"
+        android:layout_height="56dp"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

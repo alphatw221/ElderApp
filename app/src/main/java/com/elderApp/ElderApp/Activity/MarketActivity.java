@@ -1,15 +1,11 @@
 package com.elderApp.ElderApp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -19,10 +15,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
-import com.elderApp.ElderApp.Fragment.Frag2;
-import com.elderApp.ElderApp.Fragment.product_detail_Frag;
 import com.elderApp.ElderApp.Helper_Class.ErrorHandler;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.Helper_Class.jasonList_2_objList;

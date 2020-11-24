@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Fragment.myEvent_detail_Frag;
+import com.elderApp.ElderApp.Helper_Class.ErrorHandler;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.R;
 import com.squareup.picasso.Picasso;
@@ -150,6 +151,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     if(response.optInt("s") == 1){
                         isParticipated(false);
+                    }else{
+                        String message = response.optString("m");
+                        ErrorHandler.alert(context,"訊息",message);
                     }
                 }
             }, new Response.ErrorListener() {
@@ -169,6 +173,9 @@ public class EventDetailActivity extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     if(response.optInt("s") == 1){
                         isParticipated(true);
+                    }else{
+                        String message = response.optString("m");
+                        ErrorHandler.alert(context,"訊息",message);
                     }
                 }
             }, new Response.ErrorListener() {

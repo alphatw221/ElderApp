@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         prodcut_detail_radio_group=findViewById(R.id._product_detail_radio_group);
 
         product_detail_exchange.setOnClickListener(exchangeListener);
+        product_detail_purchase.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra("url",buynowUrl + "?token=" + TabActivity.user.access_token);
+                startActivity(intent);
+            }
+        });
         product_detail_back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
