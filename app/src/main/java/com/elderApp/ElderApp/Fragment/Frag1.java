@@ -37,6 +37,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.elderApp.ElderApp.Activity.GiveMoneyActivity;
 import com.elderApp.ElderApp.Activity.LoginActivity;
 import com.elderApp.ElderApp.Activity.MainActivity;
 import com.elderApp.ElderApp.Activity.MarketActivity;
@@ -139,7 +140,6 @@ public class Frag1 extends Fragment {
     private Button.OnClickListener takeBi_listener =new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
-            System.out.println("click take money button");
 
             Intent intent = new Intent(context,TakeMoneyActivity.class);
             startActivity(intent);
@@ -169,23 +169,26 @@ public class Frag1 extends Fragment {
     private Button.OnClickListener giveBi_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            FragmentManager FM = getFragmentManager();
-            FragmentTransaction FT = FM.beginTransaction();
-            Fragment fragment=FM.findFragmentByTag("give_money_Frag");
-            Fragment fragment2=FM.findFragmentByTag("Frag1");
-            if ( fragment!=null) {
-                if ( fragment.isAdded()) {
-                    FT.show(fragment);
 
-                } else {
-//                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
-
-                }
-            } else{
-                FT.replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag");
-            }
-            FT.commit();
+            Intent intent = new Intent(context, GiveMoneyActivity.class);
+            startActivity(intent);
+//            FragmentManager FM = getFragmentManager();
+//            FragmentTransaction FT = FM.beginTransaction();
+//            Fragment fragment=FM.findFragmentByTag("give_money_Frag");
+//            Fragment fragment2=FM.findFragmentByTag("Frag1");
+//            if ( fragment!=null) {
+//                if ( fragment.isAdded()) {
+//                    FT.show(fragment);
+//
+//                } else {
+////                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
+//                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
+//
+//                }
+//            } else{
+//                FT.replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag");
+//            }
+//            FT.commit();
         }
     };
 
@@ -231,7 +234,6 @@ public class Frag1 extends Fragment {
         person_name.setText("姓名:"+TabActivity.user.name);
         person_happybi.setText("剩餘樂幣:"+TabActivity.user.wallet);
         person_rank.setText("榮譽等級:"+Integer.toString(TabActivity.user.rank));
-
 
         if(TabActivity.user.org_rank > 2){
             person_org_rank_layout.setVisibility(View.VISIBLE);

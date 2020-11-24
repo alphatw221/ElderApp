@@ -322,4 +322,46 @@ public class apiService {
         };
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
+
+    /**
+     * 交易
+     * @param context
+     * @param take_id
+     * @param take_email
+     * @param amount
+     * @param message
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void transactionRequest(final Context context, final String take_id, final String take_email, final String amount,final String message, Response.Listener<String> responseListener, Response.ErrorListener errorListener){
+        System.out.println("transactionRequest");
+        String requestUrl = host + "/api/transaction/";
+        StringRequest request = new StringRequest(Request.Method.POST,requestUrl,responseListener,errorListener){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                JSONObject body = new JSONObject();
+                try {
+                    body.put("give_id", TabActivity.user.user_id);
+                    body.put("give_email", TabActivity.user.email);
+                    body.put("take_id", Integer.parseInt(take_id));
+                    body.put("take_email", take_email);
+                    body.put("amount", Integer.parseInt(amount));
+                    body.put("event",message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return body.toString().getBytes();
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                String token = TabActivity.user.access_token;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }
+        };
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
 }

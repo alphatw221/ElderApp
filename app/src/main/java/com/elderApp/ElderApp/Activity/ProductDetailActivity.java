@@ -119,7 +119,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 buynowUrl = product.optString("buynowUrl");
                 Picasso.get().load(product.optString("imgUrl")).into(product_detail_image);
                 product_detail_name.setText("商品："+product.optString("name"));

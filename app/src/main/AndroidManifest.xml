@@ -21,7 +21,9 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.WebViewActivity"></activity>
+        <activity android:name=".Activity.GiveMoneyConfirmActivity"></activity>
+        <activity android:name=".Activity.GiveMoneyActivity" />
+        <activity android:name=".Activity.WebViewActivity" />
         <activity android:name=".Activity.ProductDetailActivity" />
         <activity android:name=".Activity.MarketActivity" />
         <activity android:name=".Activity.EventDetailActivity" />
