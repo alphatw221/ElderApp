@@ -364,4 +364,53 @@ public class apiService {
         };
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
+
+
+    /**
+     * 領取獎勵
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void takeRewardRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("takeRewardRequest");
+        String requestUrl = host + "/api/drawEventRewardV2/" + slug;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 查詢是否簽到
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void isUserArriveRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("isUserArriveRequest");
+        String requestUrl = host + "/api/isUserArrive/" + slug;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * 進行簽到
+     * @param context
+     * @param slug
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void arriveEventRequest(Context context,String slug,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("arriveEventRequest");
+        String requestUrl = host + "/api/arriveEvent/" + slug;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+
+
 }
