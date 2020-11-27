@@ -52,13 +52,9 @@ public class ScannerActivity extends AppCompatActivity {
 
     public enum ScanType {
         Arrive, Reward
-    }
-
-    ;
+    };
     private ScanType scanType;
 
-    private String slug;
-    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +81,6 @@ public class ScannerActivity extends AppCompatActivity {
         switch (scanType) {
             case Arrive:
                 backbround.setBackgroundColor(Color.parseColor("#598E9A"));
-                slug = getIntent().getStringExtra("slug");
-                name = getIntent().getStringExtra("name");
-                checkIsArrive();
                 break;
             case Reward:
                 backbround.setBackgroundColor(Color.parseColor("#C15656"));
@@ -233,33 +226,6 @@ public class ScannerActivity extends AppCompatActivity {
     }
 
 
-    private void checkIsArrive() {
-        apiService.isUserArriveRequest(context, slug, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                int s = response.optInt("s");
-                if (s == 1) {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            cameraSource.release();
-                            navigate_PassportActivity(name);
-                        }
-                    });
-                } else if (s == 2) {
-                    //checkCameraPermissionAndStart();
-                }else{
-                    AlertHandler.alert(context, "錯誤", response.optString("m"), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    });
-                }
-            }
-        },ErrorHandler.defaultListener(context));
-    }
 
     private void arriveEvent(String slug){
         apiService.arriveEventRequest(context, slug, new Response.Listener<JSONObject>() {

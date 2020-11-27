@@ -172,23 +172,7 @@ public class Frag1 extends Fragment {
 
             Intent intent = new Intent(context, GiveMoneyActivity.class);
             startActivity(intent);
-//            FragmentManager FM = getFragmentManager();
-//            FragmentTransaction FT = FM.beginTransaction();
-//            Fragment fragment=FM.findFragmentByTag("give_money_Frag");
-//            Fragment fragment2=FM.findFragmentByTag("Frag1");
-//            if ( fragment!=null) {
-//                if ( fragment.isAdded()) {
-//                    FT.show(fragment);
-//
-//                } else {
-////                FT.add(R.id._frag1_fragment,FM.findFragmentByTag("take_money_Frag"),"take_money_Frag").commit();
-//                    FT.add(R.id._fragment_frag1_blank, fragment, "give_money_Frag");
-//
-//                }
-//            } else{
-//                FT.replace(R.id._fragment_frag1_blank,new give_money_Frag(),"give_money_Frag");
-//            }
-//            FT.commit();
+
         }
     };
 

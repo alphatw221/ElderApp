@@ -33,6 +33,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.elderApp.ElderApp.Activity.MainActivity;
+import com.elderApp.ElderApp.Activity.TabActivity;
+import com.elderApp.ElderApp.Activity.WebViewActivity;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.QRCodeHelper;
@@ -75,6 +77,9 @@ public class Frag3 extends Fragment {
     private Bitmap bitmap;
     private BottomSheetDialog bottomSheetDialog;
 
+    private String locationUrl;
+    private Button locationUrlButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -112,6 +117,8 @@ public class Frag3 extends Fragment {
         bottomSheetDialog.setContentView(popupButtonView);
         ViewGroup parent = (ViewGroup) popupButtonView.getParent();
         parent.setBackgroundResource(android.R.color.transparent);
+
+        locationUrlButton = view.findViewById(R.id.locationUrlButton);
 
         //---------------------發出請求------------------------------------------------------------
         getMyAccount();
@@ -183,6 +190,11 @@ public class Frag3 extends Fragment {
                 myAccount_qr.setImageBitmap(bitmap);
                 user_id=response.getInt("id");
 
+                if(response.has("locationUrl")){
+                    locationUrlButton.setVisibility(View.VISIBLE);
+                    locationUrl = response.getString("locationUrl");
+                    locationUrlButton.setOnClickListener(navigate_locationPanel);
+                }
             }catch(JSONException e){
                 new ios_style_alert_dialog_1
                         .Builder(context)
@@ -194,7 +206,14 @@ public class Frag3 extends Fragment {
 
 
 
-
+    private Button.OnClickListener navigate_locationPanel = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("url",apiService.host + locationUrl + "?token=" + TabActivity.user.access_token);
+            startActivity(intent);
+        }
+    };
 
 
     private Button.OnClickListener btn_listener = new Button.OnClickListener(){

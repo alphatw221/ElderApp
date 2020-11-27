@@ -3,8 +3,11 @@ package com.elderApp.ElderApp.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
+import com.elderApp.ElderApp.Helper_Class.AlertHandler;
 import com.elderApp.ElderApp.Helper_Class.ErrorHandler;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.R;
@@ -136,11 +140,23 @@ public class EventDetailActivity extends AppCompatActivity {
     private View.OnClickListener clickArrive = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(context,ScannerActivity.class);
-            intent.putExtra("scanType",ScannerActivity.ScanType.Arrive);
-            intent.putExtra("slug",slug);
-            intent.putExtra("name",name);
-            startActivity(intent);
+            apiService.isUserArriveRequest(context, slug, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    int s = response.optInt("s");
+                    if (s == 1) {
+                        Intent intent = new Intent(context,PassportActivity.class);
+                        intent.putExtra("name",name);
+                        startActivity(intent);
+                    } else if (s == 2) {
+                        Intent intent = new Intent(context,ScannerActivity.class);
+                        intent.putExtra("scanType",ScannerActivity.ScanType.Arrive);
+                        startActivity(intent);
+                    }else{
+                        ErrorHandler.alert(context,"錯誤",response.optString("m"));
+                    }
+                }
+            },ErrorHandler.defaultListener(context));
         }
     };
 
