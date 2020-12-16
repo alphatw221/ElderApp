@@ -219,7 +219,7 @@ public class Frag1 extends Fragment {
         person_happybi.setText("剩餘樂幣:"+TabActivity.user.wallet);
         person_rank.setText("榮譽等級:"+Integer.toString(TabActivity.user.rank));
 
-        if(TabActivity.user.org_rank > 2){
+        if(TabActivity.user.org_rank >= 2){
             person_org_rank_layout.setVisibility(View.VISIBLE);
             String[] s={"","平民","小天使","大天使","守護天使","領航天使"};
             person_org_rank.setText("職務:"+s[TabActivity.user.org_rank]);
