@@ -1,13 +1,17 @@
 package com.elderApp.ElderApp.Activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -19,8 +23,12 @@ import com.elderApp.ElderApp.Helper_Class.OrdersPagerAdapter;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.Model_Class.User;
 import com.elderApp.ElderApp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -106,6 +114,10 @@ public class TabActivity extends AppCompatActivity {
         });
 
         tabLayoutMediator.attach();
+
+        LocalBroadcastManager.getInstance(context).registerReceiver(messageReceiver,new IntentFilter("notification-action"));
+        LocalBroadcastManager.getInstance(context).registerReceiver(updateWalletReceiver,new IntentFilter("update-wallet"));
+
     }
 
     @Override
@@ -114,8 +126,76 @@ public class TabActivity extends AppCompatActivity {
         System.out.println("TabActivity onResume !!!");
 
         check_isTokenValid();
+//        getPushToken();
     }
 
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(messageReceiver);
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(updateWalletReceiver);
+        super.onDestroy();
+    }
+
+    private void getPushToken(){
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    System.out.println("getInstanceId failed");
+                    return;
+                }
+
+                String token = task.getResult().getToken();
+                System.out.println("This is push token !!!");
+                System.out.println(token);
+
+            }
+        });
+
+    }
+
+    private BroadcastReceiver messageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            System.out.println("message receive !");
+            String actionUrl = intent.getStringExtra("actionUrl");
+            if(actionUrl != null){ handleActionUrl(actionUrl); }
+        }
+    };
+
+    private BroadcastReceiver updateWalletReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String message = intent.getStringExtra("message");
+            if(message != null){
+                Toast toast = Toast.makeText(context,message,Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
+            }
+            check_isTokenValid();
+        }
+    };
+
+    private void handleActionUrl(String actionUrl){
+        String slug = getSlugIn(actionUrl);
+        if(slug == null){ return; }
+        if(actionUrl.contains("/app/product/")){
+            Intent intent = new Intent(context,ProductDetailActivity.class);
+            intent.putExtra("slug",slug);
+            startActivity(intent);
+        }else if(actionUrl.contains("/app/event/")){
+            Intent intent = new Intent(context, EventDetailActivity.class);
+            intent.putExtra("slug",slug);
+            startActivity(intent);
+        }
+    }
+
+    private String getSlugIn(String actionUrl){
+        String[] tempArray = actionUrl.split("/");
+        if(tempArray.length < 3){ return null; }
+        return tempArray[3];
+    }
 
     private void check_isTokenValid(){
         apiService.getMeRequest(this, new Response.Listener<JSONObject>() {

@@ -1,6 +1,7 @@
 package com.elderApp.ElderApp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private User user=new User();
     private Context context;
     private int versionCode;
-    private String pushtoken;
 
     //----------------------------------------------------------------------------------------------------------------------------------------
     @Override
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         preference = getSharedPreferences("preFile", MODE_PRIVATE);
-        pushtoken = preference.getString("pushtoken", "");
 
         try {
             versionCode = context.getPackageManager()
@@ -72,6 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void handleFcmMessage(){
+        System.out.println("handleActionUrl");
+        String actionUrl = getIntent().getStringExtra("actionUrl");
+        if(actionUrl != null){
+            System.out.println("ActionUrl GET");
+            Intent intent = new Intent("notification-action");
+            intent.putExtra("actionUrl",actionUrl);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }
+    }
 
 
     /**
@@ -159,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setClass(MainActivity.this, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("User", user);
         startActivity(intent);
+        handleFcmMessage();
         finish();
     }
 

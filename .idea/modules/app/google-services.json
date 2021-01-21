@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "450558424790",
+    "firebase_url": "https://elderapp-438e0.firebaseio.com",
+    "project_id": "elderapp-438e0",
+    "storage_bucket": "elderapp-438e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450558424790:android:ac276d069ef6ae7eaffb77",
+        "android_client_info": {
+          "package_name": "com.elderApp.ElderApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "450558424790-5ua7s9ram1ibcb75ehlk8dvgoh1009bk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elderApp.ElderApp",
+            "certificate_hash": "183f4b8316f7f4211341447e6586e9a9c6f0398f"
+          }
+        },
+        {
+          "client_id": "450558424790-g8cejeqqh95qnohm650mdqfhjbeiu5bl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elderApp.ElderApp",
+            "certificate_hash": "97fc08664d17ca787fd0bfc6268e0ab512a1ba16"
+          }
+        },
+        {
+          "client_id": "450558424790-pu0h7d1gu4imo8n3iqkjt06hs87at1p9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPgbbsg_tyTcqxDVwwFdSeP2aUgN5Ubow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "450558424790-pu0h7d1gu4imo8n3iqkjt06hs87at1p9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "450558424790-9kj6to1cnv3ivltoatav09oi4inip3oi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fullygarden.ElderAppiOS"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

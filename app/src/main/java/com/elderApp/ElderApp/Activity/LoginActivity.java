@@ -1,5 +1,6 @@
 package com.elderApp.ElderApp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -25,6 +26,10 @@ import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.Model_Class.User;
 import com.elderApp.ElderApp.R;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private User user;
     private int versionCode;
     private String update_url;
-    private String pushtoken;
+
 
     //----------------------------------------------------------------------------------------------------------------------------------------
     @Override
@@ -54,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         account = (TextView) findViewById(R.id.editText1);
         password = (TextView) findViewById(R.id.editText2);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-        pushtoken = getSharedPreferences("preFile", MODE_PRIVATE).getString("pushtoken", "");
+
         context = this;
         user = new User();
         login.setOnClickListener(btn_listener);
@@ -170,12 +175,25 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void uploadPushToken(){
-        apiService.uploadPushTokenRequest(context,pushtoken,new Response.Listener<JSONObject>(){
+        System.out.println("uploadPushToken !!!");
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
             @Override
-            public void onResponse(JSONObject response) { }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) { }
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    System.out.println("getInstanceId failed");
+                    return;
+                }
+
+                String pushtoken = task.getResult().getToken();
+                System.out.println(pushtoken);
+                apiService.uploadPushTokenRequest(context,pushtoken,new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) { }
+                },new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) { }
+                });
+            }
         });
     }
 
