@@ -175,7 +175,7 @@ public class post_detail_Frag extends Fragment {
     };
 
     private void show_post_detail(){
-        String url="https://www.happybi.com.tw/api/post/detail/"+slug;
+        String url="https://app.happybi.com.tw/api/post/detail/"+slug;
         JsonObjectRequest allPostRequest=new JsonObjectRequest(0, url , null,
                 new Response.Listener<JSONObject>() {
 
@@ -230,7 +230,7 @@ public class post_detail_Frag extends Fragment {
     }
 
     private void like_post(){
-        String url="https://www.happybi.com.tw/api/post/likePost/"+slug;
+        String url="https://app.happybi.com.tw/api/post/likePost/"+slug;
         JsonObjectRequest allPostRequest=new JsonObjectRequest(1, url , null,
                 new Response.Listener<JSONObject>() {
 
@@ -271,7 +271,7 @@ public class post_detail_Frag extends Fragment {
     }
 
     private void unlike_post(){
-        String url="https://www.happybi.com.tw/api/post/unLikePost/"+slug;
+        String url="https://app.happybi.com.tw/api/post/unLikePost/"+slug;
         JsonObjectRequest allPostRequest=new JsonObjectRequest(1, url , null,
                 new Response.Listener<JSONObject>() {
 
@@ -310,7 +310,7 @@ public class post_detail_Frag extends Fragment {
     }
 
     private void get_comments(Integer page){
-        String url="https://www.happybi.com.tw/api/post/commentList/"+slug+"?page="+page;
+        String url="https://app.happybi.com.tw/api/post/commentList/"+slug+"?page="+page;
         JsonObjectRequest allPostRequest=new JsonObjectRequest(0, url , null,
                 new Response.Listener<JSONObject>() {
 
@@ -370,7 +370,7 @@ public class post_detail_Frag extends Fragment {
     }
 
     private void make_comment(){
-        String url="https://www.happybi.com.tw/api/post/commentOnPost/"+slug;
+        String url="https://app.happybi.com.tw/api/post/commentOnPost/"+slug;
         JSONObject jsonObject=new JSONObject();
         try{
             jsonObject.put("comment",post_detail_comment.getText().toString());

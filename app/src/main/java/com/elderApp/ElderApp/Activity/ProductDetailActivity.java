@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,7 +22,9 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
+import com.elderApp.ElderApp.CustomComponents.LocationCell;
 import com.elderApp.ElderApp.Helper_Class.ErrorHandler;
+import com.elderApp.ElderApp.Helper_Class.ProductDetailDelegate;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.Model_Class.LocationQuantity_class;
 import com.elderApp.ElderApp.Model_Class.Location_class;
@@ -39,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends AppCompatActivity implements ProductDetailDelegate {
 
     private Context context;
     private String slug;
@@ -53,6 +56,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private RadioGroup prodcut_detail_radio_group;
+    private LinearLayout location_outter;
 
     private List<Location_class> location_list = new ArrayList<>();
     private List<LocationQuantity_class> locationquantity_list;
@@ -84,6 +88,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         product_detail_purchase=(Button)findViewById(R.id._product_detail_purchase);
         product_detail_webview=findViewById(R.id._product_detail_webview);
         prodcut_detail_radio_group=findViewById(R.id._product_detail_radio_group);
+        location_outter = findViewById(R.id.location_outter);
 
         product_detail_exchange.setOnClickListener(exchangeListener);
         product_detail_purchase.setOnClickListener(new Button.OnClickListener(){
@@ -125,18 +130,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                 product_detail_price.setText("樂幣："+product.optString("price"));
                 product_detail_webview.loadData(product.optString("info"),"text/html","UTF-8");
 
-
                 for(int i=0; i < locationList.length(); i++){
-                    View radioOptionView = LayoutInflater.from(context).inflate(R.layout.radio_btn_location_layout,null);
                     try {
                         JSONObject location = locationList.getJSONObject(i);
-                        RadioButton radioButton = (RadioButton)radioOptionView.findViewById(R.id._radio_btn_location);
-                        radioButton.setText(location.getString("name") + "(數量:" + location.getInt("quantity") + ")");
-                        radioButton.setId(location.getInt("location_id"));
+                        String address = location.getString("address");
+                        String name = location.getString("name");
+                        String link = location.getString("link");
+                        int quantity = location.getInt("quantity");
+                        int location_id = location.getInt("location_id");
+                        LocationCell cell = new LocationCell(context,location_id,name,address,link,quantity);
+                        cell.isClickable();
+                        cell.delegate = (ProductDetailDelegate)context;
+                        location_outter.addView(cell);
                     }catch (JSONException e){
                         continue;
                     }
-                    prodcut_detail_radio_group.addView(radioOptionView);
                 }
 
             }
@@ -147,13 +155,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Button.OnClickListener exchangeListener = new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            if(prodcut_detail_radio_group.getCheckedRadioButtonId() == -1) {
+            int selected_location_id = getSelected_location_id();
+            if(selected_location_id == 0){
                 ErrorHandler.alert(context,"訊息","請選擇兌換據點");
                 return;
             }
 
-            int location_id = prodcut_detail_radio_group.getCheckedRadioButtonId();
-            apiService.purchaseProductRequest(context, slug, location_id, new Response.Listener<String>() {
+            apiService.purchaseProductRequest(context, slug, selected_location_id, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     ErrorHandler.alert(context,"訊息","兌換成功");
@@ -168,5 +176,34 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         }
     };
+
+    private int getSelected_location_id(){
+        for(int i = 0; i < location_outter.getChildCount(); i++){
+            LocationCell cell = (LocationCell) location_outter.getChildAt(i);
+            if(cell.isChecked){  return cell.location_id; }
+        }
+        return 0;
+    }
+
+    @Override
+    public void selectLocation(int location_id) {
+        for(int i = 0; i < location_outter.getChildCount(); i++){
+            LocationCell cell = (LocationCell) location_outter.getChildAt(i);
+            if(cell.location_id != location_id){
+                cell.setChecked(false);
+            }
+        }
+    }
+
+    @Override
+    public void showLocationDetail(String name, String address, String link) {
+        Intent intent = new Intent();
+        intent.putExtra("name",name);
+        intent.putExtra("address",address);
+        intent.putExtra("link",link);
+        intent.setClass(ProductDetailActivity.this, LocationDetail.class);
+        startActivity(intent);
+    }
+
 
 }

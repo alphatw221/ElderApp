@@ -21,7 +21,8 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PassportActivity"></activity>
+        <activity android:name=".Activity.LocationDetail"></activity>
+        <activity android:name=".Activity.PassportActivity" />
         <activity android:name=".Activity.ScannerActivity" />
         <activity android:name=".Activity.GiveMoneyConfirmActivity" />
         <activity android:name=".Activity.GiveMoneyActivity" />
@@ -34,7 +35,6 @@
             android:name=".Activity.TakeMoneyActivity"
             android:label="@string/title_activity_take_money"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.UpdateMyDataActivity" />
         <activity

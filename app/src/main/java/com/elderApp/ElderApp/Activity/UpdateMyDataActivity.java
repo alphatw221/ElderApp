@@ -32,7 +32,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_my_data);
         //---------------------發出請求------------------------------------------------------------
-        String url="https://www.happybi.com.tw/api/auth/myAccount";
+        String url="https://app.happybi.com.tw/api/auth/myAccount";
         Object[] key=new Object[]{"token"};
         Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token","")};
 //        new myJsonRequest(url,"post",key,value,this.getApplicationContext(),RL,REL).Fire();
@@ -89,7 +89,7 @@ public class UpdateMyDataActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            String url="https://www.happybi.com.tw/api/auth/updateAccount";
+            String url="https://app.happybi.com.tw/api/auth/updateAccount";
             Object[] key=new Object[]{"token","name","phone","tel","address","id_number"};
             Object[] value=new Object[]{getSharedPreferences("preFile",MODE_PRIVATE).getString("access_token",""),
             update_name.getText().toString(),

@@ -74,7 +74,7 @@ public class give_money_comfirm_Frag extends Fragment {
         public void onClick(View v) {
             amount=give_money_comfirm_amount.getText().toString();
             message=give_money_comfirm_message.getText().toString();
-            String url="https://www.happybi.com.tw/api/transaction";
+            String url="https://app.happybi.com.tw/api/transaction";
 //            Object[] key=new Object[]{"give_id","give_email","take_id","take_email","amount"};
 //            Object[] value=new Object[]{
 //                    user.user_id,

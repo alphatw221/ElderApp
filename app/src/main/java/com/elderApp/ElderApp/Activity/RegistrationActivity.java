@@ -67,8 +67,8 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
     HashMap<String,Integer> associationMap = new HashMap<>();
     String[]test={"請選擇地區","桃園","中壢","平鎮","八德","龜山","蘆竹","大園","觀音","新屋","楊梅","龍潭","大溪","復興"};
     String[] how2Pay={"請選擇付款方式","推薦人代收","自行繳費"};
-    String url="https://www.happybi.com.tw/api/inviterCheck";
-    String url2="https://www.happybi.com.tw/api/member/join";
+    String url="https://app.happybi.com.tw/api/inviterCheck";
+    String url2="https://app.happybi.com.tw/api/member/join";
     private SharedPreferences preference;
     private Context context;
     private Activity activity;

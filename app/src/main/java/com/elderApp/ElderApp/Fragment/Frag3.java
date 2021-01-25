@@ -68,7 +68,7 @@ public class Frag3 extends Fragment {
     private TextView myAccount_member,myAccount_valid,myAccount_expiry_date;
     private ImageView myAccount_qr,myAccount_image;
 
-    private String url2="https://www.happybi.com.tw/api/extendMemberShip";
+    private String url2="https://app.happybi.com.tw/api/extendMemberShip";
     private SharedPreferences preferences;
 
     private Context context;
@@ -340,7 +340,7 @@ public class Frag3 extends Fragment {
                     try {
                         bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(resultUri));
                     }catch (IOException e){ }
-                    String url3="https://www.happybi.com.tw/api/auth/uploadImage";
+                    String url3="https://app.happybi.com.tw/api/auth/uploadImage";
             JSONObject jsonObject=new JSONObject();
             try{
                 jsonObject.put("image",bitmap2String(bitmap));

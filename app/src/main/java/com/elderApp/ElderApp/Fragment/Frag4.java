@@ -204,7 +204,7 @@ public class Frag4 extends Fragment {
 
     private void show_all_post(Integer page){
         post_progressbar.setVisibility(View.VISIBLE);
-        String url="https://www.happybi.com.tw/api/post/list";
+        String url="https://app.happybi.com.tw/api/post/list";
         JsonObjectRequest allPostRequest=new JsonObjectRequest(0, url + "?page=" + page+"&descending=true", null,
                 new Response.Listener<JSONObject>() {
 
@@ -250,7 +250,7 @@ public class Frag4 extends Fragment {
 
     private void show_my_post(Integer page){
         post_progressbar.setVisibility(View.VISIBLE);
-        String url="https://www.happybi.com.tw/api/post/myPostList";
+        String url="https://app.happybi.com.tw/api/post/myPostList";
         JsonObjectRequest allPostRequest=new JsonObjectRequest(0, url + "?page=" + page+"&descending=true", null,
                 new Response.Listener<JSONObject>() {
 

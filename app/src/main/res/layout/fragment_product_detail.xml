@@ -89,6 +89,12 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000" />
 
+            <LinearLayout
+                android:id="@+id/location_outter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
             <RadioGroup
                 android:id="@+id/_product_detail_radio_group"
                 android:layout_width="match_parent"

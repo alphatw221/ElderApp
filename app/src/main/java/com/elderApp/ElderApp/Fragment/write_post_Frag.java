@@ -269,7 +269,7 @@ public class write_post_Frag extends Fragment {
     }
 
     private void upload_post(){
-        String url="https://www.happybi.com.tw/api/post/makeNewPost";
+        String url="https://app.happybi.com.tw/api/post/makeNewPost";
         JSONObject jsonObject=new JSONObject();
         try{
             if(bitmap!=null){

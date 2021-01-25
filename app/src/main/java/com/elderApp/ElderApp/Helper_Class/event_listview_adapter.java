@@ -55,7 +55,7 @@ public class event_listview_adapter extends BaseAdapter {
         TextView event_people=(TextView)convertView.findViewById(R.id._event_people);
         TextView event_dateTime=(TextView)convertView.findViewById(R.id._event_dateTime);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
-//        String url="https://www.happybi.com.tw/images/events/"+list.get(position).slug+"/"+list.get(position).image;
+//        String url="https://app.happybi.com.tw/images/events/"+list.get(position).slug+"/"+list.get(position).image;
 //        Picasso.get().load(url).resize(300,300).centerCrop().into(event_image);
 //        event_title.setText(list.get(position).title);
 //        event_happybi.setText(list.get(position).reward);
