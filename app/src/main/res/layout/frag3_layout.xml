@@ -60,6 +60,18 @@
                 android:textSize="18sp"
                 android:visibility="gone" />
 
+            <Button
+                android:id="@+id/myCourseUrlButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#2196F3"
+                android:text="課程管理"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/testview"
                 android:layout_width="match_parent"

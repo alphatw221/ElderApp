@@ -80,6 +80,9 @@ public class Frag3 extends Fragment {
     private String locationUrl;
     private Button locationUrlButton;
 
+    private String myCourserUrl;
+    private Button myCourseUrlButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -119,6 +122,7 @@ public class Frag3 extends Fragment {
         parent.setBackgroundResource(android.R.color.transparent);
 
         locationUrlButton = view.findViewById(R.id.locationUrlButton);
+        myCourseUrlButton = view.findViewById(R.id.myCourseUrlButton);
 
         //---------------------發出請求------------------------------------------------------------
         getMyAccount();
@@ -195,6 +199,11 @@ public class Frag3 extends Fragment {
                     locationUrl = response.getString("locationUrl");
                     locationUrlButton.setOnClickListener(navigate_locationPanel);
                 }
+                if(response.has("myCourseUrl")){
+                    myCourseUrlButton.setVisibility(View.VISIBLE);
+                    myCourserUrl = response.getString("myCourseUrl");
+                    myCourseUrlButton.setOnClickListener(navigate_myCoursePanel);
+                }
             }catch(JSONException e){
                 new ios_style_alert_dialog_1
                         .Builder(context)
@@ -211,6 +220,15 @@ public class Frag3 extends Fragment {
         public void onClick(View v) {
             Intent intent = new Intent(context, WebViewActivity.class);
             intent.putExtra("url",apiService.host + locationUrl + "?token=" + TabActivity.user.access_token);
+            startActivity(intent);
+        }
+    };
+
+    private Button.OnClickListener navigate_myCoursePanel = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("url",apiService.host + myCourserUrl + "?token=" + TabActivity.user.access_token);
             startActivity(intent);
         }
     };
