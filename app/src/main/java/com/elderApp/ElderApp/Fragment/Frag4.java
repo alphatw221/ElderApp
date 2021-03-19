@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,16 @@ public class Frag4 extends Fragment {
         adapter=new post_listview_adapter(context,postList);
         post_listview.setAdapter(adapter);
         post_listview.setOnItemClickListener(listview_listener);
-        show_all_post(1);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                show_all_post(1);
+            }
+        }, 2500); // wait for 2.5 seconds
+
+
         return view;
     }
 
@@ -203,6 +213,7 @@ public class Frag4 extends Fragment {
     };
 
     private void show_all_post(Integer page){
+        System.out.println("get all post request");
         post_progressbar.setVisibility(View.VISIBLE);
         String url="https://app.happybi.com.tw/api/post/list";
         JsonObjectRequest allPostRequest=new JsonObjectRequest(0, url + "?page=" + page+"&descending=true", null,

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +54,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private Button product_detail_exchange,product_detail_purchase;
     private TextView product_detail_name,product_detail_price;
     private ImageView product_detail_image;
-
+    private Button share_button;
 
     private RadioGroup prodcut_detail_radio_group;
     private LinearLayout location_outter;
@@ -74,7 +75,25 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        slug = getIntent().getStringExtra("slug");
+
+        Intent intent = getIntent();
+
+        if(intent.getAction() != null){
+            // ATTENTION: This was auto-generated to handle app links.
+            String appLinkAction = intent.getAction();
+            Uri appLinkData = intent.getData();
+            String path = appLinkData.getPath();
+            System.out.println("App link test");
+            System.out.println(path);
+
+            String[] str = path.split("/");
+            if(str.length >= 4){
+                slug = str[3];
+            }
+        }else{
+            slug = intent.getStringExtra("slug");
+        }
+
 
         setContentView(R.layout.fragment_product_detail);
         product_detail_name=(TextView)findViewById(R.id._product_detail_name);
@@ -89,6 +108,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         product_detail_webview=findViewById(R.id._product_detail_webview);
         prodcut_detail_radio_group=findViewById(R.id._product_detail_radio_group);
         location_outter = findViewById(R.id.location_outter);
+        share_button = findViewById(R.id.share_button);
 
         product_detail_exchange.setOnClickListener(exchangeListener);
         product_detail_purchase.setOnClickListener(new Button.OnClickListener(){
@@ -105,6 +125,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 finish();
             }
         });
+        share_button.setOnClickListener(shareListener);
 
         getProduct();
 
@@ -204,6 +225,19 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         intent.setClass(ProductDetailActivity.this, LocationDetail.class);
         startActivity(intent);
     }
+
+    private Button.OnClickListener shareListener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            String urlString = apiService.host + "/app/product/" + slug;
+            sendIntent.putExtra(Intent.EXTRA_TEXT, urlString);
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        }
+    };
 
 
 }

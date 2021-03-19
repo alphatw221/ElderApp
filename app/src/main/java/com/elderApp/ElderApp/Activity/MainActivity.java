@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //------------檢查token---------------------
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        System.out.println("MainActivity onResume");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -67,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     navigate_loginActivity();
                 }
             }
-        }, 2 * 1000); // wait for 2 seconds
+        }, 500); // wait for 0.5 seconds
 
     }
 

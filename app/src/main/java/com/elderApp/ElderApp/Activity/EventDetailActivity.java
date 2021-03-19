@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -38,6 +39,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView myevent_detail_title,myevent_detail_time,myevent_detail_endtime,myevent_detail_body,myevent_detail_reward;
     private ImageView myevent_detail_image;
     private WebView myevent_detail_webview;
+    private Button share_button;
 
 
     @Override
@@ -45,7 +47,27 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         context = this;
-        slug = getIntent().getStringExtra("slug");
+
+
+        Intent intent = getIntent();
+
+        if(intent.getAction() != null){
+            // ATTENTION: This was auto-generated to handle app links.
+            String appLinkAction = intent.getAction();
+            Uri appLinkData = intent.getData();
+            String path = appLinkData.getPath();
+            System.out.println("App link test");
+            System.out.println(path);
+
+            String[] str = path.split("/");
+            if(str.length >= 4){
+                slug = str[3];
+            }
+        }else{
+            slug = intent.getStringExtra("slug");
+        }
+
+
         setContentView(R.layout.fragment_my_event_detail_);
 
         myevent_detail_back = findViewById(R.id._myevent_detail_back);
@@ -60,6 +82,7 @@ public class EventDetailActivity extends AppCompatActivity {
         myevent_detail_getreward = findViewById(R.id._myevent_detail_getreward);
         myevent_detail_signin = findViewById(R.id._myevent_detail_signup);
         myevent_detail_webview = findViewById(R.id._myevent_detail_webview);
+        share_button = findViewById(R.id.share_button);
 
         myevent_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +94,7 @@ public class EventDetailActivity extends AppCompatActivity {
         myevent_detail_join.setOnClickListener(clickJoin);
         myevent_detail_getreward.setOnClickListener(clickGetReward);
         myevent_detail_signin.setOnClickListener(clickArrive);
+        share_button.setOnClickListener(shareListener);
 
 
         getEventDetail();
@@ -204,6 +228,18 @@ public class EventDetailActivity extends AppCompatActivity {
         }
     };
 
+    private Button.OnClickListener shareListener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            String urlString = apiService.host + "/app/event/" + slug;
+            sendIntent.putExtra(Intent.EXTRA_TEXT, urlString);
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        }
+    };
 
     private void isParticipated(boolean isParticipated){
 

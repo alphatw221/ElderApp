@@ -17,8 +17,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
 
+            android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="#FF6D00"
@@ -28,12 +29,29 @@
             <ImageButton
                 android:id="@+id/_myevent_detail_back"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:background="#00FFFFFF"
-                android:src="@android:drawable/ic_input_delete" />
+                android:src="@android:drawable/ic_input_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+
+            <Button
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="#00FFFFFF"
+                android:text="分享"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"

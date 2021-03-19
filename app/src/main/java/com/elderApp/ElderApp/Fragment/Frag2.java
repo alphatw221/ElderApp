@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,15 +97,20 @@ public class Frag2 extends Fragment {
         event_btn.setOnClickListener(btn_listener);
         event_myevent_btn.setOnClickListener(btn_listener);
 
-        //---------------------發出請求------------------------------------------------------------
-        getEventList();
 
-        //----------------------------------------------------------------------------------------
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getEventList();
+            }
+        }, 1500); // wait for 1.5 seconds
+
         return view;
     }
 
 
     private void getEventList(){
+        System.out.println("get event list request");
         event_progressbar.setVisibility(View.VISIBLE);
         hasNextPage = false;
         switch (eventType){

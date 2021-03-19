@@ -21,15 +21,46 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+
         <activity android:name=".Activity.LocationDetail"></activity>
         <activity android:name=".Activity.PassportActivity" />
         <activity android:name=".Activity.ScannerActivity" />
         <activity android:name=".Activity.GiveMoneyConfirmActivity" />
         <activity android:name=".Activity.GiveMoneyActivity" />
         <activity android:name=".Activity.WebViewActivity" />
-        <activity android:name=".Activity.ProductDetailActivity" />
+
+        <activity android:name=".Activity.ProductDetailActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="app.happybi.com.tw"
+                    android:pathPrefix="/app/product/" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".Activity.MarketActivity" />
-        <activity android:name=".Activity.EventDetailActivity" />
+
+
+        <activity android:name=".Activity.EventDetailActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="app.happybi.com.tw"
+                    android:pathPrefix="/app/event/" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".Activity.MyTransactionActivity" />
         <activity
             android:name=".Activity.TakeMoneyActivity"
