@@ -77,7 +77,7 @@ public class EventDetailActivity extends AppCompatActivity {
         myevent_detail_title = findViewById(R.id._myevent_detail_title);
         myevent_detail_time = findViewById(R.id._myevent_detail_time);
         myevent_detail_endtime = findViewById(R.id._myevent_detail_endtime);
-        myevent_detail_body = findViewById(R.id._myevent_detail_body);
+
         myevent_detail_reward = findViewById(R.id._myevent_detail_reward);
         myevent_detail_getreward = findViewById(R.id._myevent_detail_getreward);
         myevent_detail_signin = findViewById(R.id._myevent_detail_signup);
@@ -142,6 +142,8 @@ public class EventDetailActivity extends AppCompatActivity {
                     myevent_detail_endtime.setVisibility(View.GONE);
                 }
                 myevent_detail_reward.setText(Integer.toString(event.getInt("reward"))+"獎勵");
+//                String html = "<body style='margin:0;padding:0'>" + event.getString("body") + "</body>";
+
                 myevent_detail_webview.loadData(event.getString("body"),"text/html","UTF-8");
 
             }catch (JSONException e){

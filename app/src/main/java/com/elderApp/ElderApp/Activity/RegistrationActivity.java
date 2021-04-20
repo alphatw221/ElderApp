@@ -309,7 +309,7 @@ public class RegistrationActivity extends AppCompatActivity implements ZXingScan
 //                                    //--------------------驗證完成送出註冊請求------------------------------------------------------------
                                     int gender_int;
                                     if(male.isChecked())gender_int=1;else gender_int=0;
-                                    String birthday_Date=Integer.toString(birthday_datePicker.getYear()) + "-" + Integer.toString(birthday_datePicker.getMonth()) + "-" + Integer.toString(birthday_datePicker.getDayOfMonth());
+                                    String birthday_Date = Integer.toString(birthday_datePicker.getYear()) + "-" + Integer.toString(birthday_datePicker.getMonth() + 1) + "-" + Integer.toString(birthday_datePicker.getDayOfMonth());
                                     JSONObject jsonObject=new JSONObject();
                                     try{
                                         jsonObject.put("association_id",selectedAssociationId);
