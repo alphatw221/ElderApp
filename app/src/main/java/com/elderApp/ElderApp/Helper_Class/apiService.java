@@ -68,6 +68,36 @@ public class apiService {
         return request;
     }
 
+    /**
+     * 帶有使用者jwt的請求(回傳 String)
+     * @param context
+     * @param requestUrl
+     * @param method
+     * @param postData
+     * @param responseListener
+     * @param errorListener
+     * @return
+     */
+    private static StringRequest AuthorizationStringRequest(final Context context, String requestUrl,int method, JSONObject postData, Response.Listener<String> responseListener, Response.ErrorListener errorListener){
+        StringRequest request = new StringRequest(method,requestUrl,responseListener,errorListener){
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return postData.toString().getBytes();
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                String token = TabActivity.user.access_token;
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }
+        };
+
+        return request;
+    }
+
 
 
     //------------------- public methods below here -------------------
@@ -336,32 +366,18 @@ public class apiService {
     public static void transactionRequest(final Context context, final String take_id, final String take_email, final String amount,final String message, Response.Listener<String> responseListener, Response.ErrorListener errorListener){
         System.out.println("transactionRequest");
         String requestUrl = host + "/api/transaction/";
-        StringRequest request = new StringRequest(Request.Method.POST,requestUrl,responseListener,errorListener){
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                JSONObject body = new JSONObject();
-                try {
-                    body.put("give_id", TabActivity.user.user_id);
-                    body.put("give_email", TabActivity.user.email);
-                    body.put("take_id", Integer.parseInt(take_id));
-                    body.put("take_email", take_email);
-                    body.put("amount", Integer.parseInt(amount));
-                    body.put("event",message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return body.toString().getBytes();
-            }
-            @Override
-            public Map<String, String> getHeaders() {
-                String token = TabActivity.user.access_token;
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer " + token);
-                return params;
-            }
-        };
+        JSONObject postData = new JSONObject();
+        try{
+            postData.put("give_id", TabActivity.user.user_id);
+            postData.put("give_email", TabActivity.user.email);
+            postData.put("take_id", Integer.parseInt(take_id));
+            postData.put("take_email", take_email);
+            postData.put("amount", Integer.parseInt(amount));
+            postData.put("event",message);
+        }catch (JSONException e){
+            return;
+        }
+        StringRequest request = AuthorizationStringRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
@@ -411,6 +427,45 @@ public class apiService {
         MySingleton.getInstance(context).getRequestQueue().add(request);
     }
 
+    /**
+     * 綁定Line 帳號請求
+     * @param context
+     * @param userId
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void bindLineAccountRequest(Context context,String userId,Response.Listener<String> responseListener,Response.ErrorListener errorListener){
+        System.out.println("bindLineAccountRequest");
+        String requestUrl = host + "/api/auth/bind_lineAccount";
+        JSONObject postData = new JSONObject();
+        try{
+            postData.putOpt("userID",userId);
+        }catch (JSONException e){
+            return;
+        }
+        StringRequest request = AuthorizationStringRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
+     * Line 登入
+     * @param context
+     * @param userId
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void lineLoginRequest(Context context,String userId,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("lineLoginRequest");
+        String requestUrl = host + "/api/auth/line_login";
+        JSONObject postData = new JSONObject();
+        try{
+            postData.putOpt("userID",userId);
+        }catch (JSONException e){
+            return;
+        }
+        JsonObjectRequest request = DefaultPostRequest(requestUrl,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
 
 
 }

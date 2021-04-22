@@ -2,6 +2,7 @@ package com.elderApp.ElderApp.Fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -36,6 +37,7 @@ import com.elderApp.ElderApp.Activity.MainActivity;
 import com.elderApp.ElderApp.Activity.TabActivity;
 import com.elderApp.ElderApp.Activity.WebViewActivity;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
+import com.elderApp.ElderApp.Helper_Class.AlertHandler;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.QRCodeHelper;
 import com.elderApp.ElderApp.Helper_Class.apiService;
@@ -44,6 +46,10 @@ import com.elderApp.ElderApp.Activity.UpdateMyDataActivity;
 import com.elderApp.ElderApp.Helper_Class.myJsonRequest;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.linecorp.linesdk.Scope;
+import com.linecorp.linesdk.auth.LineAuthenticationParams;
+import com.linecorp.linesdk.auth.LineLoginApi;
+import com.linecorp.linesdk.auth.LineLoginResult;
 import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.UCrop;
 
@@ -54,6 +60,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,6 +89,9 @@ public class Frag3 extends Fragment {
 
     private String myCourserUrl;
     private Button myCourseUrlButton;
+
+    private static final int LINE_REQUEST_CODE = 11;
+    private Button bindLineButton;
 
     @Nullable
     @Override
@@ -123,6 +133,7 @@ public class Frag3 extends Fragment {
 
         locationUrlButton = view.findViewById(R.id.locationUrlButton);
         myCourseUrlButton = view.findViewById(R.id.myCourseUrlButton);
+        bindLineButton = view.findViewById(R.id.bindLineButton);
 
         //---------------------發出請求------------------------------------------------------------
         getMyAccount();
@@ -204,6 +215,12 @@ public class Frag3 extends Fragment {
                     myCourserUrl = response.getString("myCourseUrl");
                     myCourseUrlButton.setOnClickListener(navigate_myCoursePanel);
                 }
+
+                if(!response.getBoolean("isLineAccountBinded")){
+                    bindLineButton.setVisibility(View.VISIBLE);
+                    bindLineButton.setOnClickListener(bindLineAccount);
+                }
+
             }catch(JSONException e){
                 new ios_style_alert_dialog_1
                         .Builder(context)
@@ -230,6 +247,22 @@ public class Frag3 extends Fragment {
             Intent intent = new Intent(context, WebViewActivity.class);
             intent.putExtra("url",apiService.host + myCourserUrl + "?token=" + TabActivity.user.access_token);
             startActivity(intent);
+        }
+    };
+
+    private Button.OnClickListener bindLineAccount = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            try {
+                Intent loginIntent = LineLoginApi.getLoginIntent(context,MainActivity.line_channelId,new LineAuthenticationParams.Builder()
+                        .scopes(Arrays.asList(Scope.PROFILE))
+                        // .nonce("<a randomly-generated string>") // nonce can be used to improve security
+                        .build());
+                startActivityForResult(loginIntent, LINE_REQUEST_CODE);
+            }
+            catch (Exception e){
+                System.out.println(e.toString());
+            }
         }
     };
 
@@ -403,9 +436,53 @@ public class Frag3 extends Fragment {
             case UCrop.RESULT_ERROR:
                 final Throwable cropError = UCrop.getError(data);
                 break;
+            case LINE_REQUEST_CODE:
+                this.handleLineIntent(data);
+                break;
 
         }
     }
+
+    private void handleLineIntent(Intent data){
+        LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
+        switch (result.getResponseCode()) {
+            case SUCCESS:
+                // Login successful
+                String userId = result.getLineProfile().getUserId();
+                bindLineRequest(userId);
+                break;
+            case CANCEL:
+                // Login canceled by user
+                System.out.println("canceled");
+                break;
+            default:
+                // Login canceled due to other error
+                System.out.println("error");
+        }
+    }
+
+    private void bindLineRequest(String userId){
+        apiService.bindLineAccountRequest(context, userId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String result = "綁定失敗";
+                if(response.trim().equals("success")){
+                    result = "綁定成功";
+                    bindLineButton.setVisibility(View.GONE);
+                }
+                AlertHandler.alert(context, "訊息", result, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                });
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("binding error");
+            }
+        });
+    }
+
 
     //-----------------修改資料按鈕Listener-----------------------------------------------------------------------------------------------------------------------
     private Button.OnClickListener update_listener =new Button.OnClickListener(){

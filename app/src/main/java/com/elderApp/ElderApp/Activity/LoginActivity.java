@@ -30,22 +30,29 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.linecorp.linesdk.Scope;
+import com.linecorp.linesdk.auth.LineAuthenticationParams;
+import com.linecorp.linesdk.auth.LineLoginApi;
+import com.linecorp.linesdk.auth.LineLoginResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     //-----------------全域變數-----------------------------------------------------------------------------------------------------------------------
-    private Button login, signup;
+    private Button login, signup,lineLoginButton;
     private TextView account, password;
     private SharedPreferences preference;
     public Context context;
     private User user;
     private int versionCode;
     private String update_url;
+
+    private static final int LINE_REQUEST_CODE = 11;
 
 
     //----------------------------------------------------------------------------------------------------------------------------------------
@@ -58,12 +65,15 @@ public class LoginActivity extends AppCompatActivity {
         signup = (Button) findViewById(R.id.button2);
         account = (TextView) findViewById(R.id.editText1);
         password = (TextView) findViewById(R.id.editText2);
+        lineLoginButton = findViewById(R.id.lineLoginButton);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 
         context = this;
         user = new User();
         login.setOnClickListener(btn_listener);
         signup.setOnClickListener(btn_listener);
+        lineLoginButton.setOnClickListener(lineLoginListener);
+
         preference = getSharedPreferences("preFile", MODE_PRIVATE);
         try {
             versionCode = context.getPackageManager()
@@ -80,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button1:
-                    //login_request();
                     loginRequest();
                     break;
                 case R.id.button2:
@@ -102,34 +111,8 @@ public class LoginActivity extends AppCompatActivity {
         apiService.loginRequest(this.context, _email, _password, this.versionCode, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
-                if (response.has("android_update_url")) {
-                    try {
-                        String androidUpdateUrl =  response.getString("android_update_url");
-                        askToUpdate(androidUpdateUrl);
-                    } catch (JSONException e) {
-                    }
-                    return;
-                }
-
-                if (response.has("access_token")) {
-
-                    try {
-                        preference.edit()
-                                .putString("access_token", response.getString("access_token"))
-                                .putString("email",_email)
-                                .putString("password",_password)
-                                .commit();
-
-                        user = User.getInstance(response);
-
-                        uploadPushToken();
-                        navigateToIndexPage();
-                    }catch(JSONException e){
-                    }
-
-                }
-
+                MainActivity.handleLoginResponse(context,response,null,_password);
+                uploadPushToken();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -144,34 +127,68 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private Button.OnClickListener lineLoginListener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            startLineLogin();
+        }
+    };
 
-    /**
-     * 詢問是否更新版本
-     * @param updateUrl
-     */
-    private void askToUpdate(final String updateUrl){
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        new ios_style_alert_dialog_1.Builder(context).setTitle("已有更新版本").setMessage("請更新後重新登入").setPositiveButton("是", new DialogInterface.OnClickListener() {
+        if (requestCode != LINE_REQUEST_CODE) {
+            return;
+        }
+        LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
+        switch (result.getResponseCode()) {
+            case SUCCESS:
+                // Login successful
+                String userId = result.getLineProfile().getUserId();
+                lineLoginRequest(userId);
+                break;
+            case CANCEL:
+                // Login canceled by user
+                System.out.println("canceled");
+                break;
+            default:
+                // Login canceled due to other error
+                System.out.println("error");
+        }
+
+    }
+
+
+    private void startLineLogin(){
+        try {
+            Intent loginIntent = LineLoginApi.getLoginIntent(context,MainActivity.line_channelId,new LineAuthenticationParams.Builder()
+                    .scopes(Arrays.asList(Scope.PROFILE))
+                    // .nonce("<a randomly-generated string>") // nonce can be used to improve security
+                    .build());
+            startActivityForResult(loginIntent, LINE_REQUEST_CODE);
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
+    }
+
+    private void lineLoginRequest(String userId){
+        apiService.lineLoginRequest(context,userId,new Response.Listener<JSONObject>(){
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(updateUrl));
-                context.startActivity(i);
+            public void onResponse(JSONObject response) {
+                MainActivity.handleLoginResponse(context,response,userId,null);
+                uploadPushToken();
             }
-        }).setNegativeButton("否", null).show();
-
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("binding error");
+            }
+        });
     }
 
-    /**
-     * 導向到首頁
-     */
-    private void navigateToIndexPage(){
-        Intent intent = new Intent();
-        intent.setClass(LoginActivity.this, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra("User", user);
-        startActivity(intent);
-        finish();
-    }
+
 
 
     private void uploadPushToken(){

@@ -16,10 +16,37 @@
         android:focusableInTouchMode="true">
 
 
+        <Button
+            android:id="@+id/lineLoginButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_rectangle_line_green"
+            android:text="Line登入"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="——"
+            android:textAlignment="center"
+            android:textColor="#80000000"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toTopOf="@+id/editText1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <EditText
             android:id="@+id/editText1"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="56dp"
             android:background="@drawable/background_border_line_grey"
             android:ems="10"
             android:gravity="center"
@@ -38,7 +65,7 @@
         <EditText
             android:id="@+id/editText2"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/background_border_line_grey"
             android:ems="10"
@@ -55,7 +82,7 @@
         <Button
             android:id="@+id/button1"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_rectangle_orange"
             android:text="登入"
@@ -68,7 +95,7 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="#00FFFFFF"
             android:text="註冊"

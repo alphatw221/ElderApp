@@ -59,7 +59,10 @@ public class TabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
         preferences=getSharedPreferences("preFile", MODE_PRIVATE);
-        user=(User)getIntent().getExtras().get("User");
+        if(getIntent().hasExtra("User")){
+            user=(User)getIntent().getExtras().get("User");
+        }
+
         context=this;
         try {
             versionCode = context.getPackageManager()
