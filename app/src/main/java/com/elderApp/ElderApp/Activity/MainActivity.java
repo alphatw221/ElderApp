@@ -169,21 +169,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 未知錯誤訊息
-     */
-    private void show_unknown_error_alert(){
-        new ios_style_alert_dialog_1.Builder(context)
-                .setTitle("登入失敗")
-                .setMessage("請檢查網路連線")
-                .setPositiveButton("是",new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .show();
-    }
 
     /**
      * 處理拿到 update_url 之後的動作

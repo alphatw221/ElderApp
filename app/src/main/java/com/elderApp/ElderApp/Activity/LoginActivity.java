@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
+import com.elderApp.ElderApp.Helper_Class.AlertHandler;
 import com.elderApp.ElderApp.Helper_Class.MySingleton;
 import com.elderApp.ElderApp.Helper_Class.apiService;
 import com.elderApp.ElderApp.Model_Class.User;
@@ -194,6 +195,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 System.out.println("binding error");
                 spinner.setVisibility(View.GONE);
+                AlertHandler.alert(context, "訊息", "尚未綁定此Line帳號。\n若已有會員帳號請先進行綁定\n或先進行註冊", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) { }
+                });
             }
         });
     }

@@ -8,8 +8,8 @@ android {
         applicationId "com.elderApp.ElderApp"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 14
-        versionName "2-14"
+        versionCode 15
+        versionName "2-15"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
