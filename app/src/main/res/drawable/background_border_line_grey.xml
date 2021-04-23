@@ -11,7 +11,7 @@
     <!--        android:left="10dp"-->
     <!--        />-->
     <!-- 設置圓角 -->
-    <corners android:radius="8dp" />
+    <corners android:radius="5dp" />
     <!-- 邊框線 -->
     <stroke
         android:width="0dp"

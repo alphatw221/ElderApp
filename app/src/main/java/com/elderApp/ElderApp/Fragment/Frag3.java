@@ -552,7 +552,7 @@ public class Frag3 extends Fragment {
     private Button.OnClickListener logout_listener =new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            preferences.edit().remove("email").remove("password").remove("access_token").commit();
+            preferences.edit().remove("email").remove("password").remove("access_token").remove("line_id").commit();
             Intent intent = new Intent();
             intent.setClass(context, MainActivity.class);
             startActivity(intent);

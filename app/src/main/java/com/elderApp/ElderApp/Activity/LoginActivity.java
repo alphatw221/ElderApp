@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private User user;
     private int versionCode;
     private String update_url;
+    private ProgressBar spinner;
 
     private static final int LINE_REQUEST_CODE = 11;
 
@@ -66,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         account = (TextView) findViewById(R.id.editText1);
         password = (TextView) findViewById(R.id.editText2);
         lineLoginButton = findViewById(R.id.lineLoginButton);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
         //-------------初始設定---------------------------------------------------------------------------------------------------------------------------
 
         context = this;
@@ -107,17 +111,20 @@ public class LoginActivity extends AppCompatActivity {
 
         final String _email = account.getText().toString();
         final String _password = password.getText().toString();
+        spinner.setVisibility(View.VISIBLE);
 
         apiService.loginRequest(this.context, _email, _password, this.versionCode, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                MainActivity.handleLoginResponse(context,response,null,_password);
                 uploadPushToken();
+                MainActivity.handleLoginResponse(context,response,null,_password);
+                spinner.setVisibility(View.GONE);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.toString());
+                spinner.setVisibility(View.GONE);
                 if (error.networkResponse != null) {
                     new ios_style_alert_dialog_1.Builder(context).setTitle("登入失敗").setMessage("帳號或密碼錯誤").show();
                     return;
@@ -174,16 +181,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void lineLoginRequest(String userId){
+        spinner.setVisibility(View.VISIBLE);
         apiService.lineLoginRequest(context,userId,new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response) {
-                MainActivity.handleLoginResponse(context,response,userId,null);
                 uploadPushToken();
+                MainActivity.handleLoginResponse(context,response,userId,null);
+                spinner.setVisibility(View.GONE);
             }
         },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("binding error");
+                spinner.setVisibility(View.GONE);
             }
         });
     }
