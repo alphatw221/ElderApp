@@ -73,6 +73,7 @@
                     android:layout_height="250dp"
                     android:background="#FFFFFF"
 
+                    android:scaleType="centerCrop"
                     tools:src="@tools:sample/avatars" />
 
                 <TextView

@@ -11,10 +11,10 @@
 <!--        android:left="10dp"-->
 <!--        />-->
     <!-- 設置圓角 -->
-    <corners android:radius="5dp" />
+    <corners android:radius="6dp" />
     <!-- 邊框線 -->
     <stroke
-        android:width="0.5dp"
+        android:width="0dp"
         android:color="@android:color/black"
         android:dashGap="0dp"
         android:dashWidth="0dp" />

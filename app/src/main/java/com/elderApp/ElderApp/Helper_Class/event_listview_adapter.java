@@ -1,6 +1,7 @@
 package com.elderApp.ElderApp.Helper_Class;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class event_listview_adapter extends BaseAdapter {
         event_people.setText(Integer.toString(list.get(position).people)+"/"+Integer.toString(list.get(position).maximum));
         event_happybi.setText(Integer.toString(list.get(position).reward)+"獎勵");
         if(list.get(position).type==2){
-            event_dateTime.setText("");
+            event_dateTime.setText("週期性活動");
         }else{
             event_dateTime.setText(list.get(position).dateTime);
         }
