@@ -25,6 +25,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +55,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
 
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'org.jetbrains:annotations:15.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
@@ -75,4 +84,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
 
     implementation 'com.github.yalantis:ucrop:2.2.6-native'
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+
 }

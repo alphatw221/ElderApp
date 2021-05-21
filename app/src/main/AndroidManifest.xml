@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -21,46 +22,45 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activity.EZActivity"></activity>
+
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
 
-        <activity android:name=".Activity.LocationDetail"></activity>
+        <activity android:name=".Activity.LocationDetail" />
         <activity android:name=".Activity.PassportActivity" />
         <activity android:name=".Activity.ScannerActivity" />
         <activity android:name=".Activity.GiveMoneyConfirmActivity" />
         <activity android:name=".Activity.GiveMoneyActivity" />
         <activity android:name=".Activity.WebViewActivity" />
-
         <activity android:name=".Activity.ProductDetailActivity">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="app.happybi.com.tw"
-                    android:pathPrefix="/app/product/" />
+                    android:pathPrefix="/app/product/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".Activity.MarketActivity" />
-
-
         <activity android:name=".Activity.EventDetailActivity">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="app.happybi.com.tw"
-                    android:pathPrefix="/app/event/" />
+                    android:pathPrefix="/app/event/"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".Activity.MyTransactionActivity" />
         <activity
             android:name=".Activity.TakeMoneyActivity"

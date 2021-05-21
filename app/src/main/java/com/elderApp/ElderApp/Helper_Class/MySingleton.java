@@ -15,6 +15,7 @@ public class MySingleton {
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context ctx;
+
     private MySingleton(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();

@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                MainActivity.navigate_loginActivity(MainActivity.sharedContext);
+                MainActivity.navigate_loginActivity(context);
             }
         });
 
@@ -154,8 +154,11 @@ public class MainActivity extends AppCompatActivity {
                 preference.edit().putString("password", password).commit();
             }
 
-            TabActivity.user = User.getInstance(response);
-            MainActivity.navigate_tabActivity(context);
+//            TabActivity.user = User.getInstance(response);
+//            MainActivity.navigate_tabActivity(context);
+
+            EZActivity.user = User.getInstance(response);
+            MainActivity.navigate_EZActivity(context);
 
         } else if (response.has("android_update_url")) {
 
@@ -194,6 +197,18 @@ public class MainActivity extends AppCompatActivity {
     private static void navigate_tabActivity(Context context){
         Intent intent = new Intent();
         intent.setClass(context, TabActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        context.startActivity(intent);
+        Activity activity = (Activity) context;
+        MainActivity.handleFcmMessage();
+        activity.finish();
+    }
+
+    /**
+     * 導向到 EZActivity
+     */
+    private static void navigate_EZActivity(Context context){
+        Intent intent = new Intent();
+        intent.setClass(context, EZActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
         Activity activity = (Activity) context;
         MainActivity.handleFcmMessage();

@@ -226,10 +226,7 @@ public class TabActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-    }
+
 
     private void navigate_mainActivity(){
         Intent intent = new Intent();
