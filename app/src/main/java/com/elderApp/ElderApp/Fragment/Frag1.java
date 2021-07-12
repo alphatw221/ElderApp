@@ -193,6 +193,7 @@ public class Frag1 extends Fragment {
         public void onClick(View v) {
 
             Intent intent = new Intent(context, MarketActivity.class);
+            intent.putExtra("listType","free");
             startActivity(intent);
 
         }
@@ -203,8 +204,12 @@ public class Frag1 extends Fragment {
         @Override
         public void onClick(View v) {
 
-            Intent intent = new Intent(context, WebViewActivity.class);
-            intent.putExtra("url",apiService.host + "/product/list?token=" + TabActivity.user.access_token);
+//            Intent intent = new Intent(context, WebViewActivity.class);
+//            intent.putExtra("url",apiService.host + "/product/list?token=" + TabActivity.user.access_token);
+//            startActivity(intent);
+
+            Intent intent = new Intent(context, MarketActivity.class);
+            intent.putExtra("listType","cash");
             startActivity(intent);
 
         }

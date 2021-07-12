@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class Product_class {
 
 
-    public int id ,product_category_id, price ,_public, pay_cash_price,pay_cash_point;
+    public int id ,product_category_id, price ,_public, pay_cash_price,pay_cash_point,original_cash,cash;
 
     public String name,slug,img,imgUrl,info;
 
@@ -22,6 +22,9 @@ public class Product_class {
             object.name = jsonObject.getString("name");
             object.price = jsonObject.getInt("price");
             object.pay_cash_price = jsonObject.getInt("pay_cash_price");
+            object.pay_cash_point = jsonObject.getInt("pay_cash_point");
+            object.original_cash = jsonObject.getInt("original_cash");
+            object.cash = jsonObject.getInt("cash");
             object.slug = jsonObject.getString("slug");
         }catch (JSONException e){ }
         return object;

@@ -301,6 +301,21 @@ public class apiService {
     }
 
     /**
+     * 取得可購買商品列表
+     * @param context
+     * @param page
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void getMarketProductListRequest(Context context,int page,Response.Listener<JSONObject> responseListener,Response.ErrorListener errorListener){
+        System.out.println("getMarketProductListRequest");
+        String requestUrl = host + "/api/marketProductList" + "?page=" + page;
+        JSONObject postData = new JSONObject();
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.GET,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
      * 取得我的兌換紀錄
      * @param context
      * @param page

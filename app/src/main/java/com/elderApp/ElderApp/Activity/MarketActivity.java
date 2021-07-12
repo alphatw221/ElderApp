@@ -22,6 +22,7 @@ import com.elderApp.ElderApp.Helper_Class.market_listview_adapter;
 import com.elderApp.ElderApp.Helper_Class.market_myOrder_listview_adapter;
 import com.elderApp.ElderApp.Model_Class.Order_class;
 import com.elderApp.ElderApp.Model_Class.Product_class;
+import com.elderApp.ElderApp.Model_Class.User;
 import com.elderApp.ElderApp.R;
 
 import org.json.JSONArray;
@@ -55,6 +56,10 @@ public class MarketActivity extends AppCompatActivity {
     private market_myOrder_listview_adapter orderListAdapter;
 
     private ProgressBar market_progressbar;
+    /**列表type (free=>兌換;cash=>商城) */
+    private String listType = "free";
+    /**上方tab列表*/
+    private androidx.constraintlayout.widget.ConstraintLayout tabBar;
 
 
     @Override
@@ -64,6 +69,10 @@ public class MarketActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_market_);
         context = this;
 
+        if(getIntent().hasExtra("listType")){
+            listType = (String)getIntent().getExtras().get("listType");
+        }
+
         market_listView = (ListView)findViewById(R.id._market_listView);
         order_listView = (ListView)findViewById(R.id._order_listView);
         market_product = (Button)findViewById(R.id._market_product);
@@ -71,7 +80,7 @@ public class MarketActivity extends AppCompatActivity {
         market_back = (ImageButton)findViewById(R.id._market_back);
         market_progressbar = findViewById(R.id._market_progressbar);
 
-        productListAdapter = new market_listview_adapter(context,productList);
+        productListAdapter = new market_listview_adapter(context,productList,listType);
         market_listView.setAdapter(productListAdapter);
         market_listView.setOnScrollListener(onScrollProductListener);
         market_listView.setOnItemClickListener(onItemClickListener);
@@ -79,7 +88,17 @@ public class MarketActivity extends AppCompatActivity {
         orderListAdapter = new market_myOrder_listview_adapter(context,orderList);
         order_listView.setAdapter(orderListAdapter);
         order_listView.setOnScrollListener(onScrollOrderListener);
-
+        tabBar = findViewById(R.id.tabBar);
+        switch (listType){
+            case "free":
+                tabBar.setVisibility(View.VISIBLE);
+                break;
+            case "cash":
+                tabBar.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
 
         market_product.setOnClickListener(switcherListener);
         market_myProduct.setOnClickListener(switcherListener);
@@ -97,25 +116,42 @@ public class MarketActivity extends AppCompatActivity {
 
     private void getProductList(){
         product_hasNextPage = false;
-        apiService.getProductListRequest(context, product_page, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                JSONArray jsonArray=new JSONArray();
-                try {
-                    jsonArray=response.getJSONArray("productList");
-                    product_hasNextPage=response.getBoolean("hasNextPage");
-                }catch (JSONException e){
-                    ErrorHandler.alert(context);
-                    return;
-                }
+        switch (listType){
+            case "free":
+                apiService.getProductListRequest(context, product_page, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        handleResponse(response);
+                    }
+                }, ErrorHandler.defaultListener(context));
+                break;
+            case "cash":
+                apiService.getMarketProductListRequest(context, product_page, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        handleResponse(response);
+                    }
+                }, ErrorHandler.defaultListener(context));
+                break;
+            default:
+                break;
+        }
+    }
 
-                productList.addAll(jasonList_2_objList.productList(jsonArray));
-                product_page++;
-                productListAdapter.notifyDataSetChanged();
-                market_progressbar.setVisibility(View.GONE);
+    private void handleResponse(JSONObject response){
+        JSONArray jsonArray=new JSONArray();
+        try {
+            jsonArray=response.getJSONArray("productList");
+            product_hasNextPage=response.getBoolean("hasNextPage");
+        }catch (JSONException e){
+            ErrorHandler.alert(context);
+            return;
+        }
 
-            }
-        }, ErrorHandler.defaultListener(context));
+        productList.addAll(jasonList_2_objList.productList(jsonArray));
+        product_page++;
+        productListAdapter.notifyDataSetChanged();
+        market_progressbar.setVisibility(View.GONE);
     }
 
 
