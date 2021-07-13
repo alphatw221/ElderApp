@@ -214,6 +214,7 @@ public class MarketActivity extends AppCompatActivity {
 
             Intent intent = new Intent(context,ProductDetailActivity.class);
             intent.putExtra("slug",product.slug);
+            intent.putExtra("type",listType);
             startActivity(intent);
         }
     };

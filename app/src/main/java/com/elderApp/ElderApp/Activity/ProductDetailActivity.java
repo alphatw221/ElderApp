@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
     private Context context;
     private String slug;
+    private String type = "free";
 
     private Product_class product_class;
 
@@ -54,6 +56,12 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private Button product_detail_exchange,product_detail_purchase;
     private TextView product_detail_name,product_detail_price;
     private ImageView product_detail_image;
+    private View pay_cash_view;
+    private TextView pay_cash_price;
+    private TextView pay_cash_point;
+    private View cash_view;
+    private TextView cash;
+    private TextView original_cash;
     private Button share_button;
 
     private RadioGroup prodcut_detail_radio_group;
@@ -92,6 +100,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
             }
         }else{
             slug = intent.getStringExtra("slug");
+            type = intent.getStringExtra("type");
         }
 
 
@@ -110,7 +119,29 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         location_outter = findViewById(R.id.location_outter);
         share_button = findViewById(R.id.share_button);
 
-        product_detail_exchange.setOnClickListener(exchangeListener);
+        pay_cash_view = (View)findViewById(R.id.pay_cash_view);
+        pay_cash_price = (TextView)findViewById(R.id.pay_cash_price);
+        pay_cash_point = (TextView)findViewById(R.id.pay_cash_point);
+        cash_view = (View)findViewById(R.id.cash_view);
+        cash = (TextView)findViewById(R.id.cash);
+        original_cash = (TextView)findViewById(R.id.original_cash);
+        original_cash.setPaintFlags(original_cash.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+
+
+        product_detail_price.setVisibility(View.GONE);
+        cash_view.setVisibility(View.GONE);
+        pay_cash_view.setVisibility(View.GONE);
+
+        switch(type){
+            case "free":
+                product_detail_exchange.setOnClickListener(exchangeListener);
+                break;
+            case "cash":
+                product_detail_exchange.setOnClickListener(exchangeByCashListener);
+                break;
+            default:break;
+        }
+
         product_detail_purchase.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -147,9 +178,24 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
                 buynowUrl = product.optString("buynowUrl");
                 Picasso.get().load(product.optString("imgUrl")).into(product_detail_image);
-                product_detail_name.setText("商品："+product.optString("name"));
+                product_detail_name.setText(product.optString("name"));
                 product_detail_price.setText("樂幣："+product.optString("price"));
+                pay_cash_price.setText(Integer.toString(product.optInt("pay_cash_price")));
+                pay_cash_point.setText(Integer.toString(product.optInt("pay_cash_point")));
+                cash.setText(Integer.toString(product.optInt("cash")));
+                original_cash.setText("原價："+product.optInt("original_cash"));
                 product_detail_webview.loadData(product.optString("info"),"text/html","UTF-8");
+
+                switch(type){
+                    case "free":
+                        product_detail_price.setVisibility(View.VISIBLE);
+                        break;
+                    case "cash":
+                        cash_view.setVisibility(View.VISIBLE);
+                        pay_cash_view.setVisibility(View.VISIBLE);
+                        break;
+                    default:break;
+                }
 
                 for(int i=0; i < locationList.length(); i++){
                     try {
@@ -158,6 +204,9 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                         String name = location.getString("name");
                         String link = location.getString("link");
                         int quantity = location.getInt("quantity");
+                        if(type.equals("cash")){
+                            quantity = location.getInt("quantity_cash");
+                        }
                         int location_id = location.getInt("location_id");
                         LocationCell cell = new LocationCell(context,location_id,name,address,link,quantity);
                         cell.isClickable();
@@ -172,7 +221,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         }, ErrorHandler.defaultListener(context));
     }
 
-
+    /**確認兌換（樂幣） */
     private Button.OnClickListener exchangeListener = new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -194,6 +243,14 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                     ErrorHandler.alert(context,"訊息",message);
                 }
             });
+
+        }
+    };
+
+    /**確認兌換(現金) */
+    private Button.OnClickListener exchangeByCashListener = new Button.OnClickListener(){
+        @Override
+        public void onClick(View view) {
 
         }
     };
