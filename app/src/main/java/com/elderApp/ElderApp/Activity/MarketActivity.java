@@ -60,6 +60,8 @@ public class MarketActivity extends AppCompatActivity {
     private String listType = "free";
     /**上方tab列表*/
     private androidx.constraintlayout.widget.ConstraintLayout tabBar;
+    /**訂單記錄按鈕*/
+    private Button myOrderButton;
 
 
     @Override
@@ -73,6 +75,7 @@ public class MarketActivity extends AppCompatActivity {
             listType = (String)getIntent().getExtras().get("listType");
         }
 
+        myOrderButton = (Button)findViewById(R.id.myOrderButton);
         market_listView = (ListView)findViewById(R.id._market_listView);
         order_listView = (ListView)findViewById(R.id._order_listView);
         market_product = (Button)findViewById(R.id._market_product);
@@ -92,14 +95,17 @@ public class MarketActivity extends AppCompatActivity {
         switch (listType){
             case "free":
                 tabBar.setVisibility(View.VISIBLE);
+                myOrderButton.setVisibility(View.GONE);
                 break;
             case "cash":
                 tabBar.setVisibility(View.GONE);
+                myOrderButton.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
         }
 
+        myOrderButton.setOnClickListener(myOrderListener);
         market_product.setOnClickListener(switcherListener);
         market_myProduct.setOnClickListener(switcherListener);
         market_back.setOnClickListener(new View.OnClickListener() {
@@ -248,6 +254,18 @@ public class MarketActivity extends AppCompatActivity {
             }
 
         };
+    };
+
+    /**
+     * 訂單記錄事件
+     */
+    private View.OnClickListener myOrderListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("url",apiService.host +"/order/list" + "?token=" + TabActivity.user.access_token + "&noFooter=1");
+            startActivity(intent);
+        }
     };
 
 

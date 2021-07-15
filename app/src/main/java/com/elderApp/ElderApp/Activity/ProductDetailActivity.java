@@ -2,6 +2,7 @@ package com.elderApp.ElderApp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.elderApp.ElderApp.AlertDialog.ios_style_alert_dialog_1;
 import com.elderApp.ElderApp.CustomComponents.LocationCell;
+import com.elderApp.ElderApp.Fragment.CartFragment;
 import com.elderApp.ElderApp.Helper_Class.ErrorHandler;
 import com.elderApp.ElderApp.Helper_Class.ProductDetailDelegate;
 import com.elderApp.ElderApp.Helper_Class.apiService;
@@ -53,7 +55,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private Product_class product_class;
 
     private ImageButton product_detail_back;
-    private Button product_detail_exchange,product_detail_purchase;
+    private Button product_detail_exchange;
     private TextView product_detail_name,product_detail_price;
     private ImageView product_detail_image;
     private View pay_cash_view;
@@ -63,6 +65,11 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
     private TextView cash;
     private TextView original_cash;
     private Button share_button;
+
+    /** 每單位台幣*/
+    private Integer cash_per_product;
+    /** 每單位樂幣*/
+    private Integer point_per_product;
 
     private RadioGroup prodcut_detail_radio_group;
     private LinearLayout location_outter;
@@ -113,7 +120,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
 
 
         product_detail_exchange=(Button)findViewById(R.id._product_detail_exchange);
-        product_detail_purchase=(Button)findViewById(R.id._product_detail_purchase);
+
         product_detail_webview=findViewById(R.id._product_detail_webview);
         prodcut_detail_radio_group=findViewById(R.id._product_detail_radio_group);
         location_outter = findViewById(R.id.location_outter);
@@ -142,14 +149,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
             default:break;
         }
 
-        product_detail_purchase.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, WebViewActivity.class);
-                intent.putExtra("url",buynowUrl + "?token=" + TabActivity.user.access_token);
-                startActivity(intent);
-            }
-        });
+
         product_detail_back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -181,7 +181,9 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
                 product_detail_name.setText(product.optString("name"));
                 product_detail_price.setText("樂幣："+product.optString("price"));
                 pay_cash_price.setText(Integer.toString(product.optInt("pay_cash_price")));
+                cash_per_product = product.optInt("pay_cash_price");
                 pay_cash_point.setText(Integer.toString(product.optInt("pay_cash_point")));
+                point_per_product = product.optInt("pay_cash_point");
                 cash.setText(Integer.toString(product.optInt("cash")));
                 original_cash.setText("原價："+product.optInt("original_cash"));
                 product_detail_webview.loadData(product.optString("info"),"text/html","UTF-8");
@@ -252,6 +254,13 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         @Override
         public void onClick(View view) {
 
+            int location_id = getSelected_location_id();
+            if(location_id == 0){
+                ErrorHandler.alert(context,"訊息","請選擇兌換據點");
+                return;
+            }
+
+            CartFragment.newInstance(slug,location_id,cash_per_product,point_per_product).show(getSupportFragmentManager(),null);
         }
     };
 

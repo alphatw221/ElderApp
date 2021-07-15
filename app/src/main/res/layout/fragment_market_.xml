@@ -7,7 +7,8 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@color/colorPrimaryDark">
@@ -15,11 +16,29 @@
         <ImageButton
             android:id="@+id/_market_back"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:background="#00FFFFFF"
-            android:src="@android:drawable/ic_input_delete" />
-    </LinearLayout>
+            android:src="@android:drawable/ic_input_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/myOrderButton"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:background="#00FFFFFF"
+            android:text="訂單記錄"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tabBar"

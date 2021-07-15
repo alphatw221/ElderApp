@@ -29,6 +29,11 @@ public class ErrorHandler {
         Response.ErrorListener listener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                String msg = errorMessage(error);
+                if(!msg.isEmpty()){
+                    ErrorHandler.alert(context,"錯誤",msg);
+                    return;
+                }
                 ErrorHandler.alert(context);
             }
         };
@@ -40,7 +45,8 @@ public class ErrorHandler {
         try {
             String responseBody = new String(error.networkResponse.data, "utf-8");
             return responseBody;
-        }catch (UnsupportedEncodingException errorr) { }
-        return null;
+        }catch (UnsupportedEncodingException errorr) {
+            return null;
+        }
     }
 }

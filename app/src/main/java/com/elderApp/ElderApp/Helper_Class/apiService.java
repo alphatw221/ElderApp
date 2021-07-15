@@ -369,6 +369,29 @@ public class apiService {
     }
 
     /**
+     * 購買產品
+     * @param context
+     * @param slug
+     * @param location_id
+     * @param quantity
+     * @param responseListener
+     * @param errorListener
+     */
+    public static void purchaseProductByCashRequest(final Context context, String slug, final int location_id,final int quantity, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener){
+        System.out.println("purchaseProductByCashRequest");
+        String requestUrl = host + "/api/purchaseByCash/" + slug;
+        JSONObject postData = new JSONObject();
+        try{
+            postData.put("location_id", location_id);
+            postData.put("quantity", quantity);
+        }catch (JSONException e){
+            return;
+        }
+        JsonObjectRequest request = AuthorizationPostRequest(context,requestUrl,Request.Method.POST,postData,responseListener,errorListener);
+        MySingleton.getInstance(context).getRequestQueue().add(request);
+    }
+
+    /**
      * 交易
      * @param context
      * @param take_id
